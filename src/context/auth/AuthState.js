@@ -46,8 +46,12 @@ const AuthState = props => {
 	};
 
 	// Logout
-	const logout = () => dispatch({ type: LOGOUT });
-
+	const logout = () => {
+		axios.get('https://lambda-devdesk.herokuapp.com/logout');
+		dispatch({ type: LOGOUT });
+  };
+  
+ 
 	return (
 		<AuthContext.Provider
 			value={{
