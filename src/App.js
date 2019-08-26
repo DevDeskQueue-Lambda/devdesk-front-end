@@ -6,6 +6,8 @@ import AuthState from './context/auth/AuthState';
 import Login from './components/auth/Login';
 import Home from './components/pages/Home';
 import Register from './components/auth/Registration';
+import NavBar from './components/NavBar';
+import lambdaLogo from './lambda-logo.png';
 
 import './App.css';
 
@@ -13,8 +15,8 @@ function App() {
 	return (
 		<AuthState>
 			<div className='App'>
-				APP
 				<Router>
+					<NavBar logo={lambdaLogo} />
 					<Fragment>
 						<Switch>
 							<Route exact path='/' component={Home} />
