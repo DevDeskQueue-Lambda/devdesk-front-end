@@ -7,7 +7,7 @@ const NavBar = ({ logo }) => {
     <Menu borderless>
       <Container>
         <Menu.Item>
-          <Link exact to="/">
+          <Link to="/">
             <Image src={logo} size="small" />
           </Link>
         </Menu.Item>

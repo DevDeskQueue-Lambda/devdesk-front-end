@@ -14,8 +14,6 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 //User Routing
 import UserDashboard from "./components/pages/User/Dashboard";
 
-import "./App.css";
-
 function App() {
 	return (
 		<AuthState>
