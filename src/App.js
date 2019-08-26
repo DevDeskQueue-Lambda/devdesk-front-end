@@ -1,15 +1,20 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { Fragment } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import AuthState from './context/auth/AuthState';
+import AuthState from "./context/auth/AuthState";
 
 import Login from './components/auth/Login';
-import Home from './components/pages/Home';
 import Register from './components/auth/Registration';
 import NavBar from './components/NavBar';
 import lambdaLogo from './lambda-logo.png';
 
-import './App.css';
+//Routing
+import PrivateRoute from "./components/routing/PrivateRoute";
+
+//User Routing
+import UserDashboard from "./components/pages/User/Dashboard";
+
+import "./App.css";
 
 function App() {
 	return (
@@ -19,9 +24,9 @@ function App() {
 					<NavBar logo={lambdaLogo} />
 					<Fragment>
 						<Switch>
-							<Route exact path='/' component={Home} />
-							<Route exact path='/register' component={Register} />
-							<Route exact path='/login' component={Login} />
+							<Route exact path='/' component={Login} />
+							<Route path='/register' component={Register} />
+							<PrivateRoute path="/users/dashboard" component={UserDashboard} />
 						</Switch>
 					</Fragment>
 				</Router>
