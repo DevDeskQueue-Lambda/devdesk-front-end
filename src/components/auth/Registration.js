@@ -75,8 +75,8 @@ const Registration = props => {
 							name='useremail'
 							value={useremail}
 							onChange={onChange}
-              required
-              placeholder='Valid Email'
+							required
+							placeholder='Valid Email'
 						/>
 					</div>
 					<div>
@@ -86,8 +86,8 @@ const Registration = props => {
 							name='username'
 							value={username}
 							onChange={onChange}
-              required
-              minLength='5'
+							required
+							minLength='5'
 						/>
 					</div>
 					<div>
