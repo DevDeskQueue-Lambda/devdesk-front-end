@@ -1,8 +1,18 @@
-import React from 'react';
+import React, {Fragment, useContext} from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/auth/authContext';
 import { Menu, Container, Image, Button } from 'semantic-ui-react';
 
 const NavBar = ({ logo }) => {
+  
+  const authContext = useContext(AuthContext);
+
+  const { isAuthenticated, logout, user } = authContext;
+
+  const onLogout = () => {
+    logout();
+  }
+
   return (
     <Menu borderless>
       <Container>
