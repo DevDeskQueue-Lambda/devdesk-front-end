@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
-import { axiosLogin as axios } from '../../utils';
+import { axiosLogin } from '../../utils';
+import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import { axiosWithAuth } from '../../utils';
@@ -12,7 +13,7 @@ import {
 	LOGIN_FAIL,
 	LOGOUT,
 	CLEAR_ERRORS
-} from '../types';
+} from '../types.js';
 
 const AuthState = props => {
 	const initialState = {
@@ -25,10 +26,39 @@ const AuthState = props => {
 
 	const [state, dispatch] = useReducer(authReducer, initialState);
 
+	// Register
+
+	const register = async formData => {
+		const config = {
+			header: {
+				'Content-Type': 'application/json'
+			}
+		};
+
+		try {
+			const res = await axios.post(
+				'https://lambda-devdesk.herokuapp.com/register',
+				formData,
+				config
+			);
+			console.log('AuthState Register', res);
+			dispatch({
+				type: REGISTER_SUCCESS,
+				payload: res.data
+			});
+		} catch (err) {
+			console.log(err.response);
+			dispatch({
+				type: REGISTER_FAIL,
+				payload: err.response.data
+			});
+		}
+	};
+
 	// Login
 	const login = async fromData => {
 		try {
-			const res = await axios().post(
+			const res = await axiosLogin().post(
 				'/login',
 				`grant_type=password&username=${fromData.username}&password=${fromData.password}`
 			);
@@ -46,7 +76,10 @@ const AuthState = props => {
 	};
 
 	// Logout
-	const logout = () => dispatch({ type: LOGOUT });
+	const logout = () => {
+		axiosWithAuth.get('https://lambda-devdesk.herokuapp.com/logout');
+		dispatch({ type: LOGOUT });
+	};
 
 	return (
 		<AuthContext.Provider
@@ -57,7 +90,8 @@ const AuthState = props => {
 				user: state.user,
 				error: state.error,
 				login,
-				logout
+				logout,
+				register
 			}}
 		>
 			{props.children}
