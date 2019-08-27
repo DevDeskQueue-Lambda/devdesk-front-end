@@ -24,7 +24,7 @@ const Registration = ({ errors, touched, status, history }) => {
 			}
 		}
 		// eslint-disable-next-line
-	}, [isAuthenticated, history, userInfo]);
+	}, [status]);
 
 	return (
 		<Grid container centered>
@@ -104,6 +104,7 @@ const FormikRegistration = withFormik({
 	}),
 
 	handleSubmit: function (values, { resetForm, setStatus }) {
+		console.log(values)
 		setStatus(values)
 		resetForm();
 	}
