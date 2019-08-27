@@ -12,7 +12,7 @@ const NavBar = ({ logo }) => {
     logout();
   };
 
-  return (
+  const authLinks = (
     <Menu borderless>
       <Container>
         <Menu.Item>
@@ -27,6 +27,20 @@ const NavBar = ({ logo }) => {
           <Link to="/">
             <Button className="tertiary">Login</Button>
           </Link>
+        </Menu.Item>
+      </Container>
+    </Menu>
+  );
+
+  const guestLinks = (
+    <Menu borderless>
+      <Container>
+        <Menu.Item>
+          <Link exact to="/">
+            <Image src={logo} size="small" />
+          </Link>
+        </Menu.Item>
+        <Menu.Item position="right">
           <Link>
             <Button className="tertiary" onClick={onLogOut}>
               Log Out
@@ -36,6 +50,8 @@ const NavBar = ({ logo }) => {
       </Container>
     </Menu>
   );
+
+  return <div>{isAuthenticated ? guestLinks : authLinks}</div>;
 };
 
 export default NavBar;
