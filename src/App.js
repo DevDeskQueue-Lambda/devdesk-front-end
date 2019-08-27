@@ -14,7 +14,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 //User Routing
 import UserDashboard from "./components/pages/User/Dashboard";
 
-function App() {
+function App(props) {
 	return (
 		<AuthState>
 			<div className='App'>
