@@ -1,13 +1,16 @@
-import React from 'react';
+import React from "react";
+// import { Route } from "react-router-dom";
+import NewTicketForm from "./components/NewTicketForm";
 
-import './App.css';
+import "./App.css";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      APP
-    </div>
+      <div className="App">
+      {  /* <Route path="/" exact component={NewTicketForm} />*/}
+        < NewTicketForm />
+
+        </div>
+
   );
 }
-
-export default App;
