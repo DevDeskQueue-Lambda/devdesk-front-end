@@ -1,5 +1,7 @@
 import React, { useReducer } from "react";
 import { axiosWithAuth } from "../../utils";
+import {getCurrentLoggedInUser} from '../../utils'
+import axios from "axios";
 import AdminContext from "./adminContext";
 import adminReducer from "./adminReducer";
 
@@ -13,7 +15,8 @@ import {
   ADMIN_ASSIGN_TICKET,
   ADMIN_RESOLVE_TICKET,
   ADMIN_REMOVE_ASSIGNED,
-  SET_LOADING
+  SET_LOADING,
+  USER_ERROR
 } from "../types";
 
 const AdminState = props => {
@@ -26,7 +29,23 @@ const AdminState = props => {
   const [state, dispatch] = useReducer(adminReducer, initialState);
 
   // adminGetAllUsers
-  const adminGetAllUsers = () => console.log("admin get all users");
+  const adminGetAllUsers = async () => {
+    try {
+      const res = await getCurrentLoggedInUser().get(
+        "https://lambda-devdesk.herokuapp.com/users/allusers"
+      );
+      console.log("AdminState", res);
+      dispatch({
+        type: ADMIN_GET_ALL_USERS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: USER_ERROR,
+        payload: err.response.data
+      });
+    }
+  };
 
   // adminAddStaff
   const adminAddStaff = () => console.log("adminAddStaff");
@@ -58,7 +77,7 @@ const AdminState = props => {
   return (
     <AdminContext.Provider
       value={{
-        user: state.user,
+        users: state.users,
         loading: state.loading,
         error: state.error,
         adminGetAllUsers,

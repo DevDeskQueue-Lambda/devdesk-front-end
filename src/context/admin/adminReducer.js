@@ -8,12 +8,19 @@ import {
   ADMIN_ASSIGN_TICKET,
   ADMIN_RESOLVE_TICKET,
   ADMIN_REMOVE_ASSIGNED,
-  SET_LOADING
+  SET_LOADING,
+  USER_ERROR
 } from "../types";
 
 export default (state, action) => {
   console.log("adminReducer", action);
   switch (action.type) {
+    case ADMIN_GET_ALL_USERS:
+      return {
+        ...state,
+        users: action.payload,
+        loading: false
+      };
     default:
       return state;
   }
