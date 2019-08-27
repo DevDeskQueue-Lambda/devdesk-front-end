@@ -35,8 +35,6 @@ const NavBar = ({ logo }) => {
     </Menu>
   );
 
-};
-
   const guestLinks = (
     <Menu borderless>
       <Container>
@@ -57,7 +55,7 @@ const NavBar = ({ logo }) => {
   );
 
   return <div>{isAuthenticated ? guestLinks : authLinks}</div>;
-};
+}
 
 
 export default NavBar;
