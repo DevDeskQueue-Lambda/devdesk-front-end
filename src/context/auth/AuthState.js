@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { axiosLogin } from "../../utils";
+import { axiosLogin, getCurrentLoggedInUser } from "../../utils";
 import axios from "axios";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
@@ -12,15 +12,17 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  GET_LOGGEDIN_USER_SUCCESS,
+  GET_LOGGEDIN_USER_FAIL
 } from "../types.js";
 
 const AuthState = props => {
   const initialState = {
     token: localStorage.getItem("token"),
-    isAuthenticated: null,
+    isAuthenticated: localStorage.getItem("token") ? true : false,
     loading: true,
-    user: null,
+    userInfo: JSON.parse(localStorage.getItem("user")) || "",
     error: null
   };
 
@@ -68,6 +70,15 @@ const AuthState = props => {
         type: LOGIN_SUCCESS,
         payload: res.data
       });
+
+      // Get the current logged in user data (fname, lname, userRoles, email)
+      const user = await getCurrentLoggedInUser().get("/users/user");
+
+      dispatch({
+        type: GET_LOGGEDIN_USER_SUCCESS,
+        payload: user.data
+      });
+      console.log("Logged user: ", user);
     } catch (err) {
       console.log(err);
       dispatch({
@@ -85,7 +96,7 @@ const AuthState = props => {
         token: state.token,
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
-        user: state.user,
+        userInfo: state.userInfo,
         error: state.error,
         login,
         logout,
