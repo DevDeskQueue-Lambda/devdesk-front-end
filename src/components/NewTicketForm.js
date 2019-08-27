@@ -2,14 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+ import "../App.css";
+
 
 function NewTicketForm({ values, errors, touched }) {
   return (
+    <div className='container'>
+
     <div className='form-card'>
     <Form className='ui form'>
+    <h2 className="form"> Create Ticket</h2>
 
     <div className='field'>
-      <label htmlFor='name'>Name
+      <label htmlFor='name'>Name:
       {touched.name && errors.name && <p>{errors.name}</p>}
       <Field type="text" name="name" placeholder="Name" />
       </label>
@@ -30,21 +35,22 @@ function NewTicketForm({ values, errors, touched }) {
     </label>
     </div>
     <div className='field'>
-    <label htmlFor='description'>Description
+    <label htmlFor='description'>Description:
         {touched.description && errors.description && <p>{errors.description}</p>}
         <Field component='textarea' name="description" placeholder="Description of Your Issue" />
       </label>
       </div>
       <div className='field'>
-        <label htmlFor='gitHub'>Link to Your Github
+        <label htmlFor='gitHub'>Link to Your Github:
         {touched.gitHub && errors.gitHub && <p>{errors.gitHub}</p>}
         <Field type="url" name="gitHub" placeholder="Github Link goes here.." />
         </label>
       </div>
 
       <button className='ui button' type='submit'>Submit</button>
-      <button className='ui button' type='reset'>Reset Form</button>
+      {/*<button className='ui button' type='reset'>Reset Form</button>*/}
     </Form>
+    </div>
     </div>
   );
 }

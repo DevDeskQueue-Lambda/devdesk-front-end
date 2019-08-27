@@ -4,7 +4,7 @@ import NewTicketForm from "./NewTicketForm.js";
 
 const CreateTicket = props => {
   return (
-    <div className="edit-account">
+    <div className="edit">
       <Modal
         closeIcon
         trigger={
