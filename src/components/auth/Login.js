@@ -4,13 +4,19 @@ import AuthContext from "../../context/auth/authContext";
 const Login = props => {
   const authContext = useContext(AuthContext);
 
-  const { login, isAuthenticated } = authContext;
+  const { login, isAuthenticated, userInfo } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push("/users/dashboard");
+      if (userInfo && userInfo.userRoles.length > 1) {
+        props.history.push("/dashboard");
+      } else {
+        const role = userInfo.userRoles[0].role.name;
+
+        props.history.push(`/${role}/dashboard`);
+      }
     }
-  }, [isAuthenticated, props.history]);
+  }, [isAuthenticated, props.history, userInfo]);
 
   const [user, setUser] = useState({
     username: "",

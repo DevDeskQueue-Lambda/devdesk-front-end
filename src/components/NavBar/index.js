@@ -1,6 +1,9 @@
+
+
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
+
 import { Menu, Container, Image, Button } from "semantic-ui-react";
 
 const NavBar = ({ logo }) => {
@@ -16,7 +19,7 @@ const NavBar = ({ logo }) => {
     <Menu borderless>
       <Container>
         <Menu.Item>
-          <Link exact to="/">
+          <Link to="/">
             <Image src={logo} size="small" />
           </Link>
         </Menu.Item>
@@ -52,6 +55,7 @@ const NavBar = ({ logo }) => {
   );
 
   return <div>{isAuthenticated ? guestLinks : authLinks}</div>;
-};
+}
+
 
 export default NavBar;
