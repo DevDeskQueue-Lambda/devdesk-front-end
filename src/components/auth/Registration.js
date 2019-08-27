@@ -2,7 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import AuthContext from "../../context/auth/authContext";
 
 const Registration = props => {
-  const authContext = useContext(AuthContext);
+	const authContext = useContext(AuthContext);
+
 
   const { register, isAuthenticated, userInfo } = authContext;
 
@@ -31,6 +32,7 @@ const Registration = props => {
   const { fname, lname, useremail, username, password, password2 } = user;
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
+
 
   const onSubmit = e => {
     e.preventDefault();
@@ -123,6 +125,8 @@ const Registration = props => {
       </h1>
     </div>
   );
+
+					
 };
 
 export default Registration;
