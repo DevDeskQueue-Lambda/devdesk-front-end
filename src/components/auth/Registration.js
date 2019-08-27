@@ -9,7 +9,7 @@ const Registration = props => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			props.history.push('/users/dashboard');
+			props.history.push('/login');
 		}
 		// eslint-disable-next-line
 	}, [isAuthenticated, props.history]);

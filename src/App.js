@@ -18,11 +18,14 @@ import "./App.css";
 
 function App() {
   return (
+    
     <AuthState>
+      
       <div className="App">
         <Router>
           <NavBar logo={lambdaLogo} />
           <Fragment>
+          
             <Switch>
               <Route exact path="/" component={Login} />
               <Route path="/register" component={Register} />
