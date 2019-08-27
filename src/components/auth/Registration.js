@@ -12,6 +12,7 @@ const Registration = ({ errors, touched, status, history }) => {
 	useEffect(() => {
 		if (status) {
 			register(status)
+			history.push('/dashboard')
 		}
 
 		if (isAuthenticated) {
