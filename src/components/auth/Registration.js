@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import AuthContext from '../../context/auth/authContext';
 
 const Registration = props => {
+
 	const authContext = useContext(AuthContext);
 
 	const { register, isAuthenticated } = authContext;
