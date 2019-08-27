@@ -12,7 +12,6 @@ const Registration = props => {
         props.history.push("/dashboard");
       } else {
         const role = userInfo.userRoles[0].role.name;
-
         props.history.push(`/${role}/dashboard`);
       }
     }
