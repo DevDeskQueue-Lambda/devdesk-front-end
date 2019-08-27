@@ -26,7 +26,7 @@ export const SET_LOADING = "SET_LOADING";
 
 // users
 
-export const USER_ERROR = "USER_ERROR";
+export const ERROR = "USER_ERROR";
 
 // auth state
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";

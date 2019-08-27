@@ -1,14 +1,12 @@
 import React, { useReducer } from "react";
-import { axiosWithAuth } from "../../utils";
-import {getCurrentLoggedInUser} from '../../utils'
 import axios from "axios";
+import { getCurrentLoggedInUser } from "../../utils";
+
 import AdminContext from "./adminContext";
 import adminReducer from "./adminReducer";
 
 import {
-  ADMIN_ADD_STAFF,
   ADMIN_DELETE_USER,
-  ADMIN_ADD_STUDENT,
   ADMIN_GET_ALL_USERS,
   ADMIN_GET_USER_ROLES,
   ADMIN_ARCHIVE_TICKET,
@@ -16,7 +14,7 @@ import {
   ADMIN_RESOLVE_TICKET,
   ADMIN_REMOVE_ASSIGNED,
   SET_LOADING,
-  USER_ERROR
+  ERROR
 } from "../types";
 
 const AdminState = props => {
@@ -34,27 +32,39 @@ const AdminState = props => {
       const res = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/users/allusers"
       );
-      console.log("AdminState", res);
+      // console.log("AdminState", res);
       dispatch({
         type: ADMIN_GET_ALL_USERS,
         payload: res.data
       });
     } catch (err) {
       dispatch({
-        type: USER_ERROR,
+        type: ERROR,
         payload: err.response.data
       });
     }
   };
 
-  // adminAddStaff
-  const adminAddStaff = () => console.log("adminAddStaff");
-
-  // adminAddStudent
-  const adminAddStudent = () => console.log("adminAddStudent");
-
   // adminDeleteUser  - which deletes user by id staff or student
-  const adminDeleteUser = () => console.log("adminDeleteUser");
+  const adminDeleteUser = async id => {
+    console.log("adminDeleteUser", id);
+    try {
+      await getCurrentLoggedInUser().delete(
+        `https://lambda-devdesk.herokuapp.com/users/user/${id}`
+      );
+      // console.log("adminDeleteUser", id);
+      dispatch({
+        type: ADMIN_DELETE_USER,
+        payload: id
+      });
+      adminGetAllUsers()
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.data
+      });
+    }
+  };
 
   // adminGetUserRoles
   const adminGetUserRoles = () => console.log("adminGetUserRoles");
@@ -81,8 +91,6 @@ const AdminState = props => {
         loading: state.loading,
         error: state.error,
         adminGetAllUsers,
-        adminAddStaff,
-        adminAddStudent,
         adminDeleteUser,
         adminGetUserRoles,
         adminArchiveTicket,

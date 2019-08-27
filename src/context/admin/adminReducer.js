@@ -1,7 +1,5 @@
 import {
-  ADMIN_ADD_STAFF,
   ADMIN_DELETE_USER,
-  ADMIN_ADD_STUDENT,
   ADMIN_GET_ALL_USERS,
   ADMIN_GET_USER_ROLES,
   ADMIN_ARCHIVE_TICKET,
@@ -9,7 +7,7 @@ import {
   ADMIN_RESOLVE_TICKET,
   ADMIN_REMOVE_ASSIGNED,
   SET_LOADING,
-  USER_ERROR
+  ERROR
 } from "../types";
 
 export default (state, action) => {
@@ -21,6 +19,13 @@ export default (state, action) => {
         users: action.payload,
         loading: false
       };
+    case ADMIN_DELETE_USER:
+      return {
+        ...state,
+        users: state.users.filter(user => user.id !== action.payload),
+        loading: false
+      };
+
     default:
       return state;
   }
