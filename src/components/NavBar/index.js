@@ -52,7 +52,33 @@ const NavBar = ({ logo }) => {
     </Menu>
   );
 
-  return <div>{isAuthenticated ? guestLinks : authLinks}</div>;
+  // return <div>{isAuthenticated ? guestLinks : authLinks}</div>;
+  return (
+    <Menu borderless>
+      <Container>
+        <Menu.Item>
+          <Link to="/">
+            <Image src={logo} size="small" />
+          </Link>
+        </Menu.Item>
+        <Menu.Item position="right">
+          {isAuthenticated ? (
+            <Button className="tertiary" onClick={onLogOut}>
+              Log Out
+          </Button>) : (
+              <>
+                <Link to="/register">
+                  <Button className="tertiary">Register</Button>
+                </Link>
+                <Link to="/">
+                  <Button className="tertiary">Login</Button>
+                </Link>
+              </>
+            )}
+        </Menu.Item>
+      </Container>
+    </Menu>
+  );
 }
 
 
