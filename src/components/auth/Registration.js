@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import AuthContext from '../../context/auth/authContext';
 import { Form, Field, withFormik } from 'formik';
-import { Form as SemanticForm, Button, Grid, Message } from 'semantic-ui-react';
+import { Form as SemanticForm, Button, Grid, Message, Header } from 'semantic-ui-react';
 import * as yup from 'yup';
 import _ from 'lodash';
 
@@ -30,6 +30,8 @@ const Registration = ({ errors, touched, status, history }) => {
 		<Grid container centered>
 			<Grid.Column width={8}>
 				<Form className="ui form">
+					<Header as="h1">Registration</Header>
+
 					{
 						!_.isEmpty(_.intersection(Object.keys(touched), Object.keys(errors))) && (
 							<Message
