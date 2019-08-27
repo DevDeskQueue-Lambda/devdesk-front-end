@@ -2,7 +2,9 @@ import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AuthState from "./context/auth/AuthState";
+
 import { roles } from "./utils/roles";
+
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Registration";
 import NavBar from "./components/NavBar";
@@ -16,7 +18,6 @@ import StudentDashboard from "./components/pages/Student/Dashboard";
 import StaffDashboard from "./components/pages/Staff/Dashboard";
 import AdminDashboard from "./components/pages/Admin/Dashboard";
 import Dashboard from "./components/pages/Dashboard";
-import "./App.css";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Login} />
               <Route path="/register" component={Register} />
+
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 path="/student/dashboard"
@@ -44,6 +46,9 @@ function App() {
                 roleName={roles.admin}
                 component={AdminDashboard}
               />
+
+              <PrivateRoute path="/users/dashboard" component={StudentDashboard} />
+
             </Switch>
           </Fragment>
         </Router>
