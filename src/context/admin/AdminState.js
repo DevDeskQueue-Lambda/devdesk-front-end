@@ -57,7 +57,7 @@ const AdminState = props => {
         type: ADMIN_DELETE_USER,
         payload: id
       });
-      adminGetAllUsers()
+      adminGetAllUsers();
     } catch (err) {
       dispatch({
         type: ERROR,
@@ -67,7 +67,23 @@ const AdminState = props => {
   };
 
   // adminGetUserRoles
-  const adminGetUserRoles = () => console.log("adminGetUserRoles");
+  const adminGetUserRoles = async () => {
+    try {
+      const res = await getCurrentLoggedInUser().get(
+        "https://lambda-devdesk.herokuapp.com/users/roles"
+      );
+      // console.log("AdminState", res);
+      dispatch({
+        type: ADMIN_GET_USER_ROLES,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.data
+      });
+    }
+  };
 
   // adminArchiveTicket
   const adminArchiveTicket = () => console.log("adminArchiveTicket");
