@@ -39,16 +39,14 @@ const NavBar = ({ logo }) => {
     <Menu borderless>
       <Container>
         <Menu.Item>
-          <Link exact to="/">
+          <Link to="/">
             <Image src={logo} size="small" />
           </Link>
         </Menu.Item>
         <Menu.Item position="right">
-          <Link>
-            <Button className="tertiary" onClick={onLogOut}>
-              Log Out
-            </Button>
-          </Link>
+          <Button className="tertiary" onClick={onLogOut}>
+            Log Out
+          </Button>
         </Menu.Item>
       </Container>
     </Menu>
