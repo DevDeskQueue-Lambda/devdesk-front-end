@@ -10,7 +10,7 @@
     <li>Admins can View, Create, Edit, and Delete tickets of any student</li>
     <li>Admins can View, Create, Edit, & Delete Users registered in the system </li>
     <li>Staff can claim & resolve tickets assigned to them by Admins.</li>
-    <li>Tickets can be commented on by Staff.  Comments can be modified, but <strong>not</strong>deleted.</li>
+    <li>Tickets can be commented on by Staff.  Comments can be modified, but <strong>not</strong> deleted.</li>
     <li>Admins can assign tickets to any staff.</li>
 </ol>
 <h3>Future Functionality</h3>
