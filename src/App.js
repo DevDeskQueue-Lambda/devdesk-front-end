@@ -18,7 +18,6 @@ import StudentDashboard from "./components/pages/Student/Dashboard";
 import StaffDashboard from "./components/pages/Staff/Dashboard";
 import AdminDashboard from "./components/pages/Admin/Dashboard";
 import Dashboard from "./components/pages/Dashboard";
-import "./App.css";
 
 function App() {
   return (
@@ -48,7 +47,7 @@ function App() {
                 component={AdminDashboard}
               />
 
-              <PrivateRoute path="/users/dashboard" component={UserDashboard} />
+              <PrivateRoute path="/users/dashboard" component={StudentDashboard} />
 
             </Switch>
           </Fragment>
