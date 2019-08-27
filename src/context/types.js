@@ -1,3 +1,5 @@
+
+//ticket State
 export const GET_TICKETS = "GET_TICKETS";
 
 export const ADD_TICKET = "ADD_TICKET";
@@ -8,11 +10,22 @@ export const UPDATE_TICKET = "UPDATE_TICKET";
 export const FILTER_TICKETS = "FILTER_TICKETS";
 export const CLEAR_FILTER = "CLEAR_FILTER";
 export const CLEAR_TICKETS = "CLEAR_TICKETS";
-
 export const TICKET_ERROR = "TICKET_ERROR";
-export const SET_ALERT = "SET_ALERT";
-export const REMOVE_ALERT = "REMOVE_ALERT";
 
+// admin state
+
+export const ADMIN_ADD_STAFF = 'ADMIN_ADD_STAFF'
+export const ADMIN_DELETE_USER = 'ADMIN_DELETE_USER' 
+export const ADMIN_ADD_STUDENT = 'ADMIN_ADD_STUDENT'
+export const ADMIN_GET_ALL_USERS = 'ADMIN_GET_ALL_USERS'
+export const ADMIN_GET_USER_ROLES = 'ADMIN_GET_USER_ROLES'
+export const ADMIN_ARCHIVE_TICKET = 'ADMIN_ARCHIVE_TICKET'
+export const ADMIN_ASSIGN_TICKET =  'ADMIN_ASSIGN_TICKET'
+export const ADMIN_RESOLVE_TICKET = 'ADMIN_RESOLVE_TICKET'
+export const ADMIN_REMOVE_ASSIGNED = 'ADMIN_REMOVE_ASSIGNED'
+export const SET_LOADING = 'SET_LOADING'
+
+// auth state
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const USER_LOADED = "USER_LOADED";
