@@ -7,10 +7,11 @@
 <ol>
     <li>Three User types: Student, Staff, & Administrators can Login/Logout of the Dashboard</li>
     <li>Student can View, Create, Edit, and Delete their own DevDesk Support Tickets</li>
+    <li>Admins can View, Create, Edit, and Delete tickets of any student</li>
+    <li>Admins can View, Create, Edit, & Delete Users registered in the system </li>
     <li>Staff can claim & resolve tickets assigned to them by Admins.</li>
     <li>Tickets can be commented on by Staff</li>
-    <li>Admins can View, Create, Edit, & Delete Users registered in the system </li>
-    <li>Admins can assign tickets to any staff. Staff can claim or resolve tickets assigned to them.</li>
+    <li>Admins can assign tickets to any staff.</li>
 </ol>
 <h3>Future Functionality</h3>
 <ol>
