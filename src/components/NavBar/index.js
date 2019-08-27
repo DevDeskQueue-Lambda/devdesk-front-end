@@ -15,7 +15,7 @@ const NavBar = ({ logo }) => {
     logout();
   };
 
-  const authLinks = (
+  return (
     <Menu borderless>
       <Container>
         <Menu.Item>
@@ -24,37 +24,23 @@ const NavBar = ({ logo }) => {
           </Link>
         </Menu.Item>
         <Menu.Item position="right">
-          <Link to="/register">
-            <Button className="tertiary">Register</Button>
-          </Link>
-          <Link to="/">
-            <Button className="tertiary">Login</Button>
-          </Link>
-        </Menu.Item>
-      </Container>
-    </Menu>
-  );
-
-  const guestLinks = (
-    <Menu borderless>
-      <Container>
-        <Menu.Item>
-          <Link exact to="/">
-            <Image src={logo} size="small" />
-          </Link>
-        </Menu.Item>
-        <Menu.Item position="right">
-          <Link>
+          {isAuthenticated ? (
             <Button className="tertiary" onClick={onLogOut}>
               Log Out
-            </Button>
-          </Link>
+          </Button>) : (
+              <>
+                <Link to="/register">
+                  <Button className="tertiary">Register</Button>
+                </Link>
+                <Link to="/">
+                  <Button className="tertiary">Login</Button>
+                </Link>
+              </>
+            )}
         </Menu.Item>
       </Container>
     </Menu>
   );
-
-  return <div>{isAuthenticated ? guestLinks : authLinks}</div>;
 }
 
 
