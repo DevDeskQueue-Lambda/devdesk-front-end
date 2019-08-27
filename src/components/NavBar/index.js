@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, Container, Image, Button } from 'semantic-ui-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Menu, Container, Image, Button } from "semantic-ui-react";
 
 const NavBar = ({ logo }) => {
   return (
     <Menu borderless>
       <Container>
         <Menu.Item>
-          <Link exact to="/">
+          <Link to="/">
             <Image src={logo} size="small" />
           </Link>
         </Menu.Item>
@@ -22,6 +22,6 @@ const NavBar = ({ logo }) => {
       </Container>
     </Menu>
   );
-}
+};
 
 export default NavBar;

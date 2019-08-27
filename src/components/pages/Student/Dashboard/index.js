@@ -1,15 +1,15 @@
 import React from "react";
 import { Header, Grid } from "semantic-ui-react";
-const UserDashboard = () => {
+const StudentDashboard = () => {
   return (
     <div>
       <Grid>
         <Grid.Column>
-          <Header>User Dashboard</Header>
+          <Header>Student Dashboard</Header>
         </Grid.Column>
       </Grid>
     </div>
   );
 };
 
-export default UserDashboard;
+export default StudentDashboard;
