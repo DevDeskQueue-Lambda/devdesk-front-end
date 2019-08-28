@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal } from "semantic-ui-react";
-import NewTicketForm from "./NewTicketForm.js";
+import NewTicketForm from "./components/NewTicketForm.js";
 
 const CreateTicket = props => {
   return (

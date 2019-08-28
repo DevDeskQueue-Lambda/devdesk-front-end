@@ -1,5 +1,5 @@
 import React from "react";
-// import { Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import NewTicketForm from "./components/NewTicketForm";
 
 import "./App.css";
@@ -7,8 +7,8 @@ import "./App.css";
 export default function App() {
   return (
       <div className="App">
-      {  /* <Route path="/" exact component={NewTicketForm} />*/}
-        < NewTicketForm />
+        <Route path="/" exact component={NewTicketForm} />
+
 
         </div>
 

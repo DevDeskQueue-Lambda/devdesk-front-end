@@ -7,7 +7,7 @@ import * as Yup from "yup";
 
 function NewTicketForm({ values, errors, touched }) {
   return (
-    <div className='container'>
+    <div className='contain'>
 
     <div className='form-card'>
     <Form className='ui form'>

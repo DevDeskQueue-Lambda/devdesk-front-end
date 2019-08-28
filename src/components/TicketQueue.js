@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
-import CreateTicket from "./CreateTicket.js";
-import NewTicketForm from "./NewTicketForm.js";
+import CreateTicket from "./components/CreateTicket.js";
+import NewTicketForm from "./components/NewTicketForm.js";
 
 
 const TicketQueue = props => {
