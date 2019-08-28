@@ -1,36 +1,40 @@
+// Types
 import {
-  GET_UNASSIGNED_TICKETS,
-  ASSIGN_TICKET,
-  UNASSIGN_TICKET,
-  EDIT_TICKET_STATUS,
-  SET_LOADING,
-  STAFF_ERROR
+  GET_CURRENT_USER,
+  GET_CURRENT_USER_FAIL,
+  GET_ASSIGNED_TICKETS,
+  GET_ASSIGNED_TICKETS_FAIL
 } from "../types";
 
 export default (state, action) => {
   console.log("reducer action", action);
   switch (action.type) {
-    case GET_UNASSIGNED_TICKETS:
-      console.log('GET_UNASSIGNED_TICKETS');
+    //! GET USER
+    case GET_CURRENT_USER: {
       return {
         ...state,
-        tickets: action.payload,
-        loading: false
+        user: action.payload
       };
-    case ASSIGN_TICKET:
-      console.log('ASSIGN_TICKET');
-      return {};
-    case UNASSIGN_TICKET:
-      console.log('UNASSIGN_TICKET');
-      return {};
-    case EDIT_TICKET_STATUS:
-      console.log('EDIT_TICKET_STATUS');
-      return {};
-    case STAFF_ERROR:
+    }
+    case GET_CURRENT_USER_FAIL: {
+      return {
+        ...state,
+        userError: action.payload
+      };
+    }
+    //! GET TICKETS
+    case GET_ASSIGNED_TICKETS: {
+      return {
+        ...state,
+        tickets: action.payload
+      };
+    }
+    case GET_ASSIGNED_TICKETS_FAIL: {
       return {
         ...state,
         error: action.payload
       };
+    }
     default:
       return state;
   }
