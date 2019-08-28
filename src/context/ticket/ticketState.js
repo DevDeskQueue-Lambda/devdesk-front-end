@@ -8,6 +8,7 @@ import {
   ADD_TICKET,
   ADD_TICKET_FAIL,
   UPDATE_TICKET,
+  UPDATE_TICKET_FAIL,
   DELETE_TICKET,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAIL,
@@ -69,11 +70,25 @@ const TicketState = props => {
         payload: false
       });
     } catch (errors) {
-      console.log(errors);
+      dispatch({
+        type: ADD_TICKET_FAIL,
+        payload: errors.response.data
+      });
+    }
+  };
+
+  const editTicket = async ticket => {
+    try {
+      const editedTicket = await axiosWithAuth().put(
+        `/tickets/ticket/${ticket.ticketid}`,
+        ticket
+      );
+      console.log(editedTicket);
+    } catch (errors) {
       // dispatch({
-      //   type: ADD_TICKET_FAIL,
-      //   payload: errors.response.data
-      // });
+      //   type: UPDATE_TICKET,
+      //   payload: ticket.data
+      // })
     }
   };
 
@@ -96,6 +111,7 @@ const TicketState = props => {
         fetchAllCategories,
         fetchAllTickets,
         addTicket,
+        editTicket,
         setModalOpen
       }}
     >

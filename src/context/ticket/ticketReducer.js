@@ -3,6 +3,7 @@ import {
   GET_TICKETS_FAIL,
   ADD_TICKET,
   UPDATE_TICKET,
+  UPDATE_TICKET_FAIL,
   DELETE_TICKET,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAIL,
@@ -43,7 +44,11 @@ export default (state, action) => {
         tickets: [...state.tickets, action.payload]
       };
     }
-
+    // case UPDATE_TICKET:{
+    //   return {
+    //     ...state,
+    //   }
+    // }
     case SET_MODAL_OPEN: {
       return {
         ...state,

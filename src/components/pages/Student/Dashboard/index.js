@@ -6,6 +6,7 @@ import EditTicket from "./EditTicket";
 
 const StudentDashboard = props => {
   const [ticketModal, setTicketModal] = useState({});
+  const [ticketProps, setTicketProps] = useState({});
   const ticketContext = useContext(TicketContext);
   const { tickets, fetchAllTickets, isModalOpen, setModalOpen } = ticketContext;
 
@@ -14,7 +15,10 @@ const StudentDashboard = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleTicketModal = action => {
+  const handleTicketModal = (action, ticketInfo) => {
+    if (action === "edit") {
+      setTicketProps(ticketInfo);
+    }
     setTicketModal(action);
     setModalOpen(true);
   };
@@ -25,7 +29,12 @@ const StudentDashboard = props => {
 
   let modal = {
     name: ticketModal === "add" ? "Add Ticket" : "Edit Ticket",
-    type: ticketModal === "add" ? <AddTicket /> : <EditTicket />,
+    type:
+      ticketModal === "add" ? (
+        <AddTicket ticket={ticketProps} />
+      ) : (
+        <EditTicket ticket={ticketProps} />
+      ),
     headerStyle:
       ticketModal === "add"
         ? { backgroundColor: "#21BA45", color: "#FFFFFF" }
@@ -40,7 +49,7 @@ const StudentDashboard = props => {
             <Header>Student Tickets</Header>
           </Grid.Column>
           <Grid.Column textAlign="right">
-            <Button color="green" onClick={() => handleTicketModal("add")}>
+            <Button color="green" onClick={() => handleTicketModal("add", {})}>
               Add Ticket
             </Button>
           </Grid.Column>
@@ -78,7 +87,7 @@ const StudentDashboard = props => {
                     <Table.Cell>
                       <Button
                         color="blue"
-                        onClick={() => handleTicketModal("edit")}
+                        onClick={() => handleTicketModal("edit", ticket)}
                       >
                         Edit
                       </Button>

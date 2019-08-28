@@ -51,6 +51,7 @@ const StudentForm = ({
               )
             }
             multiple={true}
+            value={values.ticketCategories}
           >
             {helpCategories.map(category => (
               <option key={category.categoryid} value={category.categoryid}>
