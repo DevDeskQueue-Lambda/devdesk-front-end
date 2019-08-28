@@ -1,19 +1,39 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Button, Header, Grid, Label, Modal, Table } from "semantic-ui-react";
+import {
+  Comment,
+  Button,
+  Header,
+  Grid,
+  Icon,
+  Label,
+  Modal,
+  Table
+} from "semantic-ui-react";
 import TicketContext from "../../../../context/ticket/ticketContext";
 import AddTicket from "./AddTicket";
 import EditTicket from "./EditTicket";
 
 const StudentDashboard = props => {
-  const [ticketModal, setTicketModal] = useState({});
-  const [ticketProps, setTicketProps] = useState({});
   const ticketContext = useContext(TicketContext);
   const { tickets, fetchAllTickets, isModalOpen, setModalOpen } = ticketContext;
+
+  const [ticketModal, setTicketModal] = useState({});
+  const [ticketProps, setTicketProps] = useState({});
+  const [isCommentModalOpen, setCommentModalOpen] = useState(false);
+  const [commentModalProps, setCommentModalProps] = useState([]);
 
   useEffect(() => {
     fetchAllTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (commentModalProps.length > 0) {
+      setCommentModalOpen(true);
+    } else {
+      setCommentModalOpen(false);
+    }
+  }, [commentModalProps]);
 
   const handleTicketModal = (action, ticketInfo) => {
     if (action === "edit") {
@@ -23,8 +43,8 @@ const StudentDashboard = props => {
     setModalOpen(true);
   };
 
-  const handleModalClose = () => {
-    setModalOpen(false);
+  const handleCommentModal = ticketComments => {
+    setCommentModalProps(ticketComments);
   };
 
   let modal = {
@@ -63,6 +83,7 @@ const StudentDashboard = props => {
                 <Table.HeaderCell>Description</Table.HeaderCell>
                 <Table.HeaderCell>Tried</Table.HeaderCell>
                 <Table.HeaderCell>Status</Table.HeaderCell>
+                <Table.HeaderCell>Notifications</Table.HeaderCell>
                 <Table.HeaderCell>Actions</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -71,32 +92,55 @@ const StudentDashboard = props => {
                 tickets.length > 0 &&
                 tickets.map(ticket => (
                   <Table.Row key={ticket.ticketid}>
-                    <Table.Cell>
-                      {ticket.ticketCategories &&
-                        ticket.ticketCategories.length > 0 &&
-                        ticket.ticketCategories.map(category => (
-                          <Label key={category.category.categoryid}>
-                            {category.category.name}
-                          </Label>
-                        ))}
+                    <Table.Cell width={3}>
+                      <Label.Group>
+                        {ticket.ticketCategories &&
+                          ticket.ticketCategories.length > 0 &&
+                          ticket.ticketCategories.map(category => (
+                            <Label
+                              key={category.category.categoryid}
+                              size="small"
+                            >
+                              {category.category.name}
+                            </Label>
+                          ))}
+                      </Label.Group>
                     </Table.Cell>
                     <Table.Cell>{ticket.title}</Table.Cell>
-                    <Table.Cell>{ticket.description}</Table.Cell>
+                    <Table.Cell width={4}>{ticket.description}</Table.Cell>
                     <Table.Cell>{ticket.tried}</Table.Cell>
                     <Table.Cell>{ticket.status.name}</Table.Cell>
                     <Table.Cell>
-                      <Button
-                        color="blue"
-                        onClick={() => handleTicketModal("edit", ticket)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        color="red"
-                        onClick={() => handleTicketModal("delete")}
-                      >
-                        Delete
-                      </Button>
+                      {ticket.ticketComments &&
+                        ticket.ticketComments.length > 0 && (
+                          <Button
+                            icon
+                            size="tiny"
+                            onClick={() =>
+                              handleCommentModal(ticket.ticketComments)
+                            }
+                          >
+                            <Icon name="comment outline" />
+                          </Button>
+                        )}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button.Group>
+                        <Button
+                          color="blue"
+                          onClick={() => handleTicketModal("edit", ticket)}
+                          size="small"
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          color="red"
+                          onClick={() => handleTicketModal("delete")}
+                          size="small"
+                        >
+                          Delete
+                        </Button>
+                      </Button.Group>
                     </Table.Cell>
                   </Table.Row>
                 ))}
@@ -104,9 +148,33 @@ const StudentDashboard = props => {
           </Table>
         </Grid.Column>
       </Grid>
-      <Modal closeIcon onClose={handleModalClose} open={isModalOpen}>
+      <Modal open={isModalOpen}>
         <Modal.Header style={modal.headerStyle}>{modal.name}</Modal.Header>
         <Modal.Content>{modal.type}</Modal.Content>
+        <Modal.Actions>
+          <Button onClick={() => setModalOpen(false)}>Close</Button>
+        </Modal.Actions>
+      </Modal>
+      <Modal open={isCommentModalOpen}>
+        <Modal.Header>Comments</Modal.Header>
+        <Modal.Content>
+          <Comment.Group>
+            {commentModalProps.length > 0 &&
+              commentModalProps.map(comment => (
+                <Comment key={comment.comment.commentid}>
+                  <Comment.Content>
+                    <Comment.Author>
+                      {comment.comment.user.fname}
+                    </Comment.Author>
+                    <Comment.Text>{comment.comment.comment}</Comment.Text>
+                  </Comment.Content>
+                </Comment>
+              ))}
+          </Comment.Group>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button onClick={() => setCommentModalProps([])}>Close</Button>
+        </Modal.Actions>
       </Modal>
     </div>
   );
