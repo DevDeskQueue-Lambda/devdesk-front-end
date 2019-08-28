@@ -6,13 +6,20 @@ import AdminContext from "./adminContext";
 import adminReducer from "./adminReducer";
 
 import {
-  ADMIN_DELETE_USER,
-  ADMIN_GET_ALL_USERS,
-  ADMIN_GET_USER_ROLES,
-  ADMIN_ARCHIVE_TICKET,
-  ADMIN_ASSIGN_TICKET,
-  ADMIN_RESOLVE_TICKET,
-  ADMIN_REMOVE_ASSIGNED,
+  DELETE_USER,
+  GET_ALL_USERS,
+  GET_USER_ROLES,
+  ARCHIVE_TICKET,
+  ASSIGN_TICKET,
+  RESOLVE_TICKET,
+  REMOVE_ASSIGNED,
+  FILTER_USERS,
+  CLEAR_FILTER,
+  ADD_USER,
+  UPDATE_USER,
+  CLEAR_USERS,
+  SET_CURRENT,
+  CLEAR_CURRENT,
   SET_LOADING,
   ERROR
 } from "../types";
@@ -21,7 +28,9 @@ const AdminState = props => {
   const initialState = {
     users: null,
     loading: false,
-    error: null
+    error: null,
+    current: null,
+    filtered: null
   };
 
   const [state, dispatch] = useReducer(adminReducer, initialState);
@@ -34,7 +43,7 @@ const AdminState = props => {
       );
       // console.log("AdminState", res);
       dispatch({
-        type: ADMIN_GET_ALL_USERS,
+        type: GET_ALL_USERS,
         payload: res.data
       });
     } catch (err) {
@@ -54,7 +63,7 @@ const AdminState = props => {
       );
       // console.log("adminDeleteUser", id);
       dispatch({
-        type: ADMIN_DELETE_USER,
+        type: DELETE_USER,
         payload: id
       });
       adminGetAllUsers();
@@ -74,7 +83,7 @@ const AdminState = props => {
       );
       console.log("AdminState", res);
       dispatch({
-        type: ADMIN_GET_USER_ROLES,
+        type: GET_USER_ROLES,
         payload: res.data
       });
     } catch (err) {
@@ -85,7 +94,18 @@ const AdminState = props => {
     }
   };
 
-  // adminStudentFilter
+  // adminAddUser
+  const adminAddUser = async () => console.log("adminAddUser");
+
+  // adminEditUser
+  const adminEditUser = async () => console.log("adminEditUser");
+
+  // adminUserFilter
+  const adminUserFilter = async () => console.log("adminUserFilter");
+
+  // adminClearFilter
+
+  const adminClearFilter = async () => console.log("adminClearFilter");
 
   // adminArchiveTicket
   const adminArchiveTicket = () => console.log("adminArchiveTicket");
@@ -115,6 +135,10 @@ const AdminState = props => {
         adminAssignTicket,
         adminResolveTicket,
         adminRemoveAssigned,
+        adminUserFilter,
+        adminAddUser,
+        adminEditUser,
+        adminClearFilter,
         setLoading
       }}
     >

@@ -4,25 +4,32 @@ export const GET_TICKETS_FAIL = "GET_TICKETS_FAIL";
 export const ADD_TICKET = "ADD_TICKET";
 export const ADD_TICKET_FAIL = "ADD_TICKET_FAIL";
 export const DELETE_TICKET = "DELETE_TICKET";
-export const SET_CURRENT = "SET_CURRENT";
-export const CLEAR_CURRENT = "CLEAR_CURRENT";
+
 export const UPDATE_TICKET = "UPDATE_TICKET";
 export const FILTER_TICKETS = "FILTER_TICKETS";
-export const CLEAR_FILTER = "CLEAR_FILTER";
+
 export const CLEAR_TICKETS = "CLEAR_TICKETS";
 export const TICKET_ERROR = "TICKET_ERROR";
 
-// admin state
 
-export const ADMIN_ADD_STAFF = "ADMIN_ADD_STAFF";
-export const ADMIN_DELETE_USER = "ADMIN_DELETE_USER";
-export const ADMIN_ADD_STUDENT = "ADMIN_ADD_STUDENT";
-export const ADMIN_GET_ALL_USERS = "ADMIN_GET_ALL_USERS";
-export const ADMIN_GET_USER_ROLES = "ADMIN_GET_USER_ROLES";
-export const ADMIN_ARCHIVE_TICKET = "ADMIN_ARCHIVE_TICKET";
-export const ADMIN_ASSIGN_TICKET = "ADMIN_ASSIGN_TICKET";
-export const ADMIN_RESOLVE_TICKET = "ADMIN_RESOLVE_TICKET";
-export const ADMIN_REMOVE_ASSIGNED = "ADMIN_REMOVE_ASSIGNED";
+
+// admin state
+export const DELETE_USER = "DELETE_USER";
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const GET_USER_ROLES = "GET_USER_ROLES";
+export const ARCHIVE_TICKET = "ARCHIVE_TICKET";
+export const ASSIGN_TICKET = "ASSIGN_TICKET";
+export const RESOLVE_TICKET = "RESOLVE_TICKET";
+export const REMOVE_ASSIGNED = "REMOVE_ASSIGNED";
+export const FILTER_USERS = 'FILTER_USERS'
+export const CLEAR_FILTER = 'CLEAR_FILTER'
+export const ADD_USER = "ADD_USER";
+export const UPDATE_USER = "UPDATE_USER";
+
+export const CLEAR_USERS = 'CLEAR_USERS'
+export const SET_CURRENT = "SET_CURRENT";
+export const CLEAR_CURRENT = "CLEAR_CURRENT";
+
 export const SET_LOADING = "SET_LOADING";
 
 // users

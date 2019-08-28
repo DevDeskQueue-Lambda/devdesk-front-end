@@ -5,11 +5,12 @@ import TicketContext from "../../../../context/ticket/ticketContext";
 
 import AddTicket from '../../Student/Dashboard/AddTicket'
 import EditTicket from '../../Student/Dashboard/EditTicket'
+import UserFilter from './UserFilter'
 
 const AdminDashboard = () => {
   const adminContext = useContext(AdminContext);
 
-  const { users, adminGetAllUsers, adminDeleteUser, loading } = adminContext;
+  const { users, adminGetAllUsers, adminDeleteUser, adminAddUser, adminEditUser } = adminContext;
 
   console.log("users", users);
 
@@ -46,7 +47,18 @@ const AdminDashboard = () => {
       <Grid>
         <Grid.Column>
           <Header>Admin Dashboard</Header>
-          <h4>adminGetAllUsers by first name</h4>
+          <h4>Users</h4>
+          <form>
+            
+            <UserFilter />
+            <button
+                    onClick={() => {
+                      adminAddUser();
+                    }}
+                  >
+                    AddUser
+                  </button>
+          </form>
           {users &&
             users.map(user => {
               return (
@@ -57,8 +69,17 @@ const AdminDashboard = () => {
                       adminDeleteUser(user.userid);
                     }}
                   >
-                    Delete
+                    Delete User
                   </button>
+                  
+                  <button
+                    onClick={() => {
+                      adminEditUser();
+                    }}
+                  >
+                    Edit User
+                  </button>
+
                 </Fragment>
               );
             })}
