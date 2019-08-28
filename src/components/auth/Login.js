@@ -24,11 +24,11 @@ const Login = ({ values, history, status }) => {
 
     if (isAuthenticated) {
       if (userInfo && userInfo.authority.length > 1) {
-        props.history.push("/dashboard");
+        history.push("/dashboard");
       } else {
         const auth = userInfo.authority[0].authority.split("_");
         const role = auth[1].toLowerCase();
-        props.history.push(`/${role}/dashboard`);
+        history.push(`/${role}/dashboard`);
       }
     }
   }, [isAuthenticated, history, userInfo, status, login, username, password]);
