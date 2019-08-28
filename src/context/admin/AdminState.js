@@ -98,14 +98,42 @@ const AdminState = props => {
   const adminAddUser = async () => console.log("adminAddUser");
 
   // adminEditUser
-  const adminEditUser = async () => console.log("adminEditUser");
+  const adminUpdateUser = async () => console.log("adminEditUser");
+
+  // clear users
+  const adminClearUsers = () => {
+    dispatch({
+      type: CLEAR_USERS
+    })
+  }
+
+  // set current user
+  const adminSetCurrent = user => {
+    dispatch({ 
+      type: SET_CURRENT,
+      payload: user
+    })
+  }
+
+  // adminClearCurrent
+  const adminClearCurrent = () => {
+    dispatch({type: CLEAR_CURRENT})
+  }}
 
   // adminUserFilter
-  const adminUserFilter = async () => console.log("adminUserFilter");
+  const adminUserFilter = () => {
+    dispatch({type: FILTER_USERS})
+  };
 
   // adminClearFilter
 
-  const adminClearFilter = async () => console.log("adminClearFilter");
+  const adminClearFilter = () => {
+    dispatch({type: CLEAR_FILTER})
+  };
+
+
+
+
 
   // adminArchiveTicket
   const adminArchiveTicket = () => console.log("adminArchiveTicket");
@@ -137,8 +165,9 @@ const AdminState = props => {
         adminRemoveAssigned,
         adminUserFilter,
         adminAddUser,
-        adminEditUser,
+        adminUpdateUser,
         adminClearFilter,
+        adminClearCurrent,
         setLoading
       }}
     >
