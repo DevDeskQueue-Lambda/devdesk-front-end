@@ -10,7 +10,8 @@ import {
   UPDATE_TICKET,
   DELETE_TICKET,
   GET_CATEGORIES_SUCCESS,
-  GET_CATEGORIES_FAIL
+  GET_CATEGORIES_FAIL,
+  SET_MODAL_OPEN
 } from "../types";
 
 const TicketState = props => {
@@ -19,7 +20,8 @@ const TicketState = props => {
     loading: false,
     error: null,
     categories: [],
-    categoriesError: null
+    categoriesError: null,
+    isModalOpen: false
   };
 
   const [state, dispatch] = useReducer(ticketReducer, initialState);
@@ -61,6 +63,11 @@ const TicketState = props => {
         type: ADD_TICKET,
         payload: ticket.data
       });
+
+      dispatch({
+        type: SET_MODAL_OPEN,
+        payload: false
+      });
     } catch (errors) {
       console.log(errors);
       // dispatch({
@@ -70,6 +77,13 @@ const TicketState = props => {
     }
   };
 
+  const setModalOpen = condition => {
+    dispatch({
+      type: SET_MODAL_OPEN,
+      payload: condition
+    });
+  };
+
   return (
     <TicketContext.Provider
       value={{
@@ -77,10 +91,12 @@ const TicketState = props => {
         loading: state.loading,
         error: state.error,
         categoriesError: state.categoriesError,
+        categories: state.categories,
+        isModalOpen: state.isModalOpen,
         fetchAllCategories,
         fetchAllTickets,
         addTicket,
-        categories: state.categories
+        setModalOpen
       }}
     >
       {props.children}

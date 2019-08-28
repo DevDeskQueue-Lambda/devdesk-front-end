@@ -5,7 +5,8 @@ import {
   UPDATE_TICKET,
   DELETE_TICKET,
   GET_CATEGORIES_SUCCESS,
-  GET_CATEGORIES_FAIL
+  GET_CATEGORIES_FAIL,
+  SET_MODAL_OPEN
 } from "../types";
 
 export default (state, action) => {
@@ -42,6 +43,14 @@ export default (state, action) => {
         tickets: [...state.tickets, action.payload]
       };
     }
+
+    case SET_MODAL_OPEN: {
+      return {
+        ...state,
+        isModalOpen: action.payload
+      };
+    }
+
     default:
       return state;
   }

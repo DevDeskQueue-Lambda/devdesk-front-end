@@ -24,7 +24,7 @@ const Registration = ({ errors, touched, status, history }) => {
       }
     }
     // eslint-disable-next-line
-  }, [isAuthenticated, history, userInfo]);
+  }, [status]);
 
   return (
     <Grid container centered>

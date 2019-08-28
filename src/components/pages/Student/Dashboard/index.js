@@ -5,10 +5,9 @@ import AddTicket from "./AddTicket";
 import EditTicket from "./EditTicket";
 
 const StudentDashboard = props => {
-  const [modalOpen, setModalOpen] = useState(false);
   const [ticketModal, setTicketModal] = useState({});
   const ticketContext = useContext(TicketContext);
-  const { tickets, fetchAllTickets } = ticketContext;
+  const { tickets, fetchAllTickets, isModalOpen, setModalOpen } = ticketContext;
 
   useEffect(() => {
     fetchAllTickets();
@@ -17,10 +16,6 @@ const StudentDashboard = props => {
 
   const handleTicketModal = action => {
     setTicketModal(action);
-    setModalOpen(true);
-  };
-
-  const handleModalOpen = () => {
     setModalOpen(true);
   };
 
@@ -91,7 +86,7 @@ const StudentDashboard = props => {
           </Table>
         </Grid.Column>
       </Grid>
-      <Modal closeIcon onClose={handleModalClose} open={modalOpen}>
+      <Modal closeIcon onClose={handleModalClose} open={isModalOpen}>
         <Modal.Header>{modal.name}</Modal.Header>
         <Modal.Content>{modal.type}</Modal.Content>
       </Modal>
