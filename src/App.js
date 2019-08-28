@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AuthState from "./context/auth/AuthState";
 import AdminState from "./context/admin/AdminState";
+import StaffState from './context/staff/StaffState';
 
 import { roles } from "./utils/roles";
 
@@ -24,6 +25,7 @@ function App() {
   return (
     <AuthState>
       <AdminState>
+        <StaffState>
         <div className="App">
           <Router>
             <NavBar logo={lambdaLogo} />
@@ -57,6 +59,7 @@ function App() {
             </Fragment>
           </Router>
         </div>
+        </StaffState>
       </AdminState>
     </AuthState>
   );
