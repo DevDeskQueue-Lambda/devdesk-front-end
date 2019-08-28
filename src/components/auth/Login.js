@@ -8,10 +8,10 @@ const Login = props => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      if (userInfo && userInfo.userRoles.length > 1) {
+      if (userInfo && userInfo.authority.length > 1) {
         props.history.push("/dashboard");
       } else {
-        const role = userInfo.userRoles[0].role.name;
+        const role = userInfo.authority[0].authority;
 
         props.history.push(`/${role}/dashboard`);
       }
