@@ -44,11 +44,20 @@ export default (state, action) => {
         tickets: [...state.tickets, action.payload]
       };
     }
-    // case UPDATE_TICKET:{
-    //   return {
-    //     ...state,
-    //   }
-    // }
+    case UPDATE_TICKET: {
+      return {
+        ...state,
+        tickets: state.tickets.map(ticket =>
+          ticket.ticketid === action.payload.ticketid ? action.payload : ticket
+        )
+      };
+    }
+    case UPDATE_TICKET_FAIL: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
     case SET_MODAL_OPEN: {
       return {
         ...state,

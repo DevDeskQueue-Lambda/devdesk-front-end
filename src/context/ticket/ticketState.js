@@ -83,12 +83,20 @@ const TicketState = props => {
         `/tickets/ticket/${ticket.ticketid}`,
         ticket
       );
-      console.log(editedTicket);
+
+      dispatch({
+        type: UPDATE_TICKET,
+        payload: editedTicket.data
+      });
+      dispatch({
+        type: SET_MODAL_OPEN,
+        payload: false
+      });
     } catch (errors) {
-      // dispatch({
-      //   type: UPDATE_TICKET,
-      //   payload: ticket.data
-      // })
+      dispatch({
+        type: UPDATE_TICKET_FAIL,
+        payload: errors.response.data
+      });
     }
   };
 

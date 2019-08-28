@@ -30,8 +30,6 @@ const StudentDashboard = props => {
   useEffect(() => {
     if (commentModalProps.length > 0) {
       setCommentModalOpen(true);
-    } else {
-      setCommentModalOpen(false);
     }
   }, [commentModalProps]);
 
@@ -173,7 +171,7 @@ const StudentDashboard = props => {
           </Comment.Group>
         </Modal.Content>
         <Modal.Actions>
-          <Button onClick={() => setCommentModalProps([])}>Close</Button>
+          <Button onClick={() => setCommentModalOpen(false)}>Close</Button>
         </Modal.Actions>
       </Modal>
     </div>

@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import StudentForm from "./StudentForm";
 const EditTicket = props => {
-  console.log(props.ticket);
   const ticketContext = useContext(TicketContext);
   const { fetchAllCategories, categories, editTicket } = ticketContext;
 
