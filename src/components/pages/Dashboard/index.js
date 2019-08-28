@@ -20,16 +20,19 @@ const Dashboard = () => {
   return (
     <Container>
       <Card.Group centered itemsPerRow={3}>
-        {userInfo.userRoles &&
-          userInfo.userRoles.length > 1 &&
-          userInfo.userRoles.map(role => (
-            <Card key={role.role.roleid}>
+        {userInfo.authority &&
+          userInfo.authority.length > 1 &&
+          userInfo.authority.map(authority => (
+            <Card key={authority.authority}>
               <Card.Content textAlign="center">
-                <Card.Header>{formatRoleName(role.role.name)}</Card.Header>
+                <Card.Header>{formatRoleName(authority.authority)}</Card.Header>
               </Card.Content>
               <Card.Content textAlign="center">
-                <Button as="a" href={`/${role.role.name}/dashboard`}>
-                  {formatRoleName(role.role.name)} Dashboard
+                <Button
+                  as="a"
+                  href={`/${formatPathName(authority.authority)}/dashboard`}
+                >
+                  {formatRoleName(authority.authority)} Dashboard
                 </Button>
               </Card.Content>
             </Card>
