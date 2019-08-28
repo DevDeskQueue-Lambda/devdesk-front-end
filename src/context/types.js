@@ -1,6 +1,7 @@
 export const GET_TICKETS = "GET_TICKETS";
-
+export const GET_TICKETS_FAIL = "GET_TICKETS_FAIL";
 export const ADD_TICKET = "ADD_TICKET";
+export const ADD_TICKET_FAIL = "ADD_TICKET_FAIL";
 export const DELETE_TICKET = "DELETE_TICKET";
 export const SET_CURRENT = "SET_CURRENT";
 export const CLEAR_CURRENT = "CLEAR_CURRENT";

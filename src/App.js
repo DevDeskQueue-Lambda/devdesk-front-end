@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AuthState from "./context/auth/AuthState";
-
+import TicketState from "./context/ticket/ticketState";
 import { roles } from "./utils/roles";
 
 import Login from "./components/auth/Login";
@@ -22,37 +22,43 @@ import Dashboard from "./components/pages/Dashboard";
 function App() {
   return (
     <AuthState>
-      <div className="App">
-        <Router>
-          <NavBar logo={lambdaLogo} />
-          <Fragment>
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route path="/register" component={Register} />
+      <TicketState>
+        <div className="App">
+          <Router>
+            <NavBar logo={lambdaLogo} />
+            <Fragment>
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route path="/register" component={Register} />
 
-              <PrivateRoute path="/dashboard" component={Dashboard} />
-              <PrivateRoute
-                path="/student/dashboard"
-                rolename={roles.student}
-                component={StudentDashboard}
-              />
-              <PrivateRoute
-                path="/staff/dashboard"
-                roleName={roles.staff}
-                component={StaffDashboard}
-              />
-              <PrivateRoute
-                path="/admin/dashboard"
-                roleName={roles.admin}
-                component={AdminDashboard}
-              />
+                <PrivateRoute path="/dashboard" component={Dashboard} />
 
-              <PrivateRoute path="/users/dashboard" component={StudentDashboard} />
+                <PrivateRoute
+                  path="/student/dashboard"
+                  rolename={roles.student}
+                  component={StudentDashboard}
+                />
 
-            </Switch>
-          </Fragment>
-        </Router>
-      </div>
+                <PrivateRoute
+                  path="/staff/dashboard"
+                  roleName={roles.staff}
+                  component={StaffDashboard}
+                />
+                <PrivateRoute
+                  path="/admin/dashboard"
+                  roleName={roles.admin}
+                  component={AdminDashboard}
+                />
+
+                <PrivateRoute
+                  path="/users/dashboard"
+                  component={StudentDashboard}
+                />
+              </Switch>
+            </Fragment>
+          </Router>
+        </div>
+      </TicketState>
     </AuthState>
   );
 }
