@@ -72,7 +72,7 @@ const AdminState = props => {
       const res = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/users/roles"
       );
-      // console.log("AdminState", res);
+      console.log("AdminState", res);
       dispatch({
         type: ADMIN_GET_USER_ROLES,
         payload: res.data

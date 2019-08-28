@@ -5,6 +5,7 @@ import AuthState from "./context/auth/AuthState";
 import AdminState from "./context/admin/AdminState";
 import StaffState from './context/staff/StaffState';
 
+import TicketState from "./context/ticket/ticketState";
 import { roles } from "./utils/roles";
 
 import Login from "./components/auth/Login";
@@ -34,22 +35,22 @@ function App() {
                 <Route exact path="/" component={Login} />
                 <Route path="/register" component={Register} />
 
-                <PrivateRoute path="/dashboard" component={Dashboard} />
-                <PrivateRoute
-                  path="/student/dashboard"
-                  rolename={roles.student}
-                  component={StudentDashboard}
-                />
-                <PrivateRoute
-                  path="/staff/dashboard"
-                  roleName={roles.staff}
-                  component={StaffDashboard}
-                />
-                <PrivateRoute
-                  path="/admin/dashboard"
-                  roleName={roles.admin}
-                  component={AdminDashboard}
-                />
+                  <PrivateRoute path="/dashboard" component={Dashboard} />
+                  <PrivateRoute
+                    path="/student/dashboard"
+                    rolename={roles.student}
+                    component={StudentDashboard}
+                  />
+                  <PrivateRoute
+                    path="/staff/dashboard"
+                    roleName={roles.staff}
+                    component={StaffDashboard}
+                  />
+                  <PrivateRoute
+                    path="/admin/dashboard"
+                    roleName={roles.admin}
+                    component={AdminDashboard}
+                  />
 
                 <PrivateRoute
                   path="/users/dashboard"
