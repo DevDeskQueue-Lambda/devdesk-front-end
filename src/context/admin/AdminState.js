@@ -104,36 +104,35 @@ const AdminState = props => {
   const adminClearUsers = () => {
     dispatch({
       type: CLEAR_USERS
-    })
-  }
+    });
+  };
 
   // set current user
   const adminSetCurrent = user => {
-    dispatch({ 
+    dispatch({
       type: SET_CURRENT,
       payload: user
-    })
-  }
+    });
+  };
 
   // adminClearCurrent
   const adminClearCurrent = () => {
-    dispatch({type: CLEAR_CURRENT})
-  }
+    dispatch({ type: CLEAR_CURRENT });
+  };
 
   // adminUserFilter
-  const adminUserFilter = () => {
-    dispatch({type: FILTER_USERS})
+  const adminUserFilter = text => {
+    dispatch({
+      type: FILTER_USERS,
+      payload: text
+    });
   };
 
   // adminClearFilter
 
   const adminClearFilter = () => {
-    dispatch({type: CLEAR_FILTER})
+    dispatch({ type: CLEAR_FILTER });
   };
-
-
-
-
 
   // adminArchiveTicket
   const adminArchiveTicket = () => console.log("adminArchiveTicket");
@@ -156,6 +155,7 @@ const AdminState = props => {
         users: state.users,
         loading: state.loading,
         error: state.error,
+        filtered: state.filtered,
         adminGetAllUsers,
         adminDeleteUser,
         adminGetUserRoles,

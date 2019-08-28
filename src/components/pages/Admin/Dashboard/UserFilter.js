@@ -1,26 +1,42 @@
-import React, {useContext, useRef, useEffect } from 'react'
-import AdminContext from '../../../../context/admin/adminContext';
-
+import React, { useContext, useRef, useEffect, useState } from "react";
+import AdminContext from "../../../../context/admin/adminContext";
 
 const UserFilter = () => {
-  const adminContext = useContext(AdminContext)
+  const [value, setValue] = useState("");
+  const adminContext = useContext(AdminContext);
 
-  const text = useRef('')
+  const text = useRef("");
 
-  const { adminStudentFilter, adminClearFilter} = adminContext
-  
+  const { adminUserFilter, adminClearFilter, filtered } = adminContext;
 
-  return(
+  useEffect(() => {
+    if (filtered == null) {
+      text.current.value = "";
+    }
+  });
+
+  console.log("UserFilter.js", text);
+
+  const onChange = e => {
+    setValue(e.target.value);
+    if (text.current.value !== "") {
+      adminUserFilter(e.target.value);
+    } else {
+      adminClearFilter();
+    }
+  };
+
+  return (
     <form>
-      <input 
+      <input
         ref={text}
         type="text"
-        placeholder='Filter Users'
-        onChange={null}
-        
-        />
+        value={value}
+        placeholder="Filter Users"
+        onChange={onChange}
+      />
     </form>
-  )
-}
+  );
+};
 
 export default UserFilter;
