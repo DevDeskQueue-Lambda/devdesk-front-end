@@ -20,6 +20,7 @@ import StudentDashboard from "./components/pages/Student/Dashboard";
 import StaffDashboard from "./components/pages/Staff/Dashboard";
 import AdminDashboard from "./components/pages/Admin/Dashboard";
 import Dashboard from "./components/pages/Dashboard";
+import StaffViewTicket from "./components/pages/Staff/Dashboard/StaffViewTicket";
 
 function App() {
   return (
@@ -41,10 +42,17 @@ function App() {
                     component={StudentDashboard}
                   />
                   <PrivateRoute
-                    path="/staff/dashboard"
+                    exact path="/staff/dashboard"
                     roleName={roles.staff}
                     component={StaffDashboard}
                   />
+
+                  <PrivateRoute
+                    path="/staff/dashboard/ticket/:id"
+                    roleName={roles.staff}
+                    component={StaffViewTicket}
+                  />
+
                   <PrivateRoute
                     path="/admin/dashboard"
                     roleName={roles.admin}
