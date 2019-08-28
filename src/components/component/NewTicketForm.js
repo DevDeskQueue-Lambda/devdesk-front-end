@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
- import "../App.css";
+ import "./App.css";
 
 
 function NewTicketForm({ values, errors, touched }) {
@@ -11,7 +11,7 @@ function NewTicketForm({ values, errors, touched }) {
 
     <div className='form-card'>
     <Form className='ui form'>
-    <h2 className="form"> Create Ticket</h2>
+    <h1 className="form"> Create Ticket</h1>
 
     <div className='field'>
       <label htmlFor='name'>Name:
@@ -73,9 +73,6 @@ const NewTicket = withFormik({
   validationSchema: Yup.object().shape({
     itemType: Yup.string().required("Type is required"),
     description: Yup.string().required("is required"),
-    gitHub: Yup.string()
-    .url('Must be a valid URL')
-     .required("is required"),
      name:  Yup.string().required("is required"),
   }),
 
