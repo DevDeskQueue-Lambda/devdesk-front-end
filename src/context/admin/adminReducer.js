@@ -33,6 +33,41 @@ export default (state, action) => {
         users: state.users.filter(user => user.id !== action.payload),
         loading: false
       };
+    case CLEAR_USERS:
+      return {
+        ...state,
+        users: null,
+        filtered: null,
+        error: null,
+        current: null
+      };
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: action.payload
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null
+      };
+    case FILTER_USERS:
+      return {
+        ...state,
+        filtered: state.users.filter(user => {
+          const regex = new RegExp(`${action.payload}`, "gi");
+          return (
+            user.fname.match(regex) ||
+            user.lname.match(regex) ||
+            user.username.match(regex)
+          );
+        })
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filtered: null
+      };
     case ERROR:
       return {
         ...state,

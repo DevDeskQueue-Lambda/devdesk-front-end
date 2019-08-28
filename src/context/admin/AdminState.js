@@ -118,7 +118,7 @@ const AdminState = props => {
   // adminClearCurrent
   const adminClearCurrent = () => {
     dispatch({type: CLEAR_CURRENT})
-  }}
+  }
 
   // adminUserFilter
   const adminUserFilter = () => {
@@ -168,6 +168,8 @@ const AdminState = props => {
         adminUpdateUser,
         adminClearFilter,
         adminClearCurrent,
+        adminSetCurrent,
+        adminClearUsers,
         setLoading
       }}
     >
