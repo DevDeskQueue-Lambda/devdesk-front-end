@@ -1,47 +1,53 @@
-//! Login / Logout
-// Staff Member can - Login/Logout
-//! Tickets
-// Staff Member can - Claim/Unclaim a ticket
-// Staff Member can - Change a ticket's status
-// Staff Member can - Comment/Edit a comment on a ticket
-// staff - password
+// Staff Member can - View list of open tickets
+// Staff Member can - Assign a ticket to his/herself by click of a button
+// Staff Member can - Change ticket to resolved, or back to the assignable queue if a resolution has not been met
 
 import React from 'react';
 // import any helpers
 import StaffContext from './staffContext';
 import staffReducer from './staffReducer';
-import { getCurrentLoggedInUser } from "../../utils";
+import { getTickets } from "../../utils";
 // Types
-import { CLAIM_TICKET, UNCLAIM_TICKET, EDIT_TICKET_STATUS, ADD_TICKET_COMMENT, EDIT_TICKET_COMMENT, STAFF_ERROR } from '../types';
+import {
+  GET_UNASSIGNED_TICKETS,
+  ASSIGN_TICKET,
+  UNASSIGN_TICKET,
+  EDIT_TICKET_STATUS,
+  SET_LOADING,
+  STAFF_ERROR
+} from "../types";
 
 const StaffState = props => {
   const initialState = {
-    users: null, 
+    tickets: null, 
     loading: false,
     error: null
   }
   const [state, dispatch] = React.useReducer(staffReducer, initialState);
-  // claim ticket
-  const claimTicket = async () => {
+  // Get unassigned tickets
+  const getUnassignedTickets = async () => {
     try {
-      const res = await getCurrentLoggedInUser()
-        .get("https://lambda-devdesk.herokuapp.com/tickets/tickets");
-
+      const res = await getTickets()
+        .get("https://lambda-devdesk.herokuapp.com/tickets/alltickets");
+      dispatch({
+        type: GET_UNASSIGNED_TICKETS,
+        payload: res.data
+      });
     } catch (err) {
       dispatch({
         type: STAFF_ERROR,
         payload: err.response.data
       });
     }
-  }
-  // unclaim ticket
-  const unclaimTicket = () => console.log('unclaimTicket');
-  // edit ticket status
+  };
+  // Assign ticket
+  const assignTicket = () => console.log('assignTicket');
+  // Unassign ticket
+  const unassignTicket = () => console.log('unassignTicket');
+  // Edit ticket status ( open, unresolved, resolved )
   const editTicketStatus = () => console.log('editTicketStatus');
-  // add ticket comment
-  const addTicketComment = () => console.log('addTicketComment');
-  // edit ticket comment
-  const editTicketComment = () => console.log('editTicketComment');
+  // set Loading to true
+  const setLoading = () => dispatch({ type: SET_LOADING });
 
   return (
     <StaffContext.Provider
@@ -49,11 +55,11 @@ const StaffState = props => {
         users: state.users,
         loading: state.loading,
         error: state.error,
-        claimTicket,
-        unclaimTicket,
+        getUnassignedTickets,
+        assignTicket,
+        unassignTicket,
         editTicketStatus,
-        addTicketComment,
-        editTicketComment
+        setLoading
       }}
     >
       {props.children}
