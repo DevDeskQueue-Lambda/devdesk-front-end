@@ -1,5 +1,6 @@
 import React from "react";
 import { Form } from "semantic-ui-react";
+import { Field } from "formik";
 
 const StudentForm = ({
   handleChange,
@@ -35,17 +36,25 @@ const StudentForm = ({
             value={values.tried}
           ></Form.Input>
         </Form.Field>
-        <Form.Field>
-          <label htmlFor="category">Help Categories</label>
-          <Form.Select
-            multiple
-            placeholder="Select a help category"
-            selection
-            options={helpCategories}
-            name="category"
-            onChange={e => setFieldValue("category", e.target.selectedOptions)}
-          />
-        </Form.Field>
+        <Field
+          component="select"
+          name="ticketCategories"
+          onChange={event =>
+            setFieldValue(
+              "ticketCategories",
+              [].slice
+                .call(event.target.selectedOptions)
+                .map(option => option.value)
+            )
+          }
+          multiple={true}
+        >
+          {helpCategories.map(category => (
+            <option key={category.categoryid} value={category.categoryid}>
+              {category.name}
+            </option>
+          ))}
+        </Field>
 
         <Form.Button type="submit">Submit</Form.Button>
       </Form>

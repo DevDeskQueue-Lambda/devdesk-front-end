@@ -11,8 +11,8 @@ const Login = props => {
       if (userInfo && userInfo.authority.length > 1) {
         props.history.push("/dashboard");
       } else {
-        const role = userInfo.authority[0].authority;
-
+        const auth = userInfo.authority[0].authority.split("_");
+        const role = auth[1].toLowerCase();
         props.history.push(`/${role}/dashboard`);
       }
     }

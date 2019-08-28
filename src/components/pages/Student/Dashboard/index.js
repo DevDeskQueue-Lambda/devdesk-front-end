@@ -91,7 +91,7 @@ const StudentDashboard = props => {
           </Table>
         </Grid.Column>
       </Grid>
-      <Modal onClose={handleModalClose} open={modalOpen}>
+      <Modal closeIcon onClose={handleModalClose} open={modalOpen}>
         <Modal.Header>{modal.name}</Modal.Header>
         <Modal.Content>{modal.type}</Modal.Content>
       </Modal>

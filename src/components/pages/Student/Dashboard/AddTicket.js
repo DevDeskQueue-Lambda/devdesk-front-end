@@ -1,13 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import TicketContext from "../../../../context/ticket/ticketContext";
 import { Formik } from "formik";
 import StudentForm from "./StudentForm";
-import { categories } from "../../../../utils/ticketCategories";
+
 import * as Yup from "yup";
 
 const AddTicket = () => {
   const ticketContext = useContext(TicketContext);
-  const { addTicket } = ticketContext;
+  const { addTicket, fetchAllCategories, categories } = ticketContext;
+
+  useEffect(() => {
+    fetchAllCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -16,16 +21,21 @@ const AddTicket = () => {
           title: "AWS API Gateway",
           description: "Infinite call",
           tried: "Console.log",
-          category: []
+          ticketCategories: []
         }}
         onSubmit={(values, actions) => {
-          /* Work in progress */
-          console.log(values);
-          //   const category = categories.find(
-          //     category => category.key === values.category
-          //   );
+          const tempArray = values.ticketCategories.map(ticketCategory => {
+            const matchCategory = categories.find(
+              category => category.categoryid === parseInt(ticketCategory)
+            );
 
-          //addTicket(values);
+            return {
+              category: matchCategory
+            };
+          });
+          values.ticketCategories = tempArray;
+
+          addTicket(values);
         }}
         render={formikProps => (
           <StudentForm {...formikProps} helpCategories={categories} />

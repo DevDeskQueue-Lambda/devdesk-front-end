@@ -3,7 +3,9 @@ import {
   GET_TICKETS_FAIL,
   ADD_TICKET,
   UPDATE_TICKET,
-  DELETE_TICKET
+  DELETE_TICKET,
+  GET_CATEGORIES_SUCCESS,
+  GET_CATEGORIES_FAIL
 } from "../types";
 
 export default (state, action) => {
@@ -20,6 +22,24 @@ export default (state, action) => {
       return {
         ...state,
         error: action.payload
+      };
+    }
+    case GET_CATEGORIES_SUCCESS: {
+      return {
+        ...state,
+        categories: action.payload
+      };
+    }
+    case GET_CATEGORIES_FAIL: {
+      return {
+        ...state,
+        categoriesError: action.payload
+      };
+    }
+    case ADD_TICKET: {
+      return {
+        ...state,
+        tickets: [...state.tickets, action.payload]
       };
     }
     default:

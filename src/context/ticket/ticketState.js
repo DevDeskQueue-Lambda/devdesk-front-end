@@ -8,18 +8,35 @@ import {
   ADD_TICKET,
   ADD_TICKET_FAIL,
   UPDATE_TICKET,
-  DELETE_TICKET
+  DELETE_TICKET,
+  GET_CATEGORIES_SUCCESS,
+  GET_CATEGORIES_FAIL
 } from "../types";
 
 const TicketState = props => {
   const initialState = {
     tickets: [],
     loading: false,
-    error: null
+    error: null,
+    categories: [],
+    categoriesError: null
   };
 
   const [state, dispatch] = useReducer(ticketReducer, initialState);
-
+  const fetchAllCategories = async () => {
+    try {
+      const categories = await axiosWithAuth().get("/category/categories");
+      dispatch({
+        type: GET_CATEGORIES_SUCCESS,
+        payload: categories.data
+      });
+    } catch (errors) {
+      dispatch({
+        type: GET_CATEGORIES_FAIL,
+        payload: errors.response.data
+      });
+    }
+  };
   const fetchAllTickets = async () => {
     try {
       const tickets = await axiosWithAuth().get("/tickets/alltickets");
@@ -36,26 +53,14 @@ const TicketState = props => {
     }
   };
 
-  const addTicket = async ticket => {
-    console.log(ticket);
+  const addTicket = async newTicket => {
     try {
-      const ticket = await axiosWithAuth().post("/tickets/ticket", {
-        title: "JSX",
-        description: "JS Error",
-        tried: "TDD",
-        ticketCategories: [
-          {
-            category: {
-              categoryid: 13
-            }
-          }
-        ]
+      const ticket = await axiosWithAuth().post("/tickets/ticket", newTicket);
+
+      dispatch({
+        type: ADD_TICKET,
+        payload: ticket.data
       });
-      console.log(ticket);
-      // dispatch({
-      //   type: ADD_TICKET,
-      //   payload: ticket.data
-      // });
     } catch (errors) {
       console.log(errors);
       // dispatch({
@@ -64,14 +69,18 @@ const TicketState = props => {
       // });
     }
   };
+
   return (
     <TicketContext.Provider
       value={{
         tickets: state.tickets,
         loading: state.loading,
         error: state.error,
+        categoriesError: state.categoriesError,
+        fetchAllCategories,
         fetchAllTickets,
-        addTicket
+        addTicket,
+        categories: state.categories
       }}
     >
       {props.children}
