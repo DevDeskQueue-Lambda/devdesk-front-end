@@ -27,12 +27,3 @@ export const getCurrentLoggedInUser = () => {
     }
   });
 };
-
-export const getTickets = () => {
-  return axios.create({
-    baseURL: "https://lambda-devdesk.herokuapp.com",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  });
-};
