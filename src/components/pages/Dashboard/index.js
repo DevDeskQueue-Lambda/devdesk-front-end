@@ -6,23 +6,34 @@ const Dashboard = () => {
   const authContext = useContext(AuthContext);
   const { userInfo } = authContext;
   const formatRoleName = role => {
-    return role.charAt(0).toUpperCase() + role.slice(1);
+    const auth = role.split("_");
+    const authRole = auth[1].toLowerCase();
+
+    return authRole.charAt(0).toUpperCase() + authRole.slice(1);
+  };
+
+  const formatPathName = role => {
+    const auth = role.split("_");
+    return auth[1].toLowerCase();
   };
 
   return (
     <Container>
       <Card.Group centered itemsPerRow={3}>
-        {userInfo.userRoles &&
-          userInfo.userRoles.length > 1 &&
-          userInfo.userRoles.map(role => (
-            <Card key={role.role.roleid}>
+        {userInfo.authority &&
+          userInfo.authority.length > 1 &&
+          userInfo.authority.map(authority => (
+            <Card key={authority.authority}>
               <Card.Content textAlign="center">
-                <Card.Header>{formatRoleName(role.role.name)}</Card.Header>
+                <Card.Header>{formatRoleName(authority.authority)}</Card.Header>
               </Card.Content>
               <Card.Content textAlign="center">
-                <Button as="a" href={`/${role.role.name}/dashboard`}>
-                  {formatRoleName(role.role.name)} Dashboard
-                    </Button>
+                <Button
+                  as="a"
+                  href={`/${formatPathName(authority.authority)}/dashboard`}
+                >
+                  {formatRoleName(authority.authority)} Dashboard
+                </Button>
               </Card.Content>
             </Card>
           ))}

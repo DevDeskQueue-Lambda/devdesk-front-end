@@ -18,14 +18,18 @@ const PrivateRoute = ({ component: Component, roleName, ...rest }) => {
 
         if (
           roleName &&
-          userInfo.userRoles.findIndex(role => role.role.name === roleName) ===
-            -1
+          userInfo.authority.findIndex(
+            authority => authority.authority === roleName
+          ) === -1
         ) {
-          if (userInfo.userRoles.length === 1) {
+          const auth = userInfo.authority[0].authority.split("_");
+          const role = auth[1].toLowerCase();
+
+          if (userInfo.authority.length === 1) {
             return (
               <Redirect
                 to={{
-                  pathname: `/${userInfo.userRoles[0].role.name}/dashboard`,
+                  pathname: `/${role}/dashboard`,
                   state: { error: "unauthorized role", from: props.location }
                 }}
               />
