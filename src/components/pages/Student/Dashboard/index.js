@@ -25,7 +25,11 @@ const StudentDashboard = props => {
 
   let modal = {
     name: ticketModal === "add" ? "Add Ticket" : "Edit Ticket",
-    type: ticketModal === "add" ? <AddTicket /> : <EditTicket />
+    type: ticketModal === "add" ? <AddTicket /> : <EditTicket />,
+    headerStyle:
+      ticketModal === "add"
+        ? { backgroundColor: "#21BA45", color: "#FFFFFF" }
+        : { backgroundColor: "#2185D0", color: "#FFFFFF" }
   };
 
   return (
@@ -36,7 +40,9 @@ const StudentDashboard = props => {
             <Header>Student Tickets</Header>
           </Grid.Column>
           <Grid.Column textAlign="right">
-            <Button onClick={() => handleTicketModal("add")}>Add Ticket</Button>
+            <Button color="green" onClick={() => handleTicketModal("add")}>
+              Add Ticket
+            </Button>
           </Grid.Column>
         </Grid.Row>
         <Grid.Column width={16}>
@@ -70,7 +76,10 @@ const StudentDashboard = props => {
                     <Table.Cell>{ticket.tried}</Table.Cell>
                     <Table.Cell>{ticket.status.name}</Table.Cell>
                     <Table.Cell>
-                      <Button onClick={() => handleTicketModal("edit")}>
+                      <Button
+                        color="blue"
+                        onClick={() => handleTicketModal("edit")}
+                      >
                         Edit
                       </Button>
                       <Button
@@ -87,7 +96,7 @@ const StudentDashboard = props => {
         </Grid.Column>
       </Grid>
       <Modal closeIcon onClose={handleModalClose} open={isModalOpen}>
-        <Modal.Header>{modal.name}</Modal.Header>
+        <Modal.Header style={modal.headerStyle}>{modal.name}</Modal.Header>
         <Modal.Content>{modal.type}</Modal.Content>
       </Modal>
     </div>

@@ -5,7 +5,7 @@ import StudentForm from "./StudentForm";
 
 import * as Yup from "yup";
 
-const AddTicket = () => {
+const AddTicket = props => {
   const ticketContext = useContext(TicketContext);
   const { addTicket, fetchAllCategories, categories } = ticketContext;
 
