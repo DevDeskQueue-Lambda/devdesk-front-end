@@ -11,8 +11,6 @@ export const FILTER_TICKETS = "FILTER_TICKETS";
 export const CLEAR_TICKETS = "CLEAR_TICKETS";
 export const TICKET_ERROR = "TICKET_ERROR";
 
-
-
 // admin state
 export const DELETE_USER = "DELETE_USER";
 export const GET_ALL_USERS = "GET_ALL_USERS";
@@ -21,12 +19,16 @@ export const ARCHIVE_TICKET = "ARCHIVE_TICKET";
 export const ASSIGN_TICKET = "ASSIGN_TICKET";
 export const RESOLVE_TICKET = "RESOLVE_TICKET";
 export const REMOVE_ASSIGNED = "REMOVE_ASSIGNED";
-export const FILTER_USERS = 'FILTER_USERS'
-export const CLEAR_FILTER = 'CLEAR_FILTER'
+export const FILTER_USERS = "FILTER_USERS";
+export const CLEAR_FILTER = "CLEAR_FILTER";
 export const ADD_USER = "ADD_USER";
 export const UPDATE_USER = "UPDATE_USER";
 
-export const CLEAR_USERS = 'CLEAR_USERS'
+export const ADMIN_FETCH_TICKETS = "ADMIN_FETCH_TICKETS";
+export const ADMIN_FILTER_TICKETS = "ADMIN_FILTER_TICKETS";
+export const ADMIN_CLEAR_TICKET_FILTER = "CLEAR_TICKET_FILTER";
+
+export const CLEAR_USERS = "CLEAR_USERS";
 export const SET_CURRENT = "SET_CURRENT";
 export const CLEAR_CURRENT = "CLEAR_CURRENT";
 

@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import axios from "axios";
 import { getCurrentLoggedInUser } from "../../utils";
-
+import { axiosWithAuth } from '../../utils';
 import AdminContext from "./adminContext";
 import adminReducer from "./adminReducer";
 
@@ -21,6 +21,9 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   SET_LOADING,
+  ADMIN_FETCH_TICKETS,
+  ADMIN_FILTER_TICKETS,
+  ADMIN_CLEAR_TICKET_FILTER,
   ERROR
 } from "../types";
 
@@ -30,7 +33,8 @@ const AdminState = props => {
     loading: false,
     error: null,
     current: null,
-    filtered: null
+    filtered: null,
+    tickets:null
   };
 
   const [state, dispatch] = useReducer(adminReducer, initialState);
@@ -134,11 +138,56 @@ const AdminState = props => {
     dispatch({ type: CLEAR_FILTER });
   };
 
+  // adminFetchTickets
+  const adminFetchTickets = async () => {
+    try {
+      const res = await axiosWithAuth().get("/tickets/alltickets")
+      dispatch({
+        type: ADMIN_FETCH_TICKETS,
+        payload: res.data
+      })
+    }catch(err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.data
+
+      })
+    }
+  }
+
+
+  // adminFilterTickets
+  const adminFilterTickets = text => {
+    dispatch({
+      type: ADMIN_FILTER_TICKETS,
+      payload: text
+    })
+  }
+
+  // adminClearTicketFilter
+  const adminClearTicketFilter = () => {
+    dispatch({type: ADMIN_CLEAR_TICKET_FILTER});
+  };
+
   // adminArchiveTicket
   const adminArchiveTicket = () => console.log("adminArchiveTicket");
 
   // adminAssignTicket
-  const adminAssignTicket = () => console.log("adminAssignTicket");
+  const adminAssignTicket = async (id) => {
+    try {
+      const res = await axiosWithAuth().put(`/tickets/ticket/assign/${id}`)
+      console.log('adminAssignTicket', res)
+      dispatch({
+        type: ASSIGN_TICKET,
+        payload: res.data
+      })
+    }catch(err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      })
+    }
+  };
 
   // adminResolveTicket
   const adminResolveTicket = () => console.log("adminResolveTicket");
@@ -170,6 +219,9 @@ const AdminState = props => {
         adminClearCurrent,
         adminSetCurrent,
         adminClearUsers,
+        adminFetchTickets,
+        adminFilterTickets,
+        adminClearTicketFilter,
         setLoading
       }}
     >
