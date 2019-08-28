@@ -6,7 +6,15 @@ const Dashboard = () => {
   const authContext = useContext(AuthContext);
   const { userInfo } = authContext;
   const formatRoleName = role => {
-    return role.charAt(0).toUpperCase() + role.slice(1);
+    const auth = role.split("_");
+    const authRole = auth[1].toLowerCase();
+
+    return authRole.charAt(0).toUpperCase() + authRole.slice(1);
+  };
+
+  const formatPathName = role => {
+    const auth = role.split("_");
+    return auth[1].toLowerCase();
   };
 
   return (
@@ -22,7 +30,7 @@ const Dashboard = () => {
               <Card.Content textAlign="center">
                 <Button as="a" href={`/${role.role.name}/dashboard`}>
                   {formatRoleName(role.role.name)} Dashboard
-                    </Button>
+                </Button>
               </Card.Content>
             </Card>
           ))}
