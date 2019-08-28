@@ -18,9 +18,9 @@ const AddTicket = () => {
     <>
       <Formik
         initialValues={{
-          title: "AWS API Gateway",
-          description: "Infinite call",
-          tried: "Console.log",
+          title: "",
+          description: "",
+          tried: "",
           ticketCategories: []
         }}
         onSubmit={(values, actions) => {

@@ -36,26 +36,29 @@ const StudentForm = ({
             value={values.tried}
           ></Form.Input>
         </Form.Field>
-        <label htmlFor="ticketCategories">Ticket Categories</label>
-        <Field
-          component="select"
-          name="ticketCategories"
-          onChange={event =>
-            setFieldValue(
-              "ticketCategories",
-              [].slice
-                .call(event.target.selectedOptions)
-                .map(option => option.value)
-            )
-          }
-          multiple={true}
-        >
-          {helpCategories.map(category => (
-            <option key={category.categoryid} value={category.categoryid}>
-              {category.name}
-            </option>
-          ))}
-        </Field>
+
+        <Form.Field>
+          <label htmlFor="ticketCategories">Ticket Categories</label>
+          <Field
+            component="select"
+            name="ticketCategories"
+            onChange={event =>
+              setFieldValue(
+                "ticketCategories",
+                [].slice
+                  .call(event.target.selectedOptions)
+                  .map(option => option.value)
+              )
+            }
+            multiple={true}
+          >
+            {helpCategories.map(category => (
+              <option key={category.categoryid} value={category.categoryid}>
+                {category.name}
+              </option>
+            ))}
+          </Field>
+        </Form.Field>
 
         <Form.Button type="submit">Submit</Form.Button>
       </Form>
