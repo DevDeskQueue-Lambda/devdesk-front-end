@@ -36,6 +36,7 @@ const StudentForm = ({
             value={values.tried}
           ></Form.Input>
         </Form.Field>
+        <label htmlFor="ticketCategories">Ticket Categories</label>
         <Field
           component="select"
           name="ticketCategories"
