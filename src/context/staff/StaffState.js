@@ -1,65 +1,71 @@
-// Staff Member can - View list of open tickets
-// Staff Member can - Assign a ticket to his/herself by click of a button
-// Staff Member can - Change ticket to resolved, or back to the assignable queue if a resolution has not been met
-
 import React from 'react';
-// import any helpers
+import { axiosWithAuth } from "../../utils";
+// Context/Reducer
 import StaffContext from './staffContext';
 import staffReducer from './staffReducer';
-import { getTickets } from "../../utils";
 // Types
 import {
-  GET_UNASSIGNED_TICKETS,
-  ASSIGN_TICKET,
-  UNASSIGN_TICKET,
-  EDIT_TICKET_STATUS,
-  SET_LOADING,
-  STAFF_ERROR
+  GET_CURRENT_USER,
+  GET_CURRENT_USER_FAIL,
+  GET_ASSIGNED_TICKETS,
+  GET_ASSIGNED_TICKETS_FAIL
 } from "../types";
 
 const StaffState = props => {
   const initialState = {
-    tickets: null, 
+    user: {},
+    userError: null,
+    tickets: [],
     loading: false,
     error: null
   }
   const [state, dispatch] = React.useReducer(staffReducer, initialState);
-  // Get unassigned tickets
-  const getUnassignedTickets = async () => {
+
+  //! GET CURRENT USER
+  const fetchCurrentUserData = async () => {
     try {
-      const res = await getTickets()
-        .get("https://lambda-devdesk.herokuapp.com/tickets/alltickets");
+      const user = await axiosWithAuth().get("/users/user");
       dispatch({
-        type: GET_UNASSIGNED_TICKETS,
-        payload: res.data
+        type: GET_CURRENT_USER,
+        payload: user.data
       });
     } catch (err) {
       dispatch({
-        type: STAFF_ERROR,
+        type: GET_CURRENT_USER_FAIL,
+        payload: err.response.data
+      });
+    }
+  }
+  //! GET ASSIGNED TICKETS
+  const fetchAssignedTickets = async () => {
+    try {
+      const tickets = await axiosWithAuth()
+      .get("/tickets/alltickets");
+      dispatch({
+        type: GET_ASSIGNED_TICKETS,
+        payload: tickets.data
+      });
+    } catch (err) {
+      dispatch({
+        type: GET_ASSIGNED_TICKETS_FAIL,
         payload: err.response.data
       });
     }
   };
-  // Assign ticket
-  const assignTicket = () => console.log('assignTicket');
-  // Unassign ticket
-  const unassignTicket = () => console.log('unassignTicket');
-  // Edit ticket status ( open, unresolved, resolved )
-  const editTicketStatus = () => console.log('editTicketStatus');
-  // set Loading to true
-  const setLoading = () => dispatch({ type: SET_LOADING });
+  // Get Assigned Tickets???
+  // Claim Ticket
+  // Resolve Ticket
 
   return (
     <StaffContext.Provider
       value={{
-        users: state.users,
+        user: state.user,
+        userError: state.userError,
+        tickets: state.tickets,
         loading: state.loading,
         error: state.error,
-        getUnassignedTickets,
-        assignTicket,
-        unassignTicket,
-        editTicketStatus,
-        setLoading
+        fetchAssignedTickets,
+        fetchCurrentUserData
       }}
     >
       {props.children}
