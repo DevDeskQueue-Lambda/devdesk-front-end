@@ -56,7 +56,7 @@ export default (state, action) => {
     case ASSIGN_TICKET:
       return {
         ...state,
-        staff: [action.payload, ...state.staff ],
+        staff: [action.payload, ...state.staff],
         loading: false
       };
     case SET_CURRENT:

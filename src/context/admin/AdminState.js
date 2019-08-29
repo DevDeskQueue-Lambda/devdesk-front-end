@@ -219,7 +219,25 @@ const AdminState = props => {
   const adminResolveTicket = () => console.log("adminResolveTicket");
 
   // adminRemoveAssigned
-  const adminRemoveAssigned = () => console.log("adminRemoveAssigned");
+  const adminRemoveAssigned = async (id) => {
+    console.log("adminRemoveAssigned", id );
+    try {
+      const res = await getCurrentLoggedInUser().put(
+        `https://lambda-devdesk.herokuapp.com/tickets/ticket/unassign/${id}`
+      );
+      console.log("adminRemoveAssigned", id );
+      dispatch({
+        type: REMOVE_ASSIGNED,
+        payload: res.data
+      });
+    } catch (err) {
+      console.log("adminRemoveAssigned", err.response);
+      dispatch({
+        type: ERROR,
+        payload: err.response
+      });
+    }
+  };
 
   // set loading to true
   const setLoading = () => dispatch({ type: SET_LOADING });
