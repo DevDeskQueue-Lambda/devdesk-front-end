@@ -5,12 +5,8 @@ import * as Yup from "yup";
 import StudentForm from "./StudentForm";
 const EditTicket = props => {
   const ticketContext = useContext(TicketContext);
-  const { fetchAllCategories, categories, editTicket } = ticketContext;
+  const { categories, editTicket } = ticketContext;
 
-  useEffect(() => {
-    fetchAllCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
     <>
       <Formik

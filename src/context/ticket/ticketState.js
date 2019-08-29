@@ -202,7 +202,11 @@ const TicketState = props => {
         loading: state.loading,
         error: state.error,
         categoriesError: state.categoriesError,
-        categories: state.categories,
+        categories: state.categories.sort((a, b) => {
+          let categoryA = a.name.toUpperCase();
+          let categoryB = b.name.toUpperCase();
+          return categoryA < categoryB ? -1 : categoryA > categoryB ? 1 : 0;
+        }),
         isModalOpen: state.isModalOpen,
         isDeleteTicketModalOpen: state.isDeleteTicketModalOpen,
         isTicketCommentsModalOpen: state.isTicketCommentsModalOpen,

@@ -1,9 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import {
   Button,
+  Dropdown,
   Header,
   Grid,
   Icon,
+  Input,
   Label,
   Modal,
   Table
@@ -20,7 +22,9 @@ const StudentDashboard = props => {
   const ticketContext = useContext(TicketContext);
   const {
     tickets,
+    categories,
     fetchAllTickets,
+    fetchAllCategories,
     isModalOpen,
     setModalOpen,
     deletingTicket,
@@ -34,6 +38,11 @@ const StudentDashboard = props => {
 
   useEffect(() => {
     fetchAllTickets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    fetchAllCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -76,7 +85,31 @@ const StudentDashboard = props => {
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Category</Table.HeaderCell>
+                <Table.HeaderCell>
+                  <Grid columns={2}>
+                    <Grid.Row>
+                      <Grid.Column>Category</Grid.Column>
+                      <Grid.Column textAlign="right">
+                        <Dropdown floating icon="filter">
+                          <Dropdown.Menu>
+                            <Input icon="search"></Input>
+                            <Dropdown.Header icon="tags" content="Categories" />
+
+                            <Dropdown.Menu scrolling>
+                              {categories &&
+                                categories.length > 0 &&
+                                categories.map(category => (
+                                  <Dropdown.Item key={category.categoryid}>
+                                    {category.name}
+                                  </Dropdown.Item>
+                                ))}
+                            </Dropdown.Menu>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Table.HeaderCell>
                 <Table.HeaderCell>Title</Table.HeaderCell>
                 <Table.HeaderCell>Description</Table.HeaderCell>
                 <Table.HeaderCell>Tried</Table.HeaderCell>

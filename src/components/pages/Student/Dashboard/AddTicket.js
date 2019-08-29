@@ -7,12 +7,7 @@ import * as Yup from "yup";
 
 const AddTicket = props => {
   const ticketContext = useContext(TicketContext);
-  const { addTicket, fetchAllCategories, categories } = ticketContext;
-
-  useEffect(() => {
-    fetchAllCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { addTicket, categories } = ticketContext;
 
   return (
     <>
