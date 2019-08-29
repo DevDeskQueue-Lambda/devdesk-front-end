@@ -48,7 +48,6 @@ function App() {
                       component={StudentDashboard}
                     />
                     <PrivateRoute
-                      exact
                       path="/staff/dashboard"
                       roleName={roles.staff}
                       component={StaffDashboard}

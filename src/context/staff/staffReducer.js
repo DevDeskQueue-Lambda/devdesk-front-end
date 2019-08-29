@@ -3,7 +3,9 @@ import {
   GET_CURRENT_USER,
   GET_CURRENT_USER_FAIL,
   GET_ASSIGNED_TICKETS,
-  GET_ASSIGNED_TICKETS_FAIL
+  GET_ASSIGNED_TICKETS_FAIL,
+  GET_All_TICKETS,
+  GET_All_TICKETS_FAIL
 } from "../types";
 
 export default (state, action) => {
@@ -30,6 +32,19 @@ export default (state, action) => {
       };
     }
     case GET_ASSIGNED_TICKETS_FAIL: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+    //! GET ALL TICKETS
+    case GET_All_TICKETS: {
+      return {
+        ...state,
+        tickets: action.payload
+      };
+    }
+    case GET_All_TICKETS_FAIL: {
       return {
         ...state,
         error: action.payload

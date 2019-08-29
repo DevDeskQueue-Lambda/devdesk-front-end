@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Header, Grid, Label, Modal, Table } from "semantic-ui-react";
+import { Button, Header, Grid, Label, Table } from "semantic-ui-react";
 import StaffContext from "../../../../context/staff/staffContext";
 
-export default function ClaimedTickets(props) {
+export default function MyTickets(props) {
   const staffContext = React.useContext(StaffContext);
   const {
     user,

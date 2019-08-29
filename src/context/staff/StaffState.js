@@ -8,7 +8,9 @@ import {
   GET_CURRENT_USER,
   GET_CURRENT_USER_FAIL,
   GET_ASSIGNED_TICKETS,
-  GET_ASSIGNED_TICKETS_FAIL
+  GET_ASSIGNED_TICKETS_FAIL,
+  GET_All_TICKETS,
+  GET_All_TICKETS_FAIL
 } from "../types";
 
 const StaffState = props => {
@@ -43,8 +45,6 @@ const StaffState = props => {
       const filteredTickets = tickets.data.filter(
         ticket => ticket.assigneduser.userid === state.user.userid
       );
-      console.log("TICKETS", tickets);
-      console.log("FILTERED TICKETS", filteredTickets);
       dispatch({
         type: GET_ASSIGNED_TICKETS,
         payload: filteredTickets
@@ -56,9 +56,25 @@ const StaffState = props => {
       });
     }
   };
-  // Get Assigned Tickets???
-  // Claim Ticket
-  // Resolve Ticket
+
+  //! GET ALL TICKETS
+  const fetchAllTickets = async () => {
+    try {
+      const tickets = await axiosWithAuth().get("/tickets/alltickets");
+      const availableTickets = tickets.data.filter(
+        ticket => ticket.assigneduser === null
+      );
+      dispatch({
+        type: GET_All_TICKETS,
+        payload: availableTickets
+      });
+    } catch (err) {
+      dispatch({
+        type: GET_All_TICKETS_FAIL,
+        payload: err.response
+      });
+    }
+  };
 
   return (
     <StaffContext.Provider
@@ -69,7 +85,8 @@ const StaffState = props => {
         loading: state.loading,
         error: state.error,
         fetchAssignedTickets,
-        fetchCurrentUserData
+        fetchCurrentUserData,
+        fetchAllTickets
       }}
     >
       {props.children}
