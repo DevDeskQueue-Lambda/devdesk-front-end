@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import AuthContext from "../../../context/auth/authContext";
-import { Button, Card, Segment, Container } from "semantic-ui-react";
+import { Button, Card, Container } from "semantic-ui-react";
 
 const Dashboard = () => {
   const authContext = useContext(AuthContext);
