@@ -42,6 +42,9 @@ export const ADMIN_FETCH_TICKETS = "ADMIN_FETCH_TICKETS";
 export const ADMIN_FILTER_TICKETS = "ADMIN_FILTER_TICKETS";
 export const ADMIN_CLEAR_TICKET_FILTER = "CLEAR_TICKET_FILTER";
 export const ADMIN_FETCH_TICKET_BY_ID = "ADMIN_FETCH_TICKET_BY_ID";
+export const PROMOTE_USER_TO_STAFF = "PROMOTE_USER_TO_STAFF";
+export const PROMOTE_ANY_USER = "PROMOTE_ANY_USER";
+export const PROMOTE_USER_TO_ADMIN = "PROMOTE_USER_TO_ADMIN";
 
 export const CLEAR_USERS = "CLEAR_USERS";
 export const SET_CURRENT = "SET_CURRENT";
@@ -49,9 +52,10 @@ export const CLEAR_CURRENT = "CLEAR_CURRENT";
 
 export const SET_LOADING = "SET_LOADING";
 
-// users
+export const ADMIN_ERROR = "ADMIN_ERROR";
 
-export const ERROR = "USER_ERROR";
+// users
+export const ERROR = "ERROR";
 
 // auth state
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";

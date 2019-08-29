@@ -16,8 +16,11 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-
-  ERROR
+  PROMOTE_USER_TO_STAFF,
+  PROMOTE_ANY_USER,
+  PROMOTE_USER_TO_ADMIN,
+  SET_LOADING,
+  ADMIN_ERROR
 } from "../types";
 
 export default (state, action) => {
@@ -58,6 +61,12 @@ export default (state, action) => {
         staff: [action.payload, ...state.staff],
         loading: false
       };
+    case REMOVE_ASSIGNED:
+      return {
+        ...state,
+        adminTickets: state.adminTickets.filter(ticket => ticket.id !== action.payload),
+        loading: false
+      };
     case SET_CURRENT:
       return {
         ...state,
@@ -76,7 +85,8 @@ export default (state, action) => {
           return (
             user.fname.match(regex) ||
             user.lname.match(regex) ||
-            user.username.match(regex) || user.useremail.match(regex)
+            user.username.match(regex) ||
+            user.useremail.match(regex)
           );
         })
       };
@@ -86,7 +96,11 @@ export default (state, action) => {
         filteredTickets: state.adminTickets.filter(ticket => {
           const regex = new RegExp(`${action.payload}`, "gi");
           return (
-            ticket.title.match(regex) || ticket.status.name.match(regex) || ticket.user.fname.match(regex) || ticket.user.lname.match(regex) || ticket.user.username.match(regex)
+            ticket.title.match(regex) ||
+            ticket.status.name.match(regex) ||
+            ticket.user.fname.match(regex) ||
+            ticket.user.lname.match(regex) ||
+            ticket.user.username.match(regex)
           );
         })
       };
@@ -96,7 +110,12 @@ export default (state, action) => {
         ...state,
         filtered: null
       };
-    case ERROR:
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+    case ADMIN_ERROR:
       return {
         ...state,
         error: action.payload
