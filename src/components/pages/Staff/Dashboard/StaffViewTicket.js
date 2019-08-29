@@ -61,86 +61,90 @@ const StaffViewTicket = ({ match, status }) => {
 
   return (
     ticket ? (
-      <Grid container>
+      <Grid container stackable>
         <Grid.Row>
-          <Link to="/staff/dashboard">
-            <Button icon="arrow left" content="Return to dashboard" />
-          </Link>
+          <Grid.Column>
+            <Link to="/staff/dashboard">
+              <Button icon="arrow left" content="Return to dashboard" />
+            </Link>
+          </Grid.Column>
         </Grid.Row>
-        <Grid.Column width={3}>
-          <Segment raised>
-            <p><strong>Status:</strong> {ticketStatus}</p>
-            <p><strong>Assigned:</strong> {ticketAssigned}</p>
-            <Label.Group>
-              {
-                ticket.ticketCategories.map(category => {
-                  return (
-                    <Label key={category.category.categoryid}>
-                      {category.category.name}
-                    </Label>
-                  )
-                })
-              }
-            </Label.Group>
-            <List>
-            {(
+        <Grid.Row>
+          <Grid.Column width={3}>
+            <Segment raised>
+              <p><strong>Status:</strong> {ticketStatus}</p>
+              <p><strong>Assigned:</strong> {ticketAssigned}</p>
+              <Label.Group>
+                {
+                  ticket.ticketCategories.map(category => {
+                    return (
+                      <Label key={category.category.categoryid}>
+                        {category.category.name}
+                      </Label>
+                    )
+                  })
+                }
+              </Label.Group>
+              <List>
+                {(
                   <List.Item>
                     <Button fluid color="green" disabled={ticketStatus === 'Resolved'} onClick={resolve}>Resolve</Button>
                   </List.Item>
                 )
-              }
+                }
+                {
+                  ticketAssigned === 'Nobody' && (
+                    <List.Item>
+                      <Button fluid disabled={ticketStatus === 'Resolved'} onClick={assign}>Assign yourself</Button>
+                    </List.Item>
+                  )
+                }
+                {
+                  ticketAssigned === userInfo.username && (
+                    <List.Item>
+                      <Button fluid disabled={ticketStatus === 'Resolved'} onClick={unassign}>Unassign yourself</Button>
+                    </List.Item>
+                  )
+                }
+              </List>
+            </Segment>
+          </Grid.Column>
+          <Grid.Column width={13}>
+            <Segment>
+              <Header as="h1">{ticket.title}</Header>
+              <p><strong>Student:</strong> {`${ticket.user.fname} ${ticket.user.lname}`}</p>
+              <p><strong>Description:</strong> {ticket.description}</p>
+              <p><strong>Attempted:</strong> {ticket.tried}</p>
+            </Segment>
+            <Comment.Group>
+              <Header>Comments</Header>
               {
-                ticketAssigned === 'Nobody' && (
-                  <List.Item>
-                    <Button fluid disabled={ticketStatus === 'Resolved'} onClick={assign}>Assign yourself</Button>
-                  </List.Item>
-                )
+                [...comments].reverse().map(comment => {
+                  return (
+                    <Comment key={comment.comment.commentid}>
+                      <Comment.Avatar src="http://via.placeholder.com/50x50" />
+                      <Comment.Content>
+                        <Comment.Author as="a">{comment.comment.user.username}</Comment.Author>
+                        <Comment.Metadata>
+                          <div>Today at 5:42PM</div>
+                        </Comment.Metadata>
+                        <Comment.Text>{comment.comment.comment}</Comment.Text>
+                      </Comment.Content>
+                    </Comment>
+                  );
+                })
               }
-              {
-                ticketAssigned === userInfo.username && (
-                  <List.Item>
-                    <Button fluid disabled={ticketStatus === 'Resolved'} onClick={unassign}>Unassign yourself</Button>
-                  </List.Item>
-                )
-              }
-            </List>
-          </Segment>
-        </Grid.Column>
-        <Grid.Column width={13}>
-          <Segment>
-            <Header as="h1">{ticket.title}</Header>
-            <p><strong>Student:</strong> {`${ticket.user.fname} ${ticket.user.lname}`}</p>
-            <p><strong>Description:</strong> {ticket.description}</p>
-            <p><strong>Attempted:</strong> {ticket.tried}</p>
-          </Segment>
-          <Comment.Group>
-            <Header>Comments</Header>
-            {
-              [...comments].reverse().map(comment => {
-                return (
-                  <Comment key={comment.comment.commentid}>
-                    <Comment.Avatar src="http://via.placeholder.com/50x50" />
-                    <Comment.Content>
-                      <Comment.Author as="a">{comment.comment.user.username}</Comment.Author>
-                      <Comment.Metadata>
-                        <div>Today at 5:42PM</div>
-                      </Comment.Metadata>
-                      <Comment.Text>{comment.comment.comment}</Comment.Text>
-                    </Comment.Content>
-                  </Comment>
-                );
-              })
-            }
-          </Comment.Group>
-          <Form className="ui reply form">
-            <SemanticForm.Field>
-              <Field component="textarea" name="content" rows="3" />
-            </SemanticForm.Field>
-            <Button primary type="submit">
-              Comment
+            </Comment.Group>
+            <Form className="ui reply form">
+              <SemanticForm.Field>
+                <Field component="textarea" name="content" rows="3" />
+              </SemanticForm.Field>
+              <Button primary type="submit">
+                Comment
             </Button>
-          </Form>
-        </Grid.Column>
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
     ) : null
   );
