@@ -14,7 +14,7 @@ const NavBar = ({ logo, homeUrl }) => {
   return (
     <Menu borderless>
       <Container>
-        <Menu.Item as="a" href={homeUrl}>
+        <Menu.Item as="a" href="/">
           <Image src={logo} size="small" />
         </Menu.Item>
         <Menu.Item position="right">
@@ -22,9 +22,14 @@ const NavBar = ({ logo, homeUrl }) => {
             <Button className="tertiary">Home</Button>
           </a>
           {isAuthenticated ? (
-            <Button className="tertiary" onClick={onLogOut}>
-              Log Out
+            <>
+              <Link to="/">
+                <Button className="tertiary">Dashboard</Button>
+              </Link>
+              <Button className="tertiary" onClick={onLogOut}>
+                Log Out
             </Button>
+            </>
           ) : (
               <>
                 <Link to="/register">
