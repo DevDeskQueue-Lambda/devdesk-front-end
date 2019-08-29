@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import { axiosWithAuth } from "../../utils";
+import axios from 'axios';
 import TicketContext from "./ticketContext";
 import ticketReducer from "./ticketReducer";
 import {
@@ -56,9 +57,20 @@ const TicketState = props => {
   };
 
   const addTicket = async newTicket => {
+    console.log('new ticket', newTicket);
+
+    axios.post('https://hooks.slack.com/services/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', { text: "does it really work?" }, {
+      withCredentials: false,
+      transformRequest: [(data, headers) => {
+        delete headers.post["Content-Type"]
+        return data
+      }]
+    })
+      .then(res => console.log('res from slack webhook', res))
+      .catch(err => console.log(err.response));
+
     try {
       const ticket = await axiosWithAuth().post("/tickets/ticket", newTicket);
-
       dispatch({
         type: ADD_TICKET,
         payload: ticket.data

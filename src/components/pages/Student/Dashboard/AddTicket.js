@@ -8,7 +8,7 @@ import * as Yup from "yup";
 const AddTicket = () => {
   const ticketContext = useContext(TicketContext);
   const { addTicket, fetchAllCategories, categories } = ticketContext;
-
+  console.log('ticketContext', ticketContext);
   useEffect(() => {
     fetchAllCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,6 +34,8 @@ const AddTicket = () => {
             };
           });
           values.ticketCategories = tempArray;
+
+          // console.log('values in submit', values);
 
           addTicket(values);
         }}

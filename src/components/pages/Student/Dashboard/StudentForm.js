@@ -49,7 +49,7 @@ const StudentForm = ({
           }
           multiple={true}
         >
-          {helpCategories.map(category => (
+          {helpCategories && helpCategories.map(category => (
             <option key={category.categoryid} value={category.categoryid}>
               {category.name}
             </option>
