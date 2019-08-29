@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Form, withFormik, Field } from 'formik';
 import { Link } from 'react-router-dom';
 import { Grid, Header, Segment, Label, Comment, Form as SemanticForm, Button, List } from 'semantic-ui-react';
-import { axiosWithAuth } from '../../../../utils'
+import { axiosWithAuth } from '../../../../utils';
 import AuthContext from '../../../../context/auth/authContext';
 import * as yup from 'yup';
 
