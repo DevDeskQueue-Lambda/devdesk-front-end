@@ -13,6 +13,7 @@ import AddTicket from "./AddTicket";
 import EditTicket from "./EditTicket";
 import DeleteTicket from "./DeleteTicket";
 import Comments from "./Comments";
+import AssignedStaff from "./AssignedStaff";
 
 const StudentDashboard = props => {
   const ticketContext = useContext(TicketContext);
@@ -22,7 +23,9 @@ const StudentDashboard = props => {
     isModalOpen,
     setModalOpen,
     deletingTicket,
-    setTicketCommentsModalOpen
+    setTicketCommentsModalOpen,
+    assignedStaff,
+    setAssignedStaffModalOpen
   } = ticketContext;
 
   const [ticketModal, setTicketModal] = useState({});
@@ -120,6 +123,17 @@ const StudentDashboard = props => {
                             <Icon name="comment outline" />
                           </Button>
                         )}
+                      {ticket.assigneduser && (
+                        <Button
+                          icon
+                          size="tiny"
+                          onClick={() =>
+                            setAssignedStaffModalOpen(true, ticket.assigneduser)
+                          }
+                        >
+                          <Icon name="user outline" />
+                        </Button>
+                      )}
                     </Table.Cell>
                     <Table.Cell>
                       <Button.Group>
@@ -152,6 +166,7 @@ const StudentDashboard = props => {
           <Button onClick={() => setModalOpen(false)}>Close</Button>
         </Modal.Actions>
       </Modal>
+      {assignedStaff && <AssignedStaff />}
       <Comments />
       <DeleteTicket />
     </div>

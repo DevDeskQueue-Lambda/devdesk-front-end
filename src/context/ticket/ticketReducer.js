@@ -12,7 +12,9 @@ import {
   SET_DELETE_TICKET_MODAL_OPEN,
   SET_DELETING_TICKET_ID,
   SET_TICKET_COMMENTS_MODAL_OPEN,
-  SET_TICKET_COMMENTS
+  SET_TICKET_COMMENTS,
+  SET_ASSIGNED_STAFF,
+  SET_ASSIGNED_STAFF_MODAL_OPEN
 } from "../types";
 
 export default (state, action) => {
@@ -107,7 +109,18 @@ export default (state, action) => {
         isTicketCommentsModalOpen: action.payload
       };
     }
-
+    case SET_ASSIGNED_STAFF: {
+      return {
+        ...state,
+        assignedStaff: action.payload
+      };
+    }
+    case SET_ASSIGNED_STAFF_MODAL_OPEN: {
+      return {
+        ...state,
+        isAssignedStaffModalOpen: action.payload
+      };
+    }
     default:
       return state;
   }
