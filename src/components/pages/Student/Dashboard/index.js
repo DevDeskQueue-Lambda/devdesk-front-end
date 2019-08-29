@@ -10,6 +10,7 @@ import {
   Modal,
   Table
 } from "semantic-ui-react";
+import AuthContext from "../../../../context/auth/authContext";
 import TicketContext from "../../../../context/ticket/ticketContext";
 import AddTicket from "./AddTicket";
 import EditTicket from "./EditTicket";
@@ -19,7 +20,9 @@ import AssignedStaff from "./AssignedStaff";
 //import { ticketCategories } from "../../../../utils/ticketCategories";
 
 const StudentDashboard = props => {
+  const authContext = useContext(AuthContext);
   const ticketContext = useContext(TicketContext);
+  const { userInfo } = authContext;
   const {
     tickets,
     categories,
@@ -30,14 +33,15 @@ const StudentDashboard = props => {
     deletingTicket,
     setTicketCommentsModalOpen,
     assignedStaff,
-    setAssignedStaffModalOpen
+    setAssignedStaffModalOpen,
+    setFilter
   } = ticketContext;
 
   const [ticketModal, setTicketModal] = useState({});
   const [ticketProps, setTicketProps] = useState({});
 
   useEffect(() => {
-    fetchAllTickets();
+    fetchAllTickets(userInfo.userid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -90,20 +94,27 @@ const StudentDashboard = props => {
                     <Grid.Row>
                       <Grid.Column>Category</Grid.Column>
                       <Grid.Column textAlign="right">
-                        <Dropdown floating icon="filter">
+                        <Dropdown floating icon="filter" clearable>
                           <Dropdown.Menu>
-                            <Input icon="search"></Input>
-                            <Dropdown.Header icon="tags" content="Categories" />
-
-                            <Dropdown.Menu scrolling>
-                              {categories &&
-                                categories.length > 0 &&
-                                categories.map(category => (
-                                  <Dropdown.Item key={category.categoryid}>
-                                    {category.name}
-                                  </Dropdown.Item>
-                                ))}
-                            </Dropdown.Menu>
+                            <Dropdown.Item
+                              color="red"
+                              onClick={() => setFilter("reset", null)}
+                            >
+                              Reset Filter
+                            </Dropdown.Item>
+                            <Dropdown.Divider />
+                            {categories &&
+                              categories.length > 0 &&
+                              categories.map(category => (
+                                <Dropdown.Item
+                                  key={category.categoryid}
+                                  onClick={() =>
+                                    setFilter("category", category.name)
+                                  }
+                                >
+                                  {category.name}
+                                </Dropdown.Item>
+                              ))}
                           </Dropdown.Menu>
                         </Dropdown>
                       </Grid.Column>

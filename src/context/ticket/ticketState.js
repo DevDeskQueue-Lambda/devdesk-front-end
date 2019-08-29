@@ -19,11 +19,14 @@ import {
   SET_TICKET_COMMENTS,
   SET_TICKET_COMMENTS_MODAL_OPEN,
   SET_ASSIGNED_STAFF,
-  SET_ASSIGNED_STAFF_MODAL_OPEN
+  SET_ASSIGNED_STAFF_MODAL_OPEN,
+  FILTER_BY_CATEGORY,
+  RESET_FILTER
 } from "../types";
 
 const TicketState = props => {
   const initialState = {
+    defaultTickets: [],
     tickets: [],
     deletingTicketID: null,
     loading: false,
@@ -53,13 +56,13 @@ const TicketState = props => {
       });
     }
   };
-  const fetchAllTickets = async () => {
+  const fetchAllTickets = async studentID => {
     try {
       const tickets = await axiosWithAuth().get("/tickets/alltickets");
 
       dispatch({
         type: GET_TICKETS,
-        payload: tickets.data
+        payload: { tickets: tickets.data, studentID: studentID }
       });
     } catch (errors) {
       dispatch({
@@ -193,11 +196,30 @@ const TicketState = props => {
     });
   };
 
+  const setFilter = (filterBy, filteringTerm) => {
+    switch (filterBy) {
+      case "category":
+        dispatch({
+          type: FILTER_BY_CATEGORY,
+          payload: filteringTerm
+        });
+
+        break;
+
+      default:
+        dispatch({
+          type: "RESET_FILTER",
+          payload: null
+        });
+    }
+  };
+
   return (
     <TicketContext.Provider
       value={{
         // state variables
         tickets: state.tickets,
+        defaultTickets: state.defaultTickets,
         deletingTicketID: state.deletingTicketID,
         loading: state.loading,
         error: state.error,
@@ -223,7 +245,8 @@ const TicketState = props => {
         setModalOpen,
         setDeleteTicketModalOpen,
         setTicketCommentsModalOpen,
-        setAssignedStaffModalOpen
+        setAssignedStaffModalOpen,
+        setFilter
       }}
     >
       {props.children}
