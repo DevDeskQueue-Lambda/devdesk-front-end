@@ -59,13 +59,7 @@ const TicketState = props => {
   const addTicket = async newTicket => {
     console.log('new ticket', newTicket);
 
-    axios.post('https://hooks.slack.com/services/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', { text: "does it really work?" }, {
-      withCredentials: false,
-      transformRequest: [(data, headers) => {
-        delete headers.post["Content-Type"]
-        return data
-      }]
-    })
+    axios.post('https://hooks.slack.com/services/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', { text: "does it really work?" })
       .then(res => console.log('res from slack webhook', res))
       .catch(err => console.log(err.response));
 
