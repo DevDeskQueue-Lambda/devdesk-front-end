@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React, { Fragment, useContext, useEffect } from "react";
 // import { Header, Grid } from "semantic-ui-react";
 // import AdminContext from "../../../../context/admin/adminContext";
@@ -60,8 +61,17 @@ const AdminDashboard = () => {
     fetchAllTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+=======
+import React from "react";
 
+import AdminTicketView from "./ticketViews/AdminTicketView";
+import AdminUserView from "./userViews/AdminUserView";
+>>>>>>> d2ae215986ff64533a09debffa9105c30fa92184
+
+const AdminDashboard = (props) => {
+  console.log('adminview', props.users)
   return (
+<<<<<<< HEAD
     <Grid padded="horizontally"  style={{ marginTop: '3rem' }}>
       <Grid.Column width={16}>
         <Header as="h1">Administration Dashboard</Header>
@@ -123,6 +133,13 @@ const AdminDashboard = () => {
         </Table>
       </Grid.Column>
     </Grid>
+=======
+    <div>
+      <AdminUserView />
+
+      <AdminTicketView />
+    </div>
+>>>>>>> d2ae215986ff64533a09debffa9105c30fa92184
   );
 };
 

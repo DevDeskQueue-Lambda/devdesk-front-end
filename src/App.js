@@ -34,6 +34,8 @@ export default function App() {
                 <Switch>
                   <Route exact path="/" component={Login} />
                   <Route path="/register" component={Register} />
+                  
+                  {/* <Route path="/users" component={Users} /> */}
 
                   <PrivateRoute path="/dashboard" component={Dashboard} />
                   <PrivateRoute
