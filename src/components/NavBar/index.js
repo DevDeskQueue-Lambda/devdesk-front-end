@@ -32,23 +32,14 @@ const NavBar = ({ logo, homeUrl }) => {
             </>
           ) : (
             <>
-              <Link to="/">
-                <Button className="tertiary">Dashboard</Button>
+              <Link to="/register">
+                <Button className="tertiary">Register</Button>
               </Link>
-              <Button className="tertiary" onClick={onLogOut}>
-                Log Out
-            </Button>
+              <Link to="/">
+                <Button className="tertiary">Login</Button>
+              </Link>
             </>
-          ) : (
-              <>
-                <Link to="/register">
-                  <Button className="tertiary">Register</Button>
-                </Link>
-                <Link to="/">
-                  <Button className="tertiary">Login</Button>
-                </Link>
-              </>
-            )}
+          )}
         </Menu.Item>
       </Container>
     </Menu>
