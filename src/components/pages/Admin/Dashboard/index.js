@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { Header, Grid } from "semantic-ui-react";
 import AdminContext from "../../../../context/admin/adminContext";
+import { Button } from 'semantic-ui-react'
 
 const AdminDashboard = () => {
   const adminContext = useContext(AdminContext);
@@ -14,25 +15,30 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div>
-      <Grid>
-        <Grid.Column>
-          <Header>Admin Dashboard</Header>
-          <h4>adminGetAllUsers by first name</h4>
+    <div class="ui two column centered grid">
+      <Grid container style={{ marginTop: '2rem' }}>
+        <Grid.Column width={16}>
+        <h1 class="ui header">Admin Dashboard</h1>
+        </Grid.Column>
+        <Grid.Column width={16}>
           {users &&
             users.map(user => {
               return (
                 <Fragment>
-                  <h1>{user.fname}</h1>
-                  <button
+                <Fragment>
+                  <h3>{user.fname}</h3>
+                </Fragment>
+                <Fragment>
+                    <Button color={"red"}
                     onClick={() => {
                       adminDeleteUser(user.userid);
                     }}
                   >
                     Delete
-                  </button>
+                                  </Button>
                 </Fragment>
-              );
+                </Fragment>
+                );
             })}
         </Grid.Column>
       </Grid>
