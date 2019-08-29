@@ -16,7 +16,7 @@ const TicketFilter = () => {
     }
   });
 
-  console.log("TicketFilter.js", text);
+  // console.log("TicketFilter.js", text);
 
   const onChange = e => {
     setValue(e.target.value);

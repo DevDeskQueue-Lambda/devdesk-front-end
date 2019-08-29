@@ -3,7 +3,8 @@ import React from "react";
 import AdminTicketView from "./ticketViews/AdminTicketView";
 import AdminUserView from "./userViews/AdminUserView";
 
-const AdminDashboard = () => {
+const AdminDashboard = (props) => {
+  console.log('adminview', props.users)
   return (
     <div>
       <AdminUserView />

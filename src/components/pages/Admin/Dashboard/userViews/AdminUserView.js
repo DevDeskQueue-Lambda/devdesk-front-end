@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useContext, useEffect } from "react";
 import { Button, Header, Grid, Label, Modal, Table } from "semantic-ui-react";
 import AdminContext from "../../../../../context/admin/adminContext";
+import AssignTicket from '../ticketViews/AssignTicket'
 
 import UserFilter from "./UserFilter";
 
@@ -10,7 +11,7 @@ const AdminUserView = () => {
 
   const { users, adminGetAllUsers, adminDeleteUser, filtered } = adminContext;
 
-  console.log("admin index", users);
+  // console.log("admin index", users);
 
   useEffect(() => {
     adminGetAllUsers();
@@ -32,7 +33,7 @@ const AdminUserView = () => {
                     <h1>{user.username}</h1>
                     <h3>{user.fname}</h3>
                     <h3>{user.lname}</h3>
-                    
+                    <AssignTicket/>
                     <button
                       onClick={() => {
                         adminDeleteUser(user.userid);
@@ -50,7 +51,7 @@ const AdminUserView = () => {
                     <h2>{user.username}</h2>
                     <h3>{user.fname}</h3>
                     <h3>{user.lname}</h3>
-                    
+                    <AssignTicket/>
                     <button
                       onClick={() => {
                         adminDeleteUser(user.userid);

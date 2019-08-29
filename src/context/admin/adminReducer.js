@@ -16,6 +16,7 @@ import {
   ADMIN_FETCH_TICKETS,
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
+  ADMIN_FETCH_TICKET_BY_ID,
   SET_LOADING,
   ERROR
 } from "../types";
@@ -23,6 +24,7 @@ import {
 export default (state, action) => {
   console.log("adminReducer", action);
   switch (action.type) {
+    case ADMIN_FETCH_TICKET_BY_ID:
     case ADMIN_FETCH_TICKETS:
         return {
           ...state,
@@ -53,7 +55,9 @@ export default (state, action) => {
     // Work in progress
     case ASSIGN_TICKET:
       return {
-        ...state
+        ...state,
+        staff: [action.payload, ...state.staff ],
+        loading: false
       };
     case SET_CURRENT:
       return {

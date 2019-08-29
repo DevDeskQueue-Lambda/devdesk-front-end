@@ -24,6 +24,7 @@ import {
   ADMIN_FETCH_TICKETS,
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
+  ADMIN_FETCH_TICKET_BY_ID,
   ERROR
 } from "../types";
 
@@ -35,7 +36,8 @@ const AdminState = props => {
     current: null,
     filtered: null,
     adminTickets: null,
-    filteredTickets: null
+    filteredTickets: null,
+    staff: null
   };
 
   const [state, dispatch] = useReducer(adminReducer, initialState);
@@ -54,7 +56,7 @@ const AdminState = props => {
     } catch (err) {
       dispatch({
         type: ERROR,
-        payload: err.response.data
+        payload: err.response
       });
     }
   };
@@ -145,9 +147,28 @@ const AdminState = props => {
       const res = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/tickets/alltickets"
       );
+      // console.log('adminFetchTickets', res)
       dispatch({
         type: ADMIN_FETCH_TICKETS,
         payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response
+      });
+    }
+  };
+
+  // get ticket by id
+  const adminFetchTicketById = async id => {
+    try {
+      await getCurrentLoggedInUser().get(
+        `https://lambda-devdesk.herokuapp.com/tickets/ticket/${id}`
+      );
+      dispatch({
+        type: ADMIN_FETCH_TICKET_BY_ID,
+        payload: id
       });
     } catch (err) {
       dispatch({
@@ -174,10 +195,10 @@ const AdminState = props => {
   const adminArchiveTicket = () => console.log("adminArchiveTicket");
 
   // adminAssignTicket
-  const adminAssignTicket = async id => {
+  const adminAssignTicket = async (id, userid) => {
     try {
       const res = await getCurrentLoggedInUser().put(
-        `https://lambda-devdesk.herokuapp.com/tickets/ticket/assign/${id}`
+        `https://lambda-devdesk.herokuapp.com/tickets/ticket/admin/assign/${id}/${userid}`
       );
       console.log("adminAssignTicket", res);
       dispatch({
@@ -187,7 +208,7 @@ const AdminState = props => {
     } catch (err) {
       dispatch({
         type: ERROR,
-        payload: err.response.msg
+        payload: err.response
       });
     }
   };
@@ -210,6 +231,7 @@ const AdminState = props => {
         filtered: state.filtered,
         adminTickets: state.adminTickets,
         filteredTickets: state.filteredTickets,
+        staff: state.staff,
         adminGetAllUsers,
         adminDeleteUser,
         adminGetUserRoles,
@@ -227,6 +249,7 @@ const AdminState = props => {
         adminFetchTickets,
         adminFilterTickets,
         adminClearTicketFilter,
+        adminFetchTicketById,
         setLoading
       }}
     >
