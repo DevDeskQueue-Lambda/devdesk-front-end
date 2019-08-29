@@ -21,7 +21,7 @@ import {
 } from "../types";
 
 export default (state, action) => {
-  console.log("adminReducer", action);
+  // console.log("adminReducer", action);
   switch (action.type) {
     case ADMIN_FETCH_TICKET_BY_ID:
     case ADMIN_FETCH_TICKETS:
