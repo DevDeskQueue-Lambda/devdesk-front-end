@@ -209,6 +209,7 @@ const AdminState = props => {
         type: ASSIGN_TICKET,
         payload: res.data
       });
+      adminFetchTickets();
     } catch (err) {
       console.log("adminAssignTicket", err);
       dispatch({
