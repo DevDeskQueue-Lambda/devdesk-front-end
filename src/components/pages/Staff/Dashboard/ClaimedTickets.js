@@ -1,24 +1,30 @@
-import React from 'react';
+import React from "react";
 import { Button, Header, Grid, Label, Modal, Table } from "semantic-ui-react";
-import StaffContext from '../../../../context/staff/staffContext'
+import StaffContext from "../../../../context/staff/staffContext";
 
 export default function ClaimedTickets(props) {
   const staffContext = React.useContext(StaffContext);
-  const { user, tickets, fetchAssignedTickets, fetchCurrentUserData } = staffContext;
+  const {
+    user,
+    tickets,
+    fetchAssignedTickets,
+    fetchCurrentUserData
+  } = staffContext;
 
   React.useEffect(() => {
     fetchAssignedTickets();
     fetchCurrentUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* const filteredTickets = tickets.assignedid.userid.filter(ticketid => ticketid < user.userid); */
   const mappedTickets = () => {
-    tickets.map(ticket => console.log(ticket.assigneduser))
-  }
+    tickets.map(ticket => console.log(ticket.assigneduser.userid === 4));
+  };
 
   console.log("USER ID", user.userid);
   console.log("TICKETS", tickets);
-  console.log('MAPPED TICKETS', mappedTickets());
+  console.log("MAPPED TICKETS", mappedTickets());
   /* console.log('FILTERED TICKETS', filteredTickets); */
 
   return (
@@ -77,5 +83,5 @@ export default function ClaimedTickets(props) {
         </Grid.Column>
       </Grid>
     </div>
-  )
+  );
 }
