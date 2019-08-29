@@ -55,9 +55,8 @@ const TicketState = props => {
 
   const addTicket = async newTicket => {
     console.log('new ticket', newTicket);
-
     //Autoposting to the devdesk slackbot which must be installed in the slack workspace
-    const slackURL = 'https://hooks.slack.com/services/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';
+    const slackURL = 'https://hooks.slack.com/services/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';
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
     axios.post(proxyurl + slackURL, { text: newTicket.description })
