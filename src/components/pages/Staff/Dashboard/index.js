@@ -25,14 +25,14 @@ export default function StaffDashboard(props) {
     <div>
       <Router>
         <Menu>
-          <Menu.Item name="My Tickets" href="/staff/dashboard/my-tickets" />
+          <Menu.Item name="My Tickets" href="/staff/dashboard" />
           <Menu.Item
             name="Available Tickets"
             href="/staff/dashboard/available-tickets"
           />
         </Menu>
         <Switch>
-          <Route path="/staff/dashboard/my-tickets" component={MyTickets} />
+          <Route exact path="/staff/dashboard" component={MyTickets} />
           <Route
             path="/staff/dashboard/available-tickets"
             component={AvailableTickets}
