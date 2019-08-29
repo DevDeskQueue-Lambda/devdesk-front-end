@@ -13,7 +13,7 @@ const AdminTicketView = () => {
 
   const { adminTickets, adminFetchTickets, filteredTickets } = adminContext;
 
-  console.log("adminFetchTickets", adminTickets);
+  // console.log("adminFetchTickets", adminTickets);
 
   //ticket context
   const [ticketModal, setTicketModal] = useState({});
@@ -105,19 +105,17 @@ const AdminTicketView = () => {
                 adminTickets.length > 0 &&
                 adminTickets.map(ticket => (
                   <Table.Row key={ticket.ticketid}>
-                    <Table.Cell>
-                      Ticket ID: {ticket.ticketid} <br />
+                    <Table.Cell>Ticket ID:{ticket.ticketid}<br />
                       {ticket.ticketCategories &&
                         ticket.ticketCategories.length > 0 &&
                         ticket.ticketCategories.map(category => (
-                          <Label key={category.category.categoryid}>
-                            {category.category.name}
+                          <Label key={category.category.categoryid}>{category.category.name}
                           </Label>
                         ))}
                     </Table.Cell>
                     <Table.Cell>{ticket.title}</Table.Cell>
                     <Table.Cell>
-                      {" "}
+                      {/* {" "} */}
                       User Id: {ticket.user.userid} <br />
                       Role: <br /> {ticket.user.authority.map(user => (`${'/'} ${user.authority} `))} <br />
                       Name: {ticket.user.fname} {ticket.user.lname} <br />
@@ -125,7 +123,7 @@ const AdminTicketView = () => {
                     </Table.Cell>
                     <Table.Cell>{ticket.tried}</Table.Cell>
                     <Table.Cell>{ticket.status.name}</Table.Cell>
-                    <Table.Cell>{console.log('assigneduser', ticket.assigneduser)}</Table.Cell> {//need assigned user
+                    {/* <Table.Cell>{console.log('assigneduser', ticket.assigneduser)}</Table.Cell> {//need assigned user */}
                     }
                     <Table.Cell>
                       <Button onClick={() => handleTicketModal("edit")}>

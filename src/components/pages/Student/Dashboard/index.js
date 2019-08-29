@@ -1,44 +1,54 @@
 import React, { useState, useContext, useEffect } from "react";
 import {
-  Comment,
   Button,
+  Dropdown,
   Header,
   Grid,
   Icon,
+  Input,
   Label,
   Modal,
   Table
 } from "semantic-ui-react";
+import AuthContext from "../../../../context/auth/authContext";
 import TicketContext from "../../../../context/ticket/ticketContext";
 import AddTicket from "./AddTicket";
 import EditTicket from "./EditTicket";
 import DeleteTicket from "./DeleteTicket";
+import Comments from "./Comments";
+import AssignedStaff from "./AssignedStaff";
+//import { ticketCategories } from "../../../../utils/ticketCategories";
 
 const StudentDashboard = props => {
+  const authContext = useContext(AuthContext);
   const ticketContext = useContext(TicketContext);
+  const { userInfo } = authContext;
   const {
     tickets,
+    categories,
     fetchAllTickets,
+    fetchAllCategories,
     isModalOpen,
     setModalOpen,
-    deletingTicket
+    deletingTicket,
+    setTicketCommentsModalOpen,
+    assignedStaff,
+    setAssignedStaffModalOpen,
+    setFilter
   } = ticketContext;
 
   const [ticketModal, setTicketModal] = useState({});
   const [ticketProps, setTicketProps] = useState({});
-  const [isCommentModalOpen, setCommentModalOpen] = useState(false);
-  const [commentModalProps, setCommentModalProps] = useState([]);
 
   useEffect(() => {
-    fetchAllTickets();
+    fetchAllTickets(userInfo.userid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (commentModalProps.length > 0) {
-      setCommentModalOpen(true);
-    }
-  }, [commentModalProps]);
+    fetchAllCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleTicketModal = (action, ticketInfo) => {
     if (action === "edit") {
@@ -46,10 +56,6 @@ const StudentDashboard = props => {
     }
     setTicketModal(action);
     setModalOpen(true);
-  };
-
-  const handleCommentModal = ticketComments => {
-    setCommentModalProps(ticketComments);
   };
 
   let modal = {
@@ -83,7 +89,38 @@ const StudentDashboard = props => {
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Category</Table.HeaderCell>
+                <Table.HeaderCell>
+                  <Grid columns={2}>
+                    <Grid.Row>
+                      <Grid.Column>Category</Grid.Column>
+                      <Grid.Column textAlign="right">
+                        <Dropdown floating icon="filter" clearable>
+                          <Dropdown.Menu>
+                            <Dropdown.Item
+                              color="red"
+                              onClick={() => setFilter("reset", null)}
+                            >
+                              Reset Filter
+                            </Dropdown.Item>
+                            <Dropdown.Divider />
+                            {categories &&
+                              categories.length > 0 &&
+                              categories.map(category => (
+                                <Dropdown.Item
+                                  key={category.categoryid}
+                                  onClick={() =>
+                                    setFilter("category", category.name)
+                                  }
+                                >
+                                  {category.name}
+                                </Dropdown.Item>
+                              ))}
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Table.HeaderCell>
                 <Table.HeaderCell>Title</Table.HeaderCell>
                 <Table.HeaderCell>Description</Table.HeaderCell>
                 <Table.HeaderCell>Tried</Table.HeaderCell>
@@ -122,12 +159,26 @@ const StudentDashboard = props => {
                             icon
                             size="tiny"
                             onClick={() =>
-                              handleCommentModal(ticket.ticketComments)
+                              setTicketCommentsModalOpen(
+                                true,
+                                ticket.ticketComments
+                              )
                             }
                           >
                             <Icon name="comment outline" />
                           </Button>
                         )}
+                      {ticket.assigneduser && (
+                        <Button
+                          icon
+                          size="tiny"
+                          onClick={() =>
+                            setAssignedStaffModalOpen(true, ticket.assigneduser)
+                          }
+                        >
+                          <Icon name="user outline" />
+                        </Button>
+                      )}
                     </Table.Cell>
                     <Table.Cell>
                       <Button.Group>
@@ -160,27 +211,8 @@ const StudentDashboard = props => {
           <Button onClick={() => setModalOpen(false)}>Close</Button>
         </Modal.Actions>
       </Modal>
-      <Modal open={isCommentModalOpen}>
-        <Modal.Header>Comments</Modal.Header>
-        <Modal.Content>
-          <Comment.Group>
-            {commentModalProps.length > 0 &&
-              commentModalProps.map(comment => (
-                <Comment key={comment.comment.commentid}>
-                  <Comment.Content>
-                    <Comment.Author>
-                      {comment.comment.user.fname}
-                    </Comment.Author>
-                    <Comment.Text>{comment.comment.comment}</Comment.Text>
-                  </Comment.Content>
-                </Comment>
-              ))}
-          </Comment.Group>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button onClick={() => setCommentModalOpen(false)}>Close</Button>
-        </Modal.Actions>
-      </Modal>
+      {assignedStaff && <AssignedStaff />}
+      <Comments />
       <DeleteTicket />
     </div>
   );

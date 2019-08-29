@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AuthState from "./context/auth/AuthState";
 import AdminState from "./context/admin/AdminState";
-import StaffState from './context/staff/StaffState';
+import StaffState from "./context/staff/StaffState";
 
 import TicketState from "./context/ticket/ticketState";
 import { roles } from "./utils/roles";
@@ -26,50 +26,56 @@ import StaffViewTicket from "./components/pages/Staff/Dashboard/StaffViewTicket"
 function App() {
   return (
     <AuthState>
-      <AdminState>
-        <StaffState>
-        <div className="App">
-          <Router>
-            <NavBar logo={lambdaLogo} />
-            <Fragment>
-              <Switch>
-                <Route exact path="/" component={Login} />
-                <Route path="/register" component={Register} />
-
-                  <PrivateRoute path="/dashboard" component={Dashboard} />
-                  <PrivateRoute
-                    path="/student/dashboard"
-                    rolename={roles.student}
-                    component={StudentDashboard}
-                  />
-                  <PrivateRoute
-                    exact path="/staff/dashboard"
-                    roleName={roles.staff}
-                    component={StaffDashboard}
-                  />
-
-                  <PrivateRoute
-                    path="/staff/dashboard/ticket/:id"
-                    roleName={roles.staff}
-                    component={StaffViewTicket}
-                  />
-
-                  <PrivateRoute
-                    path="/admin/dashboard"
-                    roleName={roles.admin}
-                    component={AdminDashboard}
-                  />
-
-                <PrivateRoute
-                  path="/users/dashboard"
-                  component={StudentDashboard}
+      <Router>
+        <AdminState>
+          <StaffState>
+            <div className="App">
+              <Router>
+                <NavBar
+                  logo={lambdaLogo}
+                  homeUrl="https://devdesk-ui.devdesk.now.sh/"
                 />
-              </Switch>
-            </Fragment>
-          </Router>
-        </div>
-        </StaffState>
-      </AdminState>
+                <Fragment>
+                  <Switch>
+                    <Route exact path="/" component={Login} />
+                    <Route path="/register" component={Register} />
+
+                    <PrivateRoute path="/dashboard" component={Dashboard} />
+                    <PrivateRoute
+                      path="/student/dashboard"
+                      rolename={roles.student}
+                      component={StudentDashboard}
+                    />
+                    <PrivateRoute
+                      exact
+                      path="/staff/dashboard"
+                      roleName={roles.staff}
+                      component={StaffDashboard}
+                    />
+
+                    <PrivateRoute
+                      path="/staff/dashboard/ticket/:id"
+                      roleName={roles.staff}
+                      component={StaffViewTicket}
+                    />
+
+                    <PrivateRoute
+                      path="/admin/dashboard"
+                      roleName={roles.admin}
+                      component={AdminDashboard}
+                    />
+
+                    <PrivateRoute
+                      path="/users/dashboard"
+                      component={StudentDashboard}
+                    />
+                  </Switch>
+                </Fragment>
+              </Router>
+            </div>
+          </StaffState>
+        </AdminState>
+      </Router>
     </AuthState>
   );
 }

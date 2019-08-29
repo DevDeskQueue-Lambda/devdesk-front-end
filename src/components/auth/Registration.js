@@ -34,16 +34,16 @@ const Registration = ({ errors, touched, status, history }) => {
           {!_.isEmpty(
             _.intersection(Object.keys(touched), Object.keys(errors))
           ) && (
-            <Message
-              icon="warning circle"
-              header="There's some problems with the information below."
-              negative
-              list={_.intersection(
-                Object.keys(touched),
-                Object.keys(errors)
-              ).map(key => errors[key])}
-            />
-          )}
+              <Message
+                icon="warning circle"
+                header="There's some problems with the information below."
+                negative
+                list={_.intersection(
+                  Object.keys(touched),
+                  Object.keys(errors)
+                ).map(key => errors[key])}
+              />
+            )}
 
           <SemanticForm.Field>
             <label>
@@ -130,8 +130,8 @@ const FormikRegistration = withFormik({
       .oneOf([yup.ref("password")], "The passwords do not match.")
   }),
 
-  handleSubmit: function(values, { resetForm, setStatus }) {
-    console.log(values);
+  handleSubmit: function (values, { resetForm, setStatus }) {
+    // console.log(values);
     setStatus(values);
     resetForm();
   }
