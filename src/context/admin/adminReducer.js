@@ -18,7 +18,7 @@ import {
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
   SET_LOADING,
-  ERROR
+  ADMIN_ERROR
 } from "../types";
 
 export default (state, action) => {
@@ -97,7 +97,7 @@ export default (state, action) => {
         ...state,
         filtered: null
       };
-    case ERROR:
+    case ADMIN_ERROR:
       return {
         ...state,
         error: action.payload

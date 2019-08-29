@@ -25,7 +25,7 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-  ERROR
+  ADMIN_ERROR
 } from "../types";
 
 const AdminState = props => {
@@ -55,7 +55,7 @@ const AdminState = props => {
       });
     } catch (err) {
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response
       });
     }
@@ -76,7 +76,7 @@ const AdminState = props => {
       adminGetAllUsers();
     } catch (err) {
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response.data
       });
     }
@@ -95,7 +95,7 @@ const AdminState = props => {
       });
     } catch (err) {
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response.data
       });
     }
@@ -154,7 +154,7 @@ const AdminState = props => {
       });
     } catch (err) {
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response
       });
     }
@@ -172,7 +172,7 @@ const AdminState = props => {
       });
     } catch (err) {
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response.data
       });
     }
@@ -209,7 +209,7 @@ const AdminState = props => {
     } catch (err) {
       console.log("adminAssignTicket", err.response);
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response
       });
     }
@@ -233,7 +233,7 @@ const AdminState = props => {
     } catch (err) {
       console.log("adminRemoveAssigned", err.response);
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response
       });
     }

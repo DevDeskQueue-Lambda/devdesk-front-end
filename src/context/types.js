@@ -35,9 +35,10 @@ export const CLEAR_CURRENT = "CLEAR_CURRENT";
 
 export const SET_LOADING = "SET_LOADING";
 
-// users
+export const ADMIN_ERROR = "ADMIN_ERROR";
 
-export const ERROR = "USER_ERROR";
+// users
+export const ERROR = "ERROR";
 
 // auth state
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
