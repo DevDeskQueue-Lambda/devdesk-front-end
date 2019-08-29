@@ -4,7 +4,7 @@ import AuthContext from "../../context/auth/authContext";
 
 import { Menu, Container, Image, Button } from "semantic-ui-react";
 
-const NavBar = ({ logo }) => {
+const NavBar = ({ logo, homeUrl }) => {
   const authContext = useContext(AuthContext);
   const { isAuthenticated, logout } = authContext;
   const onLogOut = () => {
@@ -14,10 +14,13 @@ const NavBar = ({ logo }) => {
   return (
     <Menu borderless>
       <Container>
-        <Menu.Item as="a" href="/">
+        <Menu.Item as="a" href={homeUrl}>
           <Image src={logo} size="small" />
         </Menu.Item>
         <Menu.Item position="right">
+          <a href={homeUrl}>
+            <Button className="tertiary">Home</Button>
+          </a>
           {isAuthenticated ? (
             <Button className="tertiary" onClick={onLogOut}>
               Log Out
