@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { Header, Grid, Table, Button, Label, List } from "semantic-ui-react";
+import { Header, Grid, Table, Label } from "semantic-ui-react";
 import TicketContext from "../../../../context/ticket/ticketContext";
 
 const StaffDashboard = () => {

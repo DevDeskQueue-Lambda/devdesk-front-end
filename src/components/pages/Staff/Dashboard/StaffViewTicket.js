@@ -24,7 +24,7 @@ const StaffViewTicket = ({ match, status }) => {
         setTicketStatus(response.data.status.name);
         setTicketAssigned(response.data.assigneduser ? response.data.assigneduser.username : 'Nobody');
       });
-  }, []);
+  }, [id]);
 
   const addComment = content => {
     console.log(content, id);
