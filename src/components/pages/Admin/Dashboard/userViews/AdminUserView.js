@@ -27,9 +27,9 @@ const AdminUserView = () => {
           <h4>Users</h4>
           <UserFilter />
           {filtered && filtered !== null
-            ? filtered.map(user => {
+            ? filtered.map((user, i) => {
               return (
-                <Fragment>
+                <Fragment key={i}>
                   <h1>{user.username}</h1>
                   <h3>{user.fname}</h3>
                   <h3>{user.lname}</h3>
@@ -45,9 +45,9 @@ const AdminUserView = () => {
               );
             })
             : users &&
-            users.map(user => {
+            users.map((user, i) => {
               return (
-                <Fragment>
+                <Fragment key={i}>
                   <h2>{user.username}</h2>
                   <h3>{user.fname}</h3>
                   <h3>{user.lname}</h3>
