@@ -23,7 +23,10 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-  ERROR
+  PROMOTE_USER_TO_STAFF,
+  PROMOTE_ANY_USER,
+  PROMOTE_USER_TO_ADMIN,
+  ADMIN_ERROR
 } from "../types";
 
 const AdminState = props => {
@@ -35,7 +38,7 @@ const AdminState = props => {
     filtered: null,
     adminTickets: null,
     filteredTickets: null,
-    staff: null
+    staff: []
   };
 
   const [state, dispatch] = useReducer(adminReducer, initialState);
@@ -53,8 +56,8 @@ const AdminState = props => {
       });
     } catch (err) {
       dispatch({
-        type: ERROR,
-        payload: err.response
+        type: ADMIN_ERROR,
+        payload: err.response.data
       });
     }
   };
@@ -74,7 +77,7 @@ const AdminState = props => {
       adminGetAllUsers();
     } catch (err) {
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response.data
       });
     }
@@ -93,7 +96,7 @@ const AdminState = props => {
       });
     } catch (err) {
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response.data
       });
     }
@@ -152,8 +155,8 @@ const AdminState = props => {
       });
     } catch (err) {
       dispatch({
-        type: ERROR,
-        payload: err.response
+        type: ADMIN_ERROR,
+        payload: err.response.data
       });
     }
   };
@@ -170,7 +173,7 @@ const AdminState = props => {
       });
     } catch (err) {
       dispatch({
-        type: ERROR,
+        type: ADMIN_ERROR,
         payload: err.response.data
       });
     }
@@ -204,11 +207,12 @@ const AdminState = props => {
         type: ASSIGN_TICKET,
         payload: res.data
       });
+      adminFetchTickets();
     } catch (err) {
-      console.log("adminAssignTicket", err.response);
+      console.log("adminAssignTicket", err);
       dispatch({
-        type: ERROR,
-        payload: err.response
+        type: ADMIN_ERROR,
+        payload: err.response.data
       });
     }
   };
@@ -217,28 +221,38 @@ const AdminState = props => {
   const adminResolveTicket = () => console.log("adminResolveTicket");
 
   // adminRemoveAssigned
-  const adminRemoveAssigned = async (id) => {
-    console.log("adminRemoveAssigned", id);
+  const adminRemoveAssigned = async id => {
+    console.log("adminRemoveAssigned 1", id);
     try {
       const res = await getCurrentLoggedInUser().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/unassign/${id}`
       );
-      console.log("adminRemoveAssigned", id);
+      console.log("adminRemoveAssigned 2", id);
       dispatch({
         type: REMOVE_ASSIGNED,
         payload: res.data
       });
+      adminFetchTickets();
     } catch (err) {
-      console.log("adminRemoveAssigned", err.response);
+      console.log("adminRemoveAssigned 3", err.response);
       dispatch({
-        type: ERROR,
-        payload: err.response
+        type: ADMIN_ERROR,
+        payload: err.response.data
       });
     }
   };
 
   // set loading to true
   const setLoading = () => dispatch({ type: SET_LOADING });
+
+  // promote user to staff
+  const promoteUserToStaff = () => console.log("promoteUserToStaff");
+
+  // promote any user
+  const promoteAnyUser = () => console.log("promoteUserToStaff");
+
+  // promote user to admin
+  const promoteUserToAdmin = () => console.log("promoteUserToStaff");
 
   return (
     <AdminContext.Provider
@@ -250,6 +264,9 @@ const AdminState = props => {
         adminTickets: state.adminTickets,
         filteredTickets: state.filteredTickets,
         staff: state.staff,
+        promoteUserToStaff,
+        promoteAnyUser,
+        promoteUserToAdmin,
         adminGetAllUsers,
         adminDeleteUser,
         adminGetUserRoles,
