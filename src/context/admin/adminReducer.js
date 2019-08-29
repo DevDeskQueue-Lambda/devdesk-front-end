@@ -62,6 +62,12 @@ export default (state, action) => {
         staff: [action.payload, ...state.staff],
         loading: false
       };
+    case RESOLVE_TICKET:
+      return {
+        ...state,
+        adminTickets: [action.payload],
+        loading: false
+      }
     case REMOVE_ASSIGNED:
       return {
         ...state,

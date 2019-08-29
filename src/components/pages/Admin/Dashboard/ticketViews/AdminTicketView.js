@@ -11,7 +11,7 @@ import TicketFilter from "./TicketFilter";
 const AdminTicketView = () => {
   const adminContext = useContext(AdminContext);
 
-  const { adminTickets, adminFetchTickets, filteredTickets, adminRemoveAssigned } = adminContext;
+  const { adminTickets, adminFetchTickets, filteredTickets, adminRemoveAssigned, adminResolveTicket } = adminContext;
 
   console.log("adminFetchTickets", adminTickets);
 
@@ -37,6 +37,11 @@ const AdminTicketView = () => {
 
   const onAdminRemovedAssigned = (id) => {
     adminRemoveAssigned(id)
+  }
+
+  const onAdminResolveTicket = (id) => {
+    adminResolveTicket(id)
+    
   }
 
   let modal = {
@@ -104,6 +109,7 @@ const AdminTicketView = () => {
                       <Table.Cell>
                       {ticket && ticket.assigneduser && ticket.assigneduser.fname}
                         <button onClick={() => onAdminRemovedAssigned(ticket.ticketid)}>Un Assign</button>
+                        
                       </Table.Cell>{" "}
                       {
                         //need assigned user
@@ -153,6 +159,7 @@ const AdminTicketView = () => {
                       <Table.Cell>
                         {ticket && ticket.assigneduser && ticket.assigneduser.fname}
                         <button onClick={() => onAdminRemovedAssigned(ticket.ticketid)}>Un Assign</button>
+                        <button onClick={() => onAdminResolveTicket(ticket.ticketid)}>Resolved</button>
                       </Table.Cell>{" "}
                       {
                         //need assigned user
