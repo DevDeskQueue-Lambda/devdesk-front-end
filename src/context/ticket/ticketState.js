@@ -1,33 +1,25 @@
 import React, { useReducer } from "react";
 import { axiosWithAuth } from "../../utils";
+import axios from 'axios';
 import TicketContext from "./ticketContext";
 import ticketReducer from "./ticketReducer";
 import {
   GET_TICKETS,
   GET_TICKETS_FAIL,
   ADD_TICKET,
-  ADD_TICKET_FAIL,
-  UPDATE_TICKET,
-  UPDATE_TICKET_FAIL,
-  DELETE_TICKET,
-  DELETE_TICKET_FAIL,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAIL,
-  SET_MODAL_OPEN,
-  SET_DELETE_TICKET_MODAL_OPEN,
-  SET_DELETING_TICKET_ID
+  SET_MODAL_OPEN
 } from "../types";
 
 const TicketState = props => {
   const initialState = {
     tickets: [],
-    deletingTicketID: null,
     loading: false,
     error: null,
     categories: [],
     categoriesError: null,
-    isModalOpen: false,
-    isDeleteTicketModalOpen: false
+    isModalOpen: false
   };
 
   const [state, dispatch] = useReducer(ticketReducer, initialState);
@@ -62,9 +54,14 @@ const TicketState = props => {
   };
 
   const addTicket = async newTicket => {
+    console.log('new ticket', newTicket);
+
+    axios.post('https://hooks.slack.com/services/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', { text: "does it really work?" })
+      .then(res => console.log('res from slack webhook', res))
+      .catch(err => console.log(err.response));
+
     try {
       const ticket = await axiosWithAuth().post("/tickets/ticket", newTicket);
-
       dispatch({
         type: ADD_TICKET,
         payload: ticket.data
@@ -75,73 +72,12 @@ const TicketState = props => {
         payload: false
       });
     } catch (errors) {
-      dispatch({
-        type: ADD_TICKET_FAIL,
-        payload: errors.response.data
-      });
-    }
-  };
-
-  const editTicket = async ticket => {
-    try {
-      const editedTicket = await axiosWithAuth().put(
-        `/tickets/ticket/${ticket.ticketid}`,
-        ticket
-      );
-
-      dispatch({
-        type: UPDATE_TICKET,
-        payload: editedTicket.data
-      });
-      dispatch({
-        type: SET_MODAL_OPEN,
-        payload: false
-      });
-    } catch (errors) {
-      dispatch({
-        type: UPDATE_TICKET_FAIL,
-        payload: errors.response.data
-      });
-    }
-  };
-
-  const deleteTicket = async ticketID => {
-    try {
-      const deletedTicket = await axiosWithAuth().delete(
-        `/tickets/ticket/${ticketID}`
-      );
-
-      dispatch({
-        type: DELETE_TICKET,
-        payload: deletedTicket.data
-      });
-
-      dispatch({
-        type: SET_DELETING_TICKET_ID,
-        payload: null
-      });
-      dispatch({
-        type: SET_DELETE_TICKET_MODAL_OPEN,
-        payload: false
-      });
-    } catch (errors) {
-      dispatch({
-        type: DELETE_TICKET_FAIL,
-        payload: errors.response.data
-      });
       console.log(errors);
+      // dispatch({
+      //   type: ADD_TICKET_FAIL,
+      //   payload: errors.response.data
+      // });
     }
-  };
-
-  const deletingTicket = ticketID => {
-    dispatch({
-      type: SET_DELETING_TICKET_ID,
-      payload: ticketID
-    });
-    dispatch({
-      type: SET_DELETE_TICKET_MODAL_OPEN,
-      payload: true
-    });
   };
 
   const setModalOpen = condition => {
@@ -151,39 +87,19 @@ const TicketState = props => {
     });
   };
 
-  const setDeleteTicketModalOpen = open => {
-    dispatch({
-      type: SET_DELETE_TICKET_MODAL_OPEN,
-      payload: open
-    });
-
-    if (!open) {
-      dispatch({
-        type: SET_DELETING_TICKET_ID,
-        payload: null
-      });
-    }
-  };
-
   return (
     <TicketContext.Provider
       value={{
         tickets: state.tickets,
-        deletingTicketID: state.deletingTicketID,
         loading: state.loading,
         error: state.error,
         categoriesError: state.categoriesError,
         categories: state.categories,
         isModalOpen: state.isModalOpen,
-        isDeleteTicketModalOpen: state.isDeleteTicketModalOpen,
         fetchAllCategories,
         fetchAllTickets,
         addTicket,
-        editTicket,
-        deleteTicket,
-        deletingTicket,
-        setModalOpen,
-        setDeleteTicketModalOpen
+        setModalOpen
       }}
     >
       {props.children}

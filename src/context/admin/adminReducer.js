@@ -1,15 +1,14 @@
 import {
+
   DELETE_USER,
   GET_ALL_USERS,
   GET_USER_ROLES,
-  ARCHIVE_TICKET,
+
   ASSIGN_TICKET,
-  RESOLVE_TICKET,
-  REMOVE_ASSIGNED,
+
   FILTER_USERS,
   CLEAR_FILTER,
-  ADD_USER,
-  UPDATE_USER,
+
   CLEAR_USERS,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -17,7 +16,7 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-  SET_LOADING,
+
   ERROR
 } from "../types";
 
@@ -26,11 +25,11 @@ export default (state, action) => {
   switch (action.type) {
     case ADMIN_FETCH_TICKET_BY_ID:
     case ADMIN_FETCH_TICKETS:
-        return {
-          ...state,
-          adminTickets: action.payload,
-          loading: false
-        };
+      return {
+        ...state,
+        adminTickets: action.payload,
+        loading: false
+      };
     case GET_USER_ROLES:
     case GET_ALL_USERS:
       return {
@@ -87,7 +86,7 @@ export default (state, action) => {
         filteredTickets: state.adminTickets.filter(ticket => {
           const regex = new RegExp(`${action.payload}`, "gi");
           return (
-            ticket.title.match(regex) || ticket.status.name.match(regex) || ticket.user.fname.match(regex) || ticket.user.lname.match(regex) || ticket.user.username.match(regex) 
+            ticket.title.match(regex) || ticket.status.name.match(regex) || ticket.user.fname.match(regex) || ticket.user.lname.match(regex) || ticket.user.username.match(regex)
           );
         })
       };
