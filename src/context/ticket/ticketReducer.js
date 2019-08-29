@@ -10,8 +10,14 @@ import {
   GET_CATEGORIES_FAIL,
   SET_MODAL_OPEN,
   SET_DELETE_TICKET_MODAL_OPEN,
-  SET_DELETING_TICKET_ID
-} from '../types';
+  SET_DELETING_TICKET_ID,
+  SET_TICKET_COMMENTS_MODAL_OPEN,
+  SET_TICKET_COMMENTS,
+  SET_ASSIGNED_STAFF,
+  SET_ASSIGNED_STAFF_MODAL_OPEN,
+  FILTER_BY_CATEGORY,
+  RESET_FILTER
+} from "../types";
 
 export default (state, action) => {
   console.log("reducer action ", action);
@@ -20,7 +26,12 @@ export default (state, action) => {
       localStorage.setItem("student_tickets", JSON.stringify(action.payload));
       return {
         ...state,
-        tickets: action.payload
+        tickets: action.payload.tickets.filter(
+          ticket => ticket.user.userid === action.payload.studentID
+        ),
+        defaultTickets: action.payload.tickets.filter(
+          ticket => ticket.user.userid === action.payload.studentID
+        )
       };
     }
     case GET_TICKETS_FAIL: {
@@ -93,7 +104,74 @@ export default (state, action) => {
         deletingTicketID: action.payload
       };
     }
-
+    case SET_TICKET_COMMENTS: {
+      return {
+        ...state,
+        ticketComments: action.payload
+      };
+    }
+    case SET_TICKET_COMMENTS_MODAL_OPEN: {
+      return {
+        ...state,
+        isTicketCommentsModalOpen: action.payload
+      };
+    }
+    case SET_ASSIGNED_STAFF: {
+      return {
+        ...state,
+        assignedStaff: action.payload
+      };
+    }
+    case SET_ASSIGNED_STAFF_MODAL_OPEN: {
+      return {
+        ...state,
+        isAssignedStaffModalOpen: action.payload
+      };
+    }
+    case FILTER_BY_CATEGORY: {
+      return {
+        ...state,
+        tickets: state.tickets.reduce(
+          (
+            acc,
+            {
+              ticketid,
+              title,
+              description,
+              tried,
+              user,
+              assigneduser,
+              status,
+              ticketCategories,
+              ticketComments
+            }
+          ) => {
+            ticketCategories.some(
+              category => category.category.name === action.payload
+            ) &&
+              acc.push({
+                ticketid,
+                title,
+                description,
+                tried,
+                user,
+                assigneduser,
+                status,
+                ticketCategories,
+                ticketComments
+              });
+            return acc;
+          },
+          []
+        )
+      };
+    }
+    case RESET_FILTER: {
+      return {
+        ...state,
+        tickets: [...state.defaultTickets]
+      };
+    }
     default:
       return state;
   }
