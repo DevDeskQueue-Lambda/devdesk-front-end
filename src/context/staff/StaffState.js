@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import { axiosWithAuth } from "../../utils";
 // Context/Reducer
-import StaffContext from './staffContext';
-import staffReducer from './staffReducer';
+import StaffContext from "./staffContext";
+import staffReducer from "./staffReducer";
 // Types
 import {
   GET_CURRENT_USER,
@@ -18,7 +18,7 @@ const StaffState = props => {
     tickets: [],
     loading: false,
     error: null
-  }
+  };
   const [state, dispatch] = React.useReducer(staffReducer, initialState);
 
   //! GET CURRENT USER
@@ -35,20 +35,24 @@ const StaffState = props => {
         payload: err.response.data
       });
     }
-  }
+  };
   //! GET ASSIGNED TICKETS
   const fetchAssignedTickets = async () => {
     try {
-      const tickets = await axiosWithAuth()
-      .get("/tickets/alltickets");
+      const tickets = await axiosWithAuth().get("/tickets/alltickets");
+      const filteredTickets = tickets.data.filter(
+        ticket => ticket.assigneduser.userid === state.user.userid
+      );
+      console.log("TICKETS", tickets);
+      console.log("FILTERED TICKETS", filteredTickets);
       dispatch({
         type: GET_ASSIGNED_TICKETS,
-        payload: tickets.data
+        payload: filteredTickets
       });
     } catch (err) {
       dispatch({
         type: GET_ASSIGNED_TICKETS_FAIL,
-        payload: err.response.data
+        payload: err.response
       });
     }
   };
@@ -70,7 +74,7 @@ const StaffState = props => {
     >
       {props.children}
     </StaffContext.Provider>
-  )
-}
+  );
+};
 
 export default StaffState;
