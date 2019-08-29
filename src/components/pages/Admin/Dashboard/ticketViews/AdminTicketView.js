@@ -79,7 +79,7 @@ const AdminTicketView = () => {
                           <Label key={category.category.categoryid}>
                             {category.category.name}
                           </Label>
-                        ))}
+                        ))}`
                     </Table.Cell>
                     <Table.Cell>{ticket.title}</Table.Cell>
                     <Table.Cell>

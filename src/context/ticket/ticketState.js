@@ -56,10 +56,14 @@ const TicketState = props => {
   const addTicket = async newTicket => {
     console.log('new ticket', newTicket);
 
-    axios.post('https://hooks.slack.com/services/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', { text: "does it really work?" })
+    //Autoposting to the devdesk slackbot which must be installed in the slack workspace
+    const slackURL = 'https://hooks.slack.com/services/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';
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+    axios.post(proxyurl + slackURL, { text: newTicket.description })
       .then(res => console.log('res from slack webhook', res))
       .catch(err => console.log(err.response));
-
+    //******************************************************************************* */
     try {
       const ticket = await axiosWithAuth().post("/tickets/ticket", newTicket);
       dispatch({

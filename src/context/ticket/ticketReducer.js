@@ -14,7 +14,7 @@ import {
 } from '../types';
 
 export default (state, action) => {
-  console.log("reducer action ", action);
+  // console.log("reducer action ", action);
   switch (action.type) {
     case GET_TICKETS: {
       localStorage.setItem("student_tickets", JSON.stringify(action.payload));
