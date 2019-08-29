@@ -25,6 +25,9 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
+  PROMOTE_USER_TO_STAFF,
+  PROMOTE_ANY_USER,
+  PROMOTE_USER_TO_ADMIN,
   ADMIN_ERROR
 } from "../types";
 
@@ -56,7 +59,7 @@ const AdminState = props => {
     } catch (err) {
       dispatch({
         type: ADMIN_ERROR,
-        payload: err.response
+        payload: err.response.data
       });
     }
   };
@@ -155,7 +158,7 @@ const AdminState = props => {
     } catch (err) {
       dispatch({
         type: ADMIN_ERROR,
-        payload: err.response
+        payload: err.response.data
       });
     }
   };
@@ -210,7 +213,7 @@ const AdminState = props => {
       console.log("adminAssignTicket", err.response);
       dispatch({
         type: ADMIN_ERROR,
-        payload: err.response
+        payload: err.response.data
       });
     }
   };
@@ -234,13 +237,22 @@ const AdminState = props => {
       console.log("adminRemoveAssigned", err.response);
       dispatch({
         type: ADMIN_ERROR,
-        payload: err.response
+        payload: err.response.data
       });
     }
   };
 
   // set loading to true
   const setLoading = () => dispatch({ type: SET_LOADING });
+
+  // promote user to staff
+  const promoteUserToStaff = () => console.log('promoteUserToStaff')
+
+  // promote any user
+  const promoteAnyUser = () => console.log('promoteUserToStaff')
+
+  // promote user to admin
+  const promoteUserToAdmin = () => console.log('promoteUserToStaff')
 
   return (
     <AdminContext.Provider
@@ -252,6 +264,9 @@ const AdminState = props => {
         adminTickets: state.adminTickets,
         filteredTickets: state.filteredTickets,
         staff: state.staff,
+        promoteUserToStaff,
+        promoteAnyUser,
+        promoteUserToAdmin,
         adminGetAllUsers,
         adminDeleteUser,
         adminGetUserRoles,
