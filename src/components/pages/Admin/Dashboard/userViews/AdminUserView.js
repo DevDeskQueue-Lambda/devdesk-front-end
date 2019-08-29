@@ -1,5 +1,5 @@
-import React, { useState, Fragment, useContext, useEffect } from "react";
-import { Button, Header, Grid, Label, Modal, Table } from "semantic-ui-react";
+import React, { Fragment, useContext, useEffect } from "react";
+import { Header, Grid } from "semantic-ui-react";
 import AdminContext from "../../../../../context/admin/adminContext";
 import AssignTicket from '../ticketViews/AssignTicket'
 
@@ -28,44 +28,44 @@ const AdminUserView = () => {
           <UserFilter />
           {filtered && filtered !== null
             ? filtered.map(user => {
-                return (
-                  <Fragment>
-                    <h1>{user.username}</h1>
-                    <h3>{user.fname}</h3>
-                    <h3>{user.lname}</h3>
-                    <AssignTicket/>
-                    <button
-                      onClick={() => {
-                        adminDeleteUser(user.userid);
-                      }}
-                    >
-                      Delete User
+              return (
+                <Fragment>
+                  <h1>{user.username}</h1>
+                  <h3>{user.fname}</h3>
+                  <h3>{user.lname}</h3>
+                  <AssignTicket />
+                  <button
+                    onClick={() => {
+                      adminDeleteUser(user.userid);
+                    }}
+                  >
+                    Delete User
                     </button>
-                  </Fragment>
-                );
-              })
+                </Fragment>
+              );
+            })
             : users &&
-              users.map(user => {
-                return (
-                  <Fragment>
-                    <h2>{user.username}</h2>
-                    <h3>{user.fname}</h3>
-                    <h3>{user.lname}</h3>
-                    <AssignTicket/>
-                    <button
-                      onClick={() => {
-                        adminDeleteUser(user.userid);
-                      }}
-                    >
-                      Delete User
+            users.map(user => {
+              return (
+                <Fragment>
+                  <h2>{user.username}</h2>
+                  <h3>{user.fname}</h3>
+                  <h3>{user.lname}</h3>
+                  <AssignTicket />
+                  <button
+                    onClick={() => {
+                      adminDeleteUser(user.userid);
+                    }}
+                  >
+                    Delete User
                     </button>
-                  </Fragment>
-                );
-              })}
+                </Fragment>
+              );
+            })}
         </Grid.Column>
       </Grid>
 
-     
+
     </div>
   );
 };

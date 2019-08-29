@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Button, Header, Grid, Label, Modal, Table } from "semantic-ui-react";
 
 import AdminContext from "../../../../../context/admin/adminContext";
@@ -71,75 +71,75 @@ const AdminTicketView = () => {
             <Table.Body>
               {filteredTickets && filteredTickets !== null
                 ? filteredTickets.map(ticket => (
-                    <Table.Row key={ticket.ticketid}>
-                      <Table.Cell>
-                        {ticket.ticketCategories &&
-                          ticket.ticketCategories.length > 0 &&
-                          ticket.ticketCategories.map(category => (
-                            <Label key={category.category.categoryid}>
-                              {category.category.name}
-                            </Label>
-                          ))}
-                      </Table.Cell>
-                      <Table.Cell>{ticket.title}</Table.Cell>
-                      <Table.Cell>
-                        Id {ticket.user.userid} Student {ticket.user.fname}
-                        {ticket.description}
-                      </Table.Cell>
-                      <Table.Cell>{ticket.tried}</Table.Cell>
-                      <Table.Cell>{ticket.status.name}</Table.Cell>
-                      <Table.Cell>
-                        <Button onClick={() => handleTicketModal("edit")}>
-                          Edit
+                  <Table.Row key={ticket.ticketid}>
+                    <Table.Cell>
+                      {ticket.ticketCategories &&
+                        ticket.ticketCategories.length > 0 &&
+                        ticket.ticketCategories.map(category => (
+                          <Label key={category.category.categoryid}>
+                            {category.category.name}
+                          </Label>
+                        ))}
+                    </Table.Cell>
+                    <Table.Cell>{ticket.title}</Table.Cell>
+                    <Table.Cell>
+                      Id {ticket.user.userid} Student {ticket.user.fname}
+                      {ticket.description}
+                    </Table.Cell>
+                    <Table.Cell>{ticket.tried}</Table.Cell>
+                    <Table.Cell>{ticket.status.name}</Table.Cell>
+                    <Table.Cell>
+                      <Button onClick={() => handleTicketModal("edit")}>
+                        Edit
                         </Button>
-                        <Button
-                          color="red"
-                          onClick={() => handleTicketModal("delete")}
-                        >
-                          Delete
+                      <Button
+                        color="red"
+                        onClick={() => handleTicketModal("delete")}
+                      >
+                        Delete
                         </Button>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))
+                    </Table.Cell>
+                  </Table.Row>
+                ))
                 : adminTickets &&
-                  adminTickets.length > 0 &&
-                  adminTickets.map(ticket => (
-                    <Table.Row key={ticket.ticketid}>
-                      <Table.Cell>
-                        Ticket ID: {ticket.ticketid} <br />
-                        {ticket.ticketCategories &&
-                          ticket.ticketCategories.length > 0 &&
-                          ticket.ticketCategories.map(category => (
-                            <Label key={category.category.categoryid}>
-                              {category.category.name}
-                            </Label>
-                          ))}
-                      </Table.Cell>
-                      <Table.Cell>{ticket.title}</Table.Cell>
-                      <Table.Cell>
-                        {" "}
-                        User Id: {ticket.user.userid} <br />
-                        Role: <br /> {ticket.user.authority.map(user => (`${'/'} ${user.authority} `))} <br />
-                        Name: {ticket.user.fname} {ticket.user.lname} <br />
-                        Description: {ticket.description}
-                      </Table.Cell>
-                      <Table.Cell>{ticket.tried}</Table.Cell>
-                      <Table.Cell>{ticket.status.name}</Table.Cell>
-                      <Table.Cell>{console.log('assigneduser', ticket.assigneduser)}</Table.Cell> {//need assigned user
-                      }
-                      <Table.Cell>
-                        <Button onClick={() => handleTicketModal("edit")}>
-                          Edit
+                adminTickets.length > 0 &&
+                adminTickets.map(ticket => (
+                  <Table.Row key={ticket.ticketid}>
+                    <Table.Cell>
+                      Ticket ID: {ticket.ticketid} <br />
+                      {ticket.ticketCategories &&
+                        ticket.ticketCategories.length > 0 &&
+                        ticket.ticketCategories.map(category => (
+                          <Label key={category.category.categoryid}>
+                            {category.category.name}
+                          </Label>
+                        ))}
+                    </Table.Cell>
+                    <Table.Cell>{ticket.title}</Table.Cell>
+                    <Table.Cell>
+                      {" "}
+                      User Id: {ticket.user.userid} <br />
+                      Role: <br /> {ticket.user.authority.map(user => (`${'/'} ${user.authority} `))} <br />
+                      Name: {ticket.user.fname} {ticket.user.lname} <br />
+                      Description: {ticket.description}
+                    </Table.Cell>
+                    <Table.Cell>{ticket.tried}</Table.Cell>
+                    <Table.Cell>{ticket.status.name}</Table.Cell>
+                    <Table.Cell>{console.log('assigneduser', ticket.assigneduser)}</Table.Cell> {//need assigned user
+                    }
+                    <Table.Cell>
+                      <Button onClick={() => handleTicketModal("edit")}>
+                        Edit
                         </Button>
-                        <Button
-                          color="red"
-                          onClick={() => handleTicketModal("delete")}
-                        >
-                          Delete
+                      <Button
+                        color="red"
+                        onClick={() => handleTicketModal("delete")}
+                      >
+                        Delete
                         </Button>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
             </Table.Body>
           </Table>
         </Grid.Column>

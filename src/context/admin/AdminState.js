@@ -1,30 +1,23 @@
 import React, { useReducer } from "react";
 import { getCurrentLoggedInUser } from "../../utils";
-import { axiosWithAuth } from "../../utils";
 import AdminContext from "./adminContext";
 import adminReducer from "./adminReducer";
 
 import {
-<<<<<<< HEAD
-  ADMIN_DELETE_USER,
-  ADMIN_GET_ALL_USERS,
-  ADMIN_GET_USER_ROLES,
-=======
+
   DELETE_USER,
   GET_ALL_USERS,
   GET_USER_ROLES,
-  ARCHIVE_TICKET,
+
   ASSIGN_TICKET,
-  RESOLVE_TICKET,
+
   REMOVE_ASSIGNED,
   FILTER_USERS,
   CLEAR_FILTER,
-  ADD_USER,
-  UPDATE_USER,
+
   CLEAR_USERS,
   SET_CURRENT,
   CLEAR_CURRENT,
->>>>>>> d2ae215986ff64533a09debffa9105c30fa92184
   SET_LOADING,
   ADMIN_FETCH_TICKETS,
   ADMIN_FILTER_TICKETS,
@@ -225,12 +218,12 @@ const AdminState = props => {
 
   // adminRemoveAssigned
   const adminRemoveAssigned = async (id) => {
-    console.log("adminRemoveAssigned", id );
+    console.log("adminRemoveAssigned", id);
     try {
       const res = await getCurrentLoggedInUser().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/unassign/${id}`
       );
-      console.log("adminRemoveAssigned", id );
+      console.log("adminRemoveAssigned", id);
       dispatch({
         type: REMOVE_ASSIGNED,
         payload: res.data

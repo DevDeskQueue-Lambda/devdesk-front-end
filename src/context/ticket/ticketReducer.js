@@ -11,7 +11,7 @@ import {
   SET_MODAL_OPEN,
   SET_DELETE_TICKET_MODAL_OPEN,
   SET_DELETING_TICKET_ID
-} from "../types";
+} from '../types';
 
 export default (state, action) => {
   console.log("reducer action ", action);
