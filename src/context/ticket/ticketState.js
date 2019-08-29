@@ -7,6 +7,11 @@ import {
   GET_TICKETS,
   GET_TICKETS_FAIL,
   ADD_TICKET,
+  ADD_TICKET_FAIL,
+  UPDATE_TICKET,
+  UPDATE_TICKET_FAIL,
+  DELETE_TICKET,
+  DELETE_TICKET_FAIL,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAIL,
   SET_MODAL_OPEN,
@@ -210,7 +215,7 @@ const TicketState = props => {
 
       default:
         dispatch({
-          type: "RESET_FILTER",
+          type: RESET_FILTER,
           payload: null
         });
     }
