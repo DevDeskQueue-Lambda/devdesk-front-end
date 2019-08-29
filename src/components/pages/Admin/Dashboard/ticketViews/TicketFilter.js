@@ -1,28 +1,29 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
-import AdminContext from "../../../../context/admin/adminContext";
+import AdminContext from "../../../../../context/admin/adminContext";
 
-const UserFilter = () => {
+const TicketFilter = () => {
   const [value, setValue] = useState("");
   const adminContext = useContext(AdminContext);
 
   const text = useRef("");
 
-  const { adminUserFilter, adminClearFilter, filtered } = adminContext;
+  const { adminFilterTickets,
+    adminClearTicketFilter, filteredTickets } = adminContext;
 
   useEffect(() => {
-    if (filtered == null) {
+    if (filteredTickets == null) {
       text.current.value = "";
     }
   });
 
-  // console.log("UserFilter.js", text);
+  console.log("TicketFilter.js", text);
 
   const onChange = e => {
     setValue(e.target.value);
     if (text.current.value !== "") {
-      adminUserFilter(e.target.value);
+      adminFilterTickets(e.target.value);
     } else {
-      adminClearFilter();
+      adminClearTicketFilter();
     }
   };
 
@@ -32,11 +33,11 @@ const UserFilter = () => {
         ref={text}
         type="text"
         value={value}
-        placeholder="Filter Users"
+        placeholder="Tickets"
         onChange={onChange}
       />
     </form>
   );
 };
 
-export default UserFilter;
+export default TicketFilter;

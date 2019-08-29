@@ -73,7 +73,7 @@ export default (state, action) => {
           return (
             user.fname.match(regex) ||
             user.lname.match(regex) ||
-            user.username.match(regex)
+            user.username.match(regex) || user.useremail.match(regex)
           );
         })
       };
