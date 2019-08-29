@@ -42,7 +42,7 @@
 
 // export default AdminDashboard;
 
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Header, Grid, Table, Button, Label } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 import TicketContext from "../../../../context/ticket/ticketContext";
@@ -54,18 +54,15 @@ const AdminDashboard = () => {
   const adminContext = useContext(AdminContext);
   const { users, adminGetAllUsers, adminDeleteUser, loading } = adminContext;
     
-    //   console.log("users", users);
-    
-    
-  
+        console.log("users", users);
+
   useEffect(() => {
-    adminGetAllUsers();
     fetchAllTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Grid padded="horizontally"  style={{ marginTop: '2rem' }}>
+    <Grid padded="horizontally"  style={{ marginTop: '3rem' }}>
       <Grid.Column width={16}>
         <Header as="h1">Administration Dashboard</Header>
       </Grid.Column>
@@ -88,18 +85,18 @@ const AdminDashboard = () => {
           <Table.Body>
             {tickets && 
             tickets.map(ticket => {
-              return(
+              return (
                 <Table.Row key={ticket.ticketid}>
-                  <Table.Cell><Link to={` `}> 
-                  {users && users.map(user => (
-                  {user.fname}
-                  ))
-                  </Link></Table.Cell>
+                  {/* {users && users.map(user => {
+                  return (
+                    <Table.Cell><Link to={` `}>{user.fname}</Link></Table.Cell> 
+                    );
+                  })}*/}
                   <Table.Cell>{ticket.title}</Table.Cell>
                   <Table.Cell>{ticket.description}</Table.Cell>
                   <Table.Cell>
                     <Label.Group>
-                      {ticket.ticketCategories &&ticket.ticketCategories.map(category => (
+                      {ticket.ticketCategories.map(category => (
                           <Label key={category.category.categoryid}>
                             {category.category.name}
                           </Label>
@@ -108,7 +105,7 @@ const AdminDashboard = () => {
                   </Table.Cell>
                   <Table.Cell>{ticket.status.name}</Table.Cell>
                   <Table.Cell>
-                  {users && users.map(user => {
+                  {/* {users && users.map(user => {
                     return (
                       <button
                         onClick={() => {
@@ -116,11 +113,12 @@ const AdminDashboard = () => {
                         }}>   
                         Delete</button> 
                         );
-                    })}
+                    })} */}
+                    <button></button>
                   </Table.Cell>
                 </Table.Row>
-            )
-                  })}
+              )
+            })}
           </Table.Body>
         </Table>
       </Grid.Column>
