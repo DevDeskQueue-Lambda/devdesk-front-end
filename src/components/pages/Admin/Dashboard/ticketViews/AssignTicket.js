@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import AdminContext from "../../../../../context/admin/adminContext";
 
-const AssignTicket = (props) => {
+const AssignTicket = props => {
   const adminContext = useContext(AdminContext);
   const { adminAssignTicket } = adminContext;
 
   useEffect(() => {
-    
-      setTicket({
-        id: "",
-        userid: ""
-      });
-    
+    setTicket({
+      id: "",
+      userid: ""
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -28,13 +27,14 @@ const AssignTicket = (props) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    adminAssignTicket(ticket)
+    console.log("AssignTicket.js", ticket);
+    adminAssignTicket(ticket);
     setTicket({
-      id: '',
-      userid: ''
-    })
+      id: "",
+      userid: ""
+    });
   };
-  console.log('AssignTicket', ticket)
+  console.log("AssignTicket", ticket);
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -52,7 +52,7 @@ const AssignTicket = (props) => {
           value={userid}
           onChange={onChange}
         />
-      <button>Assign Ticket</button>
+        <button>Assign Ticket</button>
       </form>
     </>
   );

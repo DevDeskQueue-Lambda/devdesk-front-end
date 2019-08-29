@@ -195,17 +195,19 @@ const AdminState = props => {
   const adminArchiveTicket = () => console.log("adminArchiveTicket");
 
   // adminAssignTicket
-  const adminAssignTicket = async (id, userid) => {
+  const adminAssignTicket = async ({ id, userid }) => {
+    console.log("adminAssignTicket", id, userid);
     try {
       const res = await getCurrentLoggedInUser().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/admin/assign/${id}/${userid}`
       );
-      console.log("adminAssignTicket", res);
+      console.log("adminAssignTicket", id, userid);
       dispatch({
         type: ASSIGN_TICKET,
         payload: res.data
       });
     } catch (err) {
+      console.log("adminAssignTicket", err.response);
       dispatch({
         type: ERROR,
         payload: err.response
