@@ -12,10 +12,17 @@ import {
 import TicketContext from "../../../../context/ticket/ticketContext";
 import AddTicket from "./AddTicket";
 import EditTicket from "./EditTicket";
+import DeleteTicket from "./DeleteTicket";
 
 const StudentDashboard = props => {
   const ticketContext = useContext(TicketContext);
-  const { tickets, fetchAllTickets, isModalOpen, setModalOpen } = ticketContext;
+  const {
+    tickets,
+    fetchAllTickets,
+    isModalOpen,
+    setModalOpen,
+    deletingTicket
+  } = ticketContext;
 
   const [ticketModal, setTicketModal] = useState({});
   const [ticketProps, setTicketProps] = useState({});
@@ -127,14 +134,14 @@ const StudentDashboard = props => {
                         <Button
                           color="blue"
                           onClick={() => handleTicketModal("edit", ticket)}
-                          size="small"
+                          size="tiny"
                         >
                           Edit
                         </Button>
                         <Button
                           color="red"
-                          onClick={() => handleTicketModal("delete")}
-                          size="small"
+                          onClick={() => deletingTicket(ticket.ticketid)}
+                          size="tiny"
                         >
                           Delete
                         </Button>
@@ -174,6 +181,7 @@ const StudentDashboard = props => {
           <Button onClick={() => setCommentModalOpen(false)}>Close</Button>
         </Modal.Actions>
       </Modal>
+      <DeleteTicket />
     </div>
   );
 };

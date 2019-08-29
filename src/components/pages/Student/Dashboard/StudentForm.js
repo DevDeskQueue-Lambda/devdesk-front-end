@@ -61,7 +61,9 @@ const StudentForm = ({
           </Field>
         </Form.Field>
 
-        <Form.Button type="submit">Submit</Form.Button>
+        <Form.Button primary type="submit">
+          Submit
+        </Form.Button>
       </Form>
     </>
   );

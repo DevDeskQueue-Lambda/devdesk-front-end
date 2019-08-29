@@ -5,9 +5,12 @@ import {
   UPDATE_TICKET,
   UPDATE_TICKET_FAIL,
   DELETE_TICKET,
+  DELETE_TICKET_FAIL,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAIL,
-  SET_MODAL_OPEN
+  SET_MODAL_OPEN,
+  SET_DELETE_TICKET_MODAL_OPEN,
+  SET_DELETING_TICKET_ID
 } from "../types";
 
 export default (state, action) => {
@@ -58,10 +61,36 @@ export default (state, action) => {
         error: action.payload
       };
     }
+    case DELETE_TICKET: {
+      return {
+        ...state,
+        tickets: state.tickets.filter(
+          ticket => ticket.ticketid !== action.payload
+        )
+      };
+    }
+    case DELETE_TICKET_FAIL: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
     case SET_MODAL_OPEN: {
       return {
         ...state,
         isModalOpen: action.payload
+      };
+    }
+    case SET_DELETE_TICKET_MODAL_OPEN: {
+      return {
+        ...state,
+        isDeleteTicketModalOpen: action.payload
+      };
+    }
+    case SET_DELETING_TICKET_ID: {
+      return {
+        ...state,
+        deletingTicketID: action.payload
       };
     }
 
