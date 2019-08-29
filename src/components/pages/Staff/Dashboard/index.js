@@ -32,7 +32,7 @@ const StaffDashboard = () => {
               return (
                 <Table.Row key={ticket.ticketid}>
                   <Table.Cell>
-                    <Link to={`/staff/dashboard/ticket/${ticket.ticketid}`}>
+                    <Link to={`/staff/dashboard/ticket/${ticket.ticketid}`} style={{fontWeight: 'bold'}}>
                       {ticket.title}
                     </Link></Table.Cell>
                   <Table.Cell>{ticket.description}</Table.Cell>
