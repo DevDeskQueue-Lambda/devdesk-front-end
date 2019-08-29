@@ -10,7 +10,9 @@ import {
   GET_CATEGORIES_FAIL,
   SET_MODAL_OPEN,
   SET_DELETE_TICKET_MODAL_OPEN,
-  SET_DELETING_TICKET_ID
+  SET_DELETING_TICKET_ID,
+  SET_TICKET_COMMENTS_MODAL_OPEN,
+  SET_TICKET_COMMENTS
 } from "../types";
 
 export default (state, action) => {
@@ -91,6 +93,18 @@ export default (state, action) => {
       return {
         ...state,
         deletingTicketID: action.payload
+      };
+    }
+    case SET_TICKET_COMMENTS: {
+      return {
+        ...state,
+        ticketComments: action.payload
+      };
+    }
+    case SET_TICKET_COMMENTS_MODAL_OPEN: {
+      return {
+        ...state,
+        isTicketCommentsModalOpen: action.payload
       };
     }
 

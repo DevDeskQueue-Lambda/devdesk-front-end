@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import {
-  Comment,
   Button,
   Header,
   Grid,
@@ -13,6 +12,7 @@ import TicketContext from "../../../../context/ticket/ticketContext";
 import AddTicket from "./AddTicket";
 import EditTicket from "./EditTicket";
 import DeleteTicket from "./DeleteTicket";
+import Comments from "./Comments";
 
 const StudentDashboard = props => {
   const ticketContext = useContext(TicketContext);
@@ -21,24 +21,17 @@ const StudentDashboard = props => {
     fetchAllTickets,
     isModalOpen,
     setModalOpen,
-    deletingTicket
+    deletingTicket,
+    setTicketCommentsModalOpen
   } = ticketContext;
 
   const [ticketModal, setTicketModal] = useState({});
   const [ticketProps, setTicketProps] = useState({});
-  const [isCommentModalOpen, setCommentModalOpen] = useState(false);
-  const [commentModalProps, setCommentModalProps] = useState([]);
 
   useEffect(() => {
     fetchAllTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (commentModalProps.length > 0) {
-      setCommentModalOpen(true);
-    }
-  }, [commentModalProps]);
 
   const handleTicketModal = (action, ticketInfo) => {
     if (action === "edit") {
@@ -46,10 +39,6 @@ const StudentDashboard = props => {
     }
     setTicketModal(action);
     setModalOpen(true);
-  };
-
-  const handleCommentModal = ticketComments => {
-    setCommentModalProps(ticketComments);
   };
 
   let modal = {
@@ -122,7 +111,10 @@ const StudentDashboard = props => {
                             icon
                             size="tiny"
                             onClick={() =>
-                              handleCommentModal(ticket.ticketComments)
+                              setTicketCommentsModalOpen(
+                                true,
+                                ticket.ticketComments
+                              )
                             }
                           >
                             <Icon name="comment outline" />
@@ -160,27 +152,7 @@ const StudentDashboard = props => {
           <Button onClick={() => setModalOpen(false)}>Close</Button>
         </Modal.Actions>
       </Modal>
-      <Modal open={isCommentModalOpen}>
-        <Modal.Header>Comments</Modal.Header>
-        <Modal.Content>
-          <Comment.Group>
-            {commentModalProps.length > 0 &&
-              commentModalProps.map(comment => (
-                <Comment key={comment.comment.commentid}>
-                  <Comment.Content>
-                    <Comment.Author>
-                      {comment.comment.user.fname}
-                    </Comment.Author>
-                    <Comment.Text>{comment.comment.comment}</Comment.Text>
-                  </Comment.Content>
-                </Comment>
-              ))}
-          </Comment.Group>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button onClick={() => setCommentModalOpen(false)}>Close</Button>
-        </Modal.Actions>
-      </Modal>
+      <Comments />
       <DeleteTicket />
     </div>
   );

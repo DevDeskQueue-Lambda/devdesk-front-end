@@ -15,7 +15,9 @@ import {
   GET_CATEGORIES_FAIL,
   SET_MODAL_OPEN,
   SET_DELETE_TICKET_MODAL_OPEN,
-  SET_DELETING_TICKET_ID
+  SET_DELETING_TICKET_ID,
+  SET_TICKET_COMMENTS,
+  SET_TICKET_COMMENTS_MODAL_OPEN
 } from "../types";
 
 const TicketState = props => {
@@ -27,7 +29,9 @@ const TicketState = props => {
     categories: [],
     categoriesError: null,
     isModalOpen: false,
-    isDeleteTicketModalOpen: false
+    isDeleteTicketModalOpen: false,
+    isTicketCommentsModalOpen: false,
+    ticketComments: []
   };
 
   const [state, dispatch] = useReducer(ticketReducer, initialState);
@@ -165,9 +169,21 @@ const TicketState = props => {
     }
   };
 
+  const setTicketCommentsModalOpen = (isOpen, comments) => {
+    dispatch({
+      type: SET_TICKET_COMMENTS_MODAL_OPEN,
+      payload: isOpen
+    });
+    dispatch({
+      type: SET_TICKET_COMMENTS,
+      payload: comments
+    });
+  };
+
   return (
     <TicketContext.Provider
       value={{
+        // state variables
         tickets: state.tickets,
         deletingTicketID: state.deletingTicketID,
         loading: state.loading,
@@ -176,6 +192,9 @@ const TicketState = props => {
         categories: state.categories,
         isModalOpen: state.isModalOpen,
         isDeleteTicketModalOpen: state.isDeleteTicketModalOpen,
+        isTicketCommentsModalOpen: state.isTicketCommentsModalOpen,
+        ticketComments: state.ticketComments,
+        // functions
         fetchAllCategories,
         fetchAllTickets,
         addTicket,
@@ -183,7 +202,8 @@ const TicketState = props => {
         deleteTicket,
         deletingTicket,
         setModalOpen,
-        setDeleteTicketModalOpen
+        setDeleteTicketModalOpen,
+        setTicketCommentsModalOpen
       }}
     >
       {props.children}
