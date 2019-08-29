@@ -35,8 +35,8 @@ const AdminTicketView = () => {
     setModalOpen(false);
   };
 
-  const onAdminRemovedAssigned = () => {
-    adminRemoveAssigned(adminTickets.id)
+  const onAdminRemovedAssigned = (id) => {
+    adminRemoveAssigned(id)
   }
 
   let modal = {
@@ -102,8 +102,8 @@ const AdminTicketView = () => {
                       <Table.Cell>{ticket.tried}</Table.Cell>
                       <Table.Cell>{ticket.status.name}</Table.Cell>
                       <Table.Cell>
-                        {/* {console.log("assigneduser", ticket.assigneduser)} */}
-                        <button onClick={onAdminRemovedAssigned}>Un Assign</button>
+                      {ticket && ticket.assigneduser && ticket.assigneduser.fname}
+                        <button onClick={() => onAdminRemovedAssigned(ticket.ticketid)}>Un Assign</button>
                       </Table.Cell>{" "}
                       {
                         //need assigned user
@@ -151,8 +151,8 @@ const AdminTicketView = () => {
                       <Table.Cell>{ticket.tried}</Table.Cell>
                       <Table.Cell>{ticket.status.name}</Table.Cell>
                       <Table.Cell>
-                        {/* {console.log("assigneduser", ticket.assigneduser)} */}
-                        <button onClick={onAdminRemovedAssigned}>Un Assign</button>
+                        {ticket && ticket.assigneduser && ticket.assigneduser.fname}
+                        <button onClick={() => onAdminRemovedAssigned(ticket.ticketid)}>Un Assign</button>
                       </Table.Cell>{" "}
                       {
                         //need assigned user
