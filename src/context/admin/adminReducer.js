@@ -83,7 +83,7 @@ export default (state, action) => {
         filteredTickets: state.adminTickets.filter(ticket => {
           const regex = new RegExp(`${action.payload}`, "gi");
           return (
-            ticket.title.match(regex)
+            ticket.title.match(regex) || ticket.status.name.match(regex) || ticket.user.fname.match(regex) || ticket.user.lname.match(regex) || ticket.user.username.match(regex)
           );
         })
       };
