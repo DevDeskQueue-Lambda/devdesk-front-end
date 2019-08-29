@@ -5,7 +5,7 @@ import StudentForm from "./StudentForm";
 
 import * as Yup from "yup";
 
-const AddTicket = () => {
+const AddTicket = props => {
   const ticketContext = useContext(TicketContext);
   const { addTicket, fetchAllCategories, categories } = ticketContext;
 
@@ -18,9 +18,9 @@ const AddTicket = () => {
     <>
       <Formik
         initialValues={{
-          title: "AWS API Gateway",
-          description: "Infinite call",
-          tried: "Console.log",
+          title: "",
+          description: "",
+          tried: "",
           ticketCategories: []
         }}
         onSubmit={(values, actions) => {
