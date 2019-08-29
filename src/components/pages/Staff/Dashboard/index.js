@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { Header, Grid, Table, Label } from "semantic-ui-react";
-import TicketContext from "../../../../context/ticket/ticketContext";
+import { axiosWithAuth } from '../../../../utils';
 
 const StaffDashboard = () => {
-  const ticketContext = useContext(TicketContext);
-  const { tickets, fetchAllTickets } = ticketContext;
+  const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetchAllTickets();
+    axiosWithAuth().get('/tickets/alltickets')
+      .then(response => setTickets(response.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -32,7 +32,7 @@ const StaffDashboard = () => {
               return (
                 <Table.Row key={ticket.ticketid}>
                   <Table.Cell>
-                    <Link to={`/staff/dashboard/ticket/${ticket.ticketid}`}>
+                    <Link to={`/staff/dashboard/ticket/${ticket.ticketid}`} style={{fontWeight: 'bold'}}>
                       {ticket.title}
                     </Link></Table.Cell>
                   <Table.Cell>{ticket.description}</Table.Cell>

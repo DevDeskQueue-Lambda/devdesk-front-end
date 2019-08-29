@@ -5,12 +5,7 @@ import StudentForm from "./StudentForm";
 
 const AddTicket = () => {
   const ticketContext = useContext(TicketContext);
-  const { addTicket, fetchAllCategories, categories } = ticketContext;
-  // console.log('ticketContext', ticketContext);
-  useEffect(() => {
-    fetchAllCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { addTicket, categories } = ticketContext;
 
   return (
     <>

@@ -35,7 +35,7 @@ const Login = ({ values, history, status }) => {
 
   return (
     <Grid container centered>
-      <Grid.Column width={5}>
+      <Grid.Column computer={6} tablet={12} mobile={16}>
         <Form className="ui form">
           {error && (
             <Message
