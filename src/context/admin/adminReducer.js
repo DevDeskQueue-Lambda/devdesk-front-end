@@ -25,7 +25,7 @@ import {
 } from "../types";
 
 export default (state, action) => {
-  console.log("adminReducer", action);
+  console.log("admiReducer", action);
   switch (action.type) {
     case ADMIN_FETCH_TICKET_BY_ID:
     case ADMIN_FETCH_TICKETS:
@@ -65,7 +65,9 @@ export default (state, action) => {
     case REMOVE_ASSIGNED:
       return {
         ...state,
-        adminTickets: state.adminTickets.filter(ticket => ticket.id !== action.payload),
+        adminTickets: state.adminTickets.filter(
+          ticket => ticket.id !== action.payload
+        ),
         loading: false
       };
     case SET_CURRENT:
