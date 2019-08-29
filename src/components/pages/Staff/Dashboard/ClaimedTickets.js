@@ -12,27 +12,17 @@ export default function ClaimedTickets(props) {
   } = staffContext;
 
   React.useEffect(() => {
-    fetchAssignedTickets();
     fetchCurrentUserData();
+    fetchAssignedTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  /* const filteredTickets = tickets.assignedid.userid.filter(ticketid => ticketid < user.userid); */
-  const mappedTickets = () => {
-    tickets.map(ticket => console.log(ticket.assigneduser.userid === 4));
-  };
-
-  console.log("USER ID", user.userid);
-  console.log("TICKETS", tickets);
-  console.log("MAPPED TICKETS", mappedTickets());
-  /* console.log('FILTERED TICKETS', filteredTickets); */
 
   return (
     <div>
       <Grid padded="horizontally" style={{ marginTop: "5rem" }}>
         <Grid.Row columns={2}>
           <Grid.Column>
-            <Header>My Claimed Tickets</Header>
+            <Header>My Assigned Tickets</Header>
           </Grid.Column>
         </Grid.Row>
         <Grid.Column width={16}>
