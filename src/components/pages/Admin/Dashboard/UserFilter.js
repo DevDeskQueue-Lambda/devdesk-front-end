@@ -15,7 +15,7 @@ const UserFilter = () => {
     }
   });
 
-  console.log("UserFilter.js", text);
+  // console.log("UserFilter.js", text);
 
   const onChange = e => {
     setValue(e.target.value);

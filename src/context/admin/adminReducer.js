@@ -23,6 +23,12 @@ import {
 export default (state, action) => {
   console.log("adminReducer", action);
   switch (action.type) {
+    case ADMIN_FETCH_TICKETS:
+        return {
+          ...state,
+          adminTickets: action.payload,
+          loading: false
+        };
     case GET_USER_ROLES:
     case GET_ALL_USERS:
       return {
@@ -44,12 +50,11 @@ export default (state, action) => {
         error: null,
         current: null
       };
-      // Work in progress
+    // Work in progress
     case ASSIGN_TICKET:
       return {
-        ...state,
-
-      }
+        ...state
+      };
     case SET_CURRENT:
       return {
         ...state,
@@ -75,12 +80,13 @@ export default (state, action) => {
     case ADMIN_FILTER_TICKETS:
       return {
         ...state,
-        tickets: state.tickets.filter(ticket => {
-          const regex = new RegExp(`${action.payload}`, 'gi');
+        filteredTickets: state.adminTickets.filter(ticket => {
+          const regex = new RegExp(`${action.payload}`, "gi");
           return (
-            ticket.status.name.match(regex) || ticket.title.match(regex) || ticket.user.username.match(regex) || ticket.user.fname.match(regex) || ticket.user.lname.match(regex) || ticket.user.useremail.match(regex) || ticket.user.authority.authority.match(regex))
+            ticket.title.match(regex)
+          );
         })
-      }
+      };
     case ADMIN_CLEAR_TICKET_FILTER:
     case CLEAR_FILTER:
       return {

@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import axios from "axios";
 import { getCurrentLoggedInUser } from "../../utils";
-import { axiosWithAuth } from '../../utils';
+import { axiosWithAuth } from "../../utils";
 import AdminContext from "./adminContext";
 import adminReducer from "./adminReducer";
 
@@ -34,7 +34,8 @@ const AdminState = props => {
     error: null,
     current: null,
     filtered: null,
-    tickets:null
+    adminTickets: null,
+    filteredTickets: null
   };
 
   const [state, dispatch] = useReducer(adminReducer, initialState);
@@ -60,7 +61,7 @@ const AdminState = props => {
 
   // adminDeleteUser  - which deletes user by id staff or student
   const adminDeleteUser = async id => {
-    console.log("adminDeleteUser", id);
+    // console.log("adminDeleteUser", id);
     try {
       await getCurrentLoggedInUser().delete(
         `https://lambda-devdesk.herokuapp.com/users/user/${id}`
@@ -85,7 +86,7 @@ const AdminState = props => {
       const res = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/users/roles"
       );
-      console.log("AdminState", res);
+      // console.log("AdminState", res);
       dispatch({
         type: GET_USER_ROLES,
         payload: res.data
@@ -141,51 +142,53 @@ const AdminState = props => {
   // adminFetchTickets
   const adminFetchTickets = async () => {
     try {
-      const res = await axiosWithAuth().get("/tickets/alltickets")
+      const res = await getCurrentLoggedInUser().get(
+        "https://lambda-devdesk.herokuapp.com/tickets/alltickets"
+      );
       dispatch({
         type: ADMIN_FETCH_TICKETS,
         payload: res.data
-      })
-    }catch(err) {
+      });
+    } catch (err) {
       dispatch({
         type: ERROR,
         payload: err.response.data
-
-      })
+      });
     }
-  }
-
+  };
 
   // adminFilterTickets
   const adminFilterTickets = text => {
     dispatch({
       type: ADMIN_FILTER_TICKETS,
       payload: text
-    })
-  }
+    });
+  };
 
   // adminClearTicketFilter
   const adminClearTicketFilter = () => {
-    dispatch({type: ADMIN_CLEAR_TICKET_FILTER});
+    dispatch({ type: ADMIN_CLEAR_TICKET_FILTER });
   };
 
   // adminArchiveTicket
   const adminArchiveTicket = () => console.log("adminArchiveTicket");
 
   // adminAssignTicket
-  const adminAssignTicket = async (id) => {
+  const adminAssignTicket = async id => {
     try {
-      const res = await axiosWithAuth().put(`/tickets/ticket/assign/${id}`)
-      console.log('adminAssignTicket', res)
+      const res = await getCurrentLoggedInUser().put(
+        `https://lambda-devdesk.herokuapp.com/tickets/ticket/assign/${id}`
+      );
+      console.log("adminAssignTicket", res);
       dispatch({
         type: ASSIGN_TICKET,
         payload: res.data
-      })
-    }catch(err) {
+      });
+    } catch (err) {
       dispatch({
         type: ERROR,
         payload: err.response.msg
-      })
+      });
     }
   };
 
@@ -205,6 +208,8 @@ const AdminState = props => {
         loading: state.loading,
         error: state.error,
         filtered: state.filtered,
+        adminTickets: state.adminTickets,
+        filteredTickets: state.filteredTickets,
         adminGetAllUsers,
         adminDeleteUser,
         adminGetUserRoles,
