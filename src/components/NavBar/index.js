@@ -6,7 +6,7 @@ import { Menu, Container, Image, Button } from "semantic-ui-react";
 
 const NavBar = ({ logo }) => {
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, logout, user } = authContext;
+  const { isAuthenticated, logout, userInfo } = authContext;
   //console.log("navbar", user);
 
   const onLogOut = () => {
@@ -21,9 +21,12 @@ const NavBar = ({ logo }) => {
         </Menu.Item>
         <Menu.Item position="right">
           {isAuthenticated ? (
-            <Button className="tertiary" onClick={onLogOut}>
-              Log Out
-            </Button>
+            <>
+              <Menu.Item>Hello, {userInfo.fname}</Menu.Item>
+              <Button className="tertiary" onClick={onLogOut}>
+                Log Out
+              </Button>
+            </>
           ) : (
             <>
               <Link to="/register">

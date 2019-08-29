@@ -14,6 +14,7 @@ import EditTicket from "./EditTicket";
 import DeleteTicket from "./DeleteTicket";
 import Comments from "./Comments";
 import AssignedStaff from "./AssignedStaff";
+//import { ticketCategories } from "../../../../utils/ticketCategories";
 
 const StudentDashboard = props => {
   const ticketContext = useContext(TicketContext);
