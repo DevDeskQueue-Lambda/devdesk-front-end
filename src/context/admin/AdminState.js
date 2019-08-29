@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import axios from "axios";
 import { getCurrentLoggedInUser } from "../../utils";
 
 import AdminContext from "./adminContext";
@@ -9,10 +8,6 @@ import {
   ADMIN_DELETE_USER,
   ADMIN_GET_ALL_USERS,
   ADMIN_GET_USER_ROLES,
-  ADMIN_ARCHIVE_TICKET,
-  ADMIN_ASSIGN_TICKET,
-  ADMIN_RESOLVE_TICKET,
-  ADMIN_REMOVE_ASSIGNED,
   SET_LOADING,
   ERROR
 } from "../types";

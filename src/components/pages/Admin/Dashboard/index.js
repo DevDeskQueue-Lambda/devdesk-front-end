@@ -5,7 +5,7 @@ import AdminContext from "../../../../context/admin/adminContext";
 const AdminDashboard = () => {
   const adminContext = useContext(AdminContext);
 
-  const { users, adminGetAllUsers, adminDeleteUser, loading } = adminContext;
+  const { users, adminGetAllUsers, adminDeleteUser } = adminContext;
 
   console.log("users", users);
 
@@ -20,9 +20,9 @@ const AdminDashboard = () => {
           <Header>Admin Dashboard</Header>
           <h4>adminGetAllUsers by first name</h4>
           {users &&
-            users.map(user => {
+            users.map((user, i) => {
               return (
-                <Fragment>
+                <Fragment key={i}>
                   <h1>{user.fname}</h1>
                   <button
                     onClick={() => {

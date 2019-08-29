@@ -3,12 +3,10 @@ import TicketContext from "../../../../context/ticket/ticketContext";
 import { Formik } from "formik";
 import StudentForm from "./StudentForm";
 
-import * as Yup from "yup";
-
-const AddTicket = props => {
+const AddTicket = () => {
   const ticketContext = useContext(TicketContext);
   const { addTicket, fetchAllCategories, categories } = ticketContext;
-  console.log('ticketContext', ticketContext);
+  // console.log('ticketContext', ticketContext);
   useEffect(() => {
     fetchAllCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps

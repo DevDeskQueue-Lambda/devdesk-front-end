@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import TicketContext from "../../../../context/ticket/ticketContext";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import StudentForm from "./StudentForm";
 const EditTicket = props => {
   const ticketContext = useContext(TicketContext);

@@ -12,7 +12,7 @@ const StaffViewTicket = ({ match }) => {
         console.log(response.data);
         setTicket(response.data);
       });
-  }, []);
+  }, [id]);
 
   return (
     ticket ? (
