@@ -27,14 +27,14 @@ const AssignTicket = props => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log("AssignTicket.js", ticket);
+    // console.log("AssignTicket.js", ticket);
     adminAssignTicket(ticket);
     setTicket({
       id: "",
       userid: ""
     });
   };
-  console.log("AssignTicket", ticket);
+  // console.log("AssignTicket", ticket);
   return (
     <>
       <form onSubmit={onSubmit}>

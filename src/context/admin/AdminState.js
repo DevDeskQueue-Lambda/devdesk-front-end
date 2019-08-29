@@ -223,18 +223,18 @@ const AdminState = props => {
 
   // adminRemoveAssigned
   const adminRemoveAssigned = async (id) => {
-    console.log("adminRemoveAssigned", id );
+    console.log("adminRemoveAssigned 1", id );
     try {
       const res = await getCurrentLoggedInUser().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/unassign/${id}`
       );
-      console.log("adminRemoveAssigned", id );
+      console.log("adminRemoveAssigned 2", id );
       dispatch({
         type: REMOVE_ASSIGNED,
         payload: res.data
       });
     } catch (err) {
-      console.log("adminRemoveAssigned", err.response);
+      console.log("adminRemoveAssigned 3", err.response);
       dispatch({
         type: ADMIN_ERROR,
         payload: err.response.data

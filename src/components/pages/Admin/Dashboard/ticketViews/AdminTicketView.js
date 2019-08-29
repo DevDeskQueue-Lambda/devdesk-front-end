@@ -102,7 +102,7 @@ const AdminTicketView = () => {
                       <Table.Cell>{ticket.tried}</Table.Cell>
                       <Table.Cell>{ticket.status.name}</Table.Cell>
                       <Table.Cell>
-                        {console.log("assigneduser", ticket.assigneduser)}
+                        {/* {console.log("assigneduser", ticket.assigneduser)} */}
                         <button onClick={onAdminRemovedAssigned}>Un Assign</button>
                       </Table.Cell>{" "}
                       {
@@ -151,7 +151,7 @@ const AdminTicketView = () => {
                       <Table.Cell>{ticket.tried}</Table.Cell>
                       <Table.Cell>{ticket.status.name}</Table.Cell>
                       <Table.Cell>
-                        {console.log("assigneduser", ticket.assigneduser)}
+                        {/* {console.log("assigneduser", ticket.assigneduser)} */}
                         <button onClick={onAdminRemovedAssigned}>Un Assign</button>
                       </Table.Cell>{" "}
                       {
