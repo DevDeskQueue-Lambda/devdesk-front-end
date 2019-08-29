@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import AuthContext from "../../../context/auth/authContext";
-import { Button, Card, Container, Grid } from "semantic-ui-react";
+import { Button, Card, Grid } from "semantic-ui-react";
 
 const Dashboard = () => {
   const authContext = useContext(AuthContext);
@@ -22,7 +22,7 @@ const Dashboard = () => {
       {userInfo.authority &&
         userInfo.authority.length > 1 &&
         userInfo.authority.map(authority => (
-          <Grid.Column>
+          <Grid.Column key={authority.authority}>
             <Card fluid key={authority.authority}>
               <Card.Content textAlign="center">
                 <Card.Header>{formatRoleName(authority.authority)}</Card.Header>

@@ -5,6 +5,7 @@ import AuthState from "./context/auth/AuthState";
 import AdminState from "./context/admin/AdminState";
 import StaffState from "./context/staff/StaffState";
 
+// eslint-disable-next-line
 import TicketState from "./context/ticket/ticketState";
 import { roles } from "./utils/roles";
 

@@ -5,7 +5,6 @@ import {
   Header,
   Grid,
   Icon,
-  Input,
   Label,
   Modal,
   Table
