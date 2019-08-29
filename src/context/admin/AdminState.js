@@ -4,17 +4,13 @@ import AdminContext from "./adminContext";
 import adminReducer from "./adminReducer";
 
 import {
-
   DELETE_USER,
   GET_ALL_USERS,
   GET_USER_ROLES,
-
   ASSIGN_TICKET,
-
   REMOVE_ASSIGNED,
   FILTER_USERS,
   CLEAR_FILTER,
-
   CLEAR_USERS,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -23,9 +19,9 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-  PROMOTE_USER_TO_STAFF,
+  /*   PROMOTE_USER_TO_STAFF,
   PROMOTE_ANY_USER,
-  PROMOTE_USER_TO_ADMIN,
+  PROMOTE_USER_TO_ADMIN, */
   ADMIN_ERROR
 } from "../types";
 
