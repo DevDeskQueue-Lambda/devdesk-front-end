@@ -12,7 +12,7 @@ import AssignedStaff from '../../../Student/Dashboard/AssignedStaff'
 
 import TicketFilter from "./TicketFilter";
 
-const AdminTicketView = () => {
+const AdminTicketView = (props) => {
   //auth
   const authContext = useContext(AuthContext);
   const { userInfo } = authContext;
@@ -42,17 +42,20 @@ const AdminTicketView = () => {
 
   useEffect(() => {
     fetchAllTickets(userInfo.userid);
+   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     // fetchAllTickets();
     adminFetchTickets();
+   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     fetchAllCategories();
+   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -62,11 +65,10 @@ const AdminTicketView = () => {
     }
     setTicketModal(action);
     setModalOpen(true);
+    
   };
 
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
+
 
   const onAdminRemovedAssigned = (id) => {
     adminRemoveAssigned(id)
@@ -99,7 +101,13 @@ const AdminTicketView = () => {
             <Header>Student Tickets</Header>
           </Grid.Column>
           <Grid.Column textAlign="right">
-            <Button color="green" onClick={() => handleTicketModal("add", {})}>
+            <Button color="green" onClick={() => 
+              
+
+                handleTicketModal("add", {})
+                
+            
+              }>
               Add Ticket
             </Button>
           </Grid.Column>
