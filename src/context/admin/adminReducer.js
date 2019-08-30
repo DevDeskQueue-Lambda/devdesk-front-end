@@ -17,7 +17,6 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-
   SET_LOADING,
   ADMIN_ERROR,
   ERROR,
@@ -79,7 +78,7 @@ export default (state, action) => {
           ticket => ticket.id !== action.payload
         ),
         loading: false
-      }; */
+      };
     case SET_CURRENT:
       return {
         ...state,
