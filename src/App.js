@@ -54,7 +54,7 @@ function App() {
                   />
 
                   <PrivateRoute
-                    path="/admin/dashboard"
+                    path="/admin/dashboard/"
                     roleName={roles.admin}
                     component={AdminDashboard}
                   />
