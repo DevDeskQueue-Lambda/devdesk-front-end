@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import AdminContext from "../../../../../context/admin/adminContext";
+import { Button } from "semantic-ui-react";
 
 const AssignTicket = props => {
   const adminContext = useContext(AdminContext);
@@ -38,21 +39,25 @@ const AssignTicket = props => {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          placeholder="ticket id"
-          name="id"
-          value={id}
-          onChange={onChange}
-        />
-        <input
-          type="text"
-          placeholder="user id"
-          name="userid"
-          value={userid}
-          onChange={onChange}
-        />
-        <button>Assign Ticket</button>
+        <div className="ui input">
+          <input
+            type="text"
+            placeholder="ticket id"
+            name="id"
+            value={id}
+            onChange={onChange}
+          />
+        </div>
+        <div className="ui input">
+          <input
+            type="text"
+            placeholder="user id"
+            name="userid"
+            value={userid}
+            onChange={onChange}
+          />
+        </div>
+        <Button>Assign Ticket</Button>
       </form>
     </>
   );

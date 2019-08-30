@@ -11,7 +11,13 @@ import TicketFilter from "./TicketFilter";
 const AdminTicketView = () => {
   const adminContext = useContext(AdminContext);
 
-  const { adminTickets, adminFetchTickets, filteredTickets, adminRemoveAssigned, adminResolveTicket } = adminContext;
+  const {
+    adminTickets,
+    adminFetchTickets,
+    filteredTickets,
+    adminRemoveAssigned,
+    adminResolveTicket
+  } = adminContext;
 
   console.log("adminFetchTickets", adminTickets);
 
@@ -19,7 +25,6 @@ const AdminTicketView = () => {
   const [ticketModal, setTicketModal] = useState({});
   const ticketContext = useContext(TicketContext);
   const { isModalOpen, setModalOpen } = ticketContext;
-
 
   useEffect(() => {
     // fetchAllTickets();
@@ -36,14 +41,13 @@ const AdminTicketView = () => {
     setModalOpen(false);
   };
 
-  const onAdminRemovedAssigned = (id) => {
-    adminRemoveAssigned(id)
-  }
+  const onAdminRemovedAssigned = id => {
+    adminRemoveAssigned(id);
+  };
 
-  const onAdminResolveTicket = (id) => {
-    adminResolveTicket(id)
-    
-  }
+  const onAdminResolveTicket = id => {
+    adminResolveTicket(id);
+  };
 
   let modal = {
     name: ticketModal === "add" ? "Add Ticket" : "Edit Ticket",
@@ -108,9 +112,21 @@ const AdminTicketView = () => {
                       <Table.Cell>{ticket.tried}</Table.Cell>
                       <Table.Cell>{ticket.status.name}</Table.Cell>
                       <Table.Cell>
-                      {ticket && ticket.assigneduser && ticket.assigneduser.fname}
-                        <button onClick={() => onAdminRemovedAssigned(ticket.ticketid)}>Un Assign</button>
-                        <button onClick={() => onAdminResolveTicket(ticket.ticketid)}>Resolved</button>
+                        {ticket &&
+                          ticket.assigneduser &&
+                          ticket.assigneduser.fname}
+                        <button
+                          onClick={() =>
+                            onAdminRemovedAssigned(ticket.ticketid)
+                          }
+                        >
+                          Un Assign
+                        </button>
+                        <button
+                          onClick={() => onAdminResolveTicket(ticket.ticketid)}
+                        >
+                          Resolved
+                        </button>
                       </Table.Cell>{" "}
                       {
                         //need assigned user
@@ -158,19 +174,36 @@ const AdminTicketView = () => {
                       <Table.Cell>{ticket.tried}</Table.Cell>
                       <Table.Cell>{ticket.status.name}</Table.Cell>
                       <Table.Cell>
-                        {ticket && ticket.assigneduser && ticket.assigneduser.fname}
-                        <button onClick={() => onAdminRemovedAssigned(ticket.ticketid)}>Un Assign</button>
-                        <button onClick={() => onAdminResolveTicket(ticket.ticketid)}>Resolved</button>
+                        {/* {ticket && ticket.assigneduser && ticket.assigneduser.fname} */}
+                        <Button
+                          fluid="true"
+                          onClick={() =>
+                            onAdminRemovedAssigned(ticket.ticketid)
+                          }
+                        >
+                          Un Assign
+                        </Button>
+                        <Button
+                          fluid="true"
+                          color="green"
+                          onClick={() => onAdminResolveTicket(ticket.ticketid)}
+                        >
+                          Resolve
+                        </Button>
                       </Table.Cell>{" "}
                       {
                         //need assigned user
                       }
                       <Table.Cell>
-                        <Button onClick={() => handleTicketModal("edit")}>
+                        <Button
+                          fluid="true"
+                          onClick={() => handleTicketModal("edit")}
+                        >
                           Edit
                         </Button>
                         <Button
                           color="red"
+                          fluid="true"
                           onClick={() => handleTicketModal("delete")}
                         >
                           Delete

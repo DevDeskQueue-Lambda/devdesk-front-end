@@ -28,13 +28,15 @@ const UserFilter = () => {
 
   return (
     <form>
-      <input
-        ref={text}
-        type="text"
-        value={value}
-        placeholder="Filter Users"
-        onChange={onChange}
-      />
+      <div className="ui input">
+        <input
+          ref={text}
+          type="text"
+          value={value}
+          placeholder="Filter Users"
+          onChange={onChange}
+        />
+      </div>
     </form>
   );
 };

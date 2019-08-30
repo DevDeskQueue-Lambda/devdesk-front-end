@@ -34,7 +34,7 @@ function App() {
               <Router>
                 <NavBar
                   logo={lambdaLogo}
-                  homeUrl="https://devdesk-ui.devdesk.now.sh/"
+                  homeUrl="https://devdesk.lambdaschool.me/"
                 />
                 <Fragment>
                   <Switch>
@@ -60,7 +60,7 @@ function App() {
                     />
 
                     <PrivateRoute
-                      path="/admin/dashboard"
+                      path="/admin/dashboard/"
                       roleName={roles.admin}
                       component={AdminDashboard}
                     />

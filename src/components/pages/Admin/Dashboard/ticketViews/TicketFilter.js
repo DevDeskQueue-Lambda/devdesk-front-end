@@ -1,5 +1,7 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
 import AdminContext from "../../../../../context/admin/adminContext";
+import { Input } from 'semantic-ui-react';
+
 
 const TicketFilter = () => {
   const [value, setValue] = useState("");
@@ -29,13 +31,15 @@ const TicketFilter = () => {
 
   return (
     <form>
-      <input
-        ref={text}
-        type="text"
-        value={value}
-        placeholder="Tickets"
-        onChange={onChange}
-      />
+      <div className="ui input">
+        <input
+          ref={text}
+          type="text"
+          value={value}
+          placeholder="Tickets"
+          onChange={onChange}
+        />
+      </div>
     </form>
   );
 };
