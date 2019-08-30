@@ -1,14 +1,10 @@
 import {
-
   DELETE_USER,
   GET_ALL_USERS,
   GET_USER_ROLES,
-
   ASSIGN_TICKET,
-
   FILTER_USERS,
   CLEAR_FILTER,
-
   CLEAR_USERS,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -16,8 +12,12 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-
-  ERROR
+  ERROR,
+  SET_PROMOTING_USER,
+  SET_PROMOTED_USER,
+  SET_PROMOTING_USER_MODAL_OPEN,
+  UPDATE_USERS_AFTER_PROMOTION,
+  SET_PROMOTED_USER_FAIL
 } from "../types";
 
 export default (state, action) => {
@@ -76,7 +76,8 @@ export default (state, action) => {
           return (
             user.fname.match(regex) ||
             user.lname.match(regex) ||
-            user.username.match(regex) || user.useremail.match(regex)
+            user.username.match(regex) ||
+            user.useremail.match(regex)
           );
         })
       };
@@ -86,11 +87,48 @@ export default (state, action) => {
         filteredTickets: state.adminTickets.filter(ticket => {
           const regex = new RegExp(`${action.payload}`, "gi");
           return (
-            ticket.title.match(regex) || ticket.status.name.match(regex) || ticket.user.fname.match(regex) || ticket.user.lname.match(regex) || ticket.user.username.match(regex)
+            ticket.title.match(regex) ||
+            ticket.status.name.match(regex) ||
+            ticket.user.fname.match(regex) ||
+            ticket.user.lname.match(regex) ||
+            ticket.user.username.match(regex)
           );
         })
       };
     case ADMIN_CLEAR_TICKET_FILTER:
+    case SET_PROMOTING_USER: {
+      return {
+        ...state,
+        promotingUser: action.payload
+      };
+    }
+    case SET_PROMOTED_USER: {
+      return {
+        ...state,
+        promotedUser: action.payload
+      };
+    }
+    case SET_PROMOTED_USER_FAIL: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+    case UPDATE_USERS_AFTER_PROMOTION: {
+      console.log("promoted ", action.payload);
+      return {
+        ...state,
+        users: state.users.map(user =>
+          user.userid === action.payload.userid ? action.payload : user
+        )
+      };
+    }
+    case SET_PROMOTING_USER_MODAL_OPEN: {
+      return {
+        ...state,
+        isPromotingUserModalOpen: action.payload
+      };
+    }
     case CLEAR_FILTER:
       return {
         ...state,

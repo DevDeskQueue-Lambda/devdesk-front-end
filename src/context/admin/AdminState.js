@@ -1,20 +1,16 @@
 import React, { useReducer } from "react";
-import { getCurrentLoggedInUser } from "../../utils";
+import { getCurrentLoggedInUser, axiosWithAuth } from "../../utils";
 import AdminContext from "./adminContext";
 import adminReducer from "./adminReducer";
 
 import {
-
   DELETE_USER,
   GET_ALL_USERS,
   GET_USER_ROLES,
-
   ASSIGN_TICKET,
-
   REMOVE_ASSIGNED,
   FILTER_USERS,
   CLEAR_FILTER,
-
   CLEAR_USERS,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -23,7 +19,12 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-  ERROR
+  ERROR,
+  SET_PROMOTING_USER,
+  SET_PROMOTED_USER,
+  SET_PROMOTING_USER_MODAL_OPEN,
+  UPDATE_USERS_AFTER_PROMOTION,
+  SET_PROMOTED_USER_FAIL
 } from "../types";
 
 const AdminState = props => {
@@ -35,7 +36,10 @@ const AdminState = props => {
     filtered: null,
     adminTickets: null,
     filteredTickets: null,
-    staff: null
+    staff: null,
+    promotingUser: null,
+    promotedUser: null,
+    isPromotingUserModalOpen: false
   };
 
   const [state, dispatch] = useReducer(adminReducer, initialState);
@@ -217,7 +221,7 @@ const AdminState = props => {
   const adminResolveTicket = () => console.log("adminResolveTicket");
 
   // adminRemoveAssigned
-  const adminRemoveAssigned = async (id) => {
+  const adminRemoveAssigned = async id => {
     console.log("adminRemoveAssigned", id);
     try {
       const res = await getCurrentLoggedInUser().put(
@@ -234,6 +238,65 @@ const AdminState = props => {
         type: ERROR,
         payload: err.response
       });
+    }
+  };
+
+  const setPromotingUser = (modalOpen, user, resetPromotedUser) => {
+    dispatch({
+      type: SET_PROMOTING_USER,
+      payload: user
+    });
+    dispatch({
+      type: SET_PROMOTING_USER_MODAL_OPEN,
+      payload: modalOpen
+    });
+
+    if (resetPromotedUser) {
+      dispatch({
+        type: SET_PROMOTED_USER,
+        payload: null
+      });
+    }
+  };
+
+  const promoteUserToStaff = async userID => {
+    try {
+      const promotedUser = await axiosWithAuth().put(
+        `/users/admin/promote/staff/${userID}`
+      );
+
+      dispatch({
+        type: SET_PROMOTED_USER,
+        payload: promotedUser.data
+      });
+
+      dispatch({
+        type: UPDATE_USERS_AFTER_PROMOTION,
+        payload: promotedUser.data
+      });
+    } catch (errors) {
+      dispatch({
+        type: SET_PROMOTED_USER_FAIL,
+        payload: errors.response
+      });
+    }
+  };
+  const promoteUserToAdmin = async userID => {
+    try {
+      const promotedUser = await axiosWithAuth().put(
+        `/users/admin/promote/admin/${userID}`
+      );
+
+      dispatch({
+        type: SET_PROMOTED_USER,
+        payload: promotedUser.data
+      });
+      dispatch({
+        type: UPDATE_USERS_AFTER_PROMOTION,
+        payload: promotedUser.data
+      });
+    } catch (errors) {
+      console.log(errors);
     }
   };
 
@@ -268,7 +331,13 @@ const AdminState = props => {
         adminFilterTickets,
         adminClearTicketFilter,
         adminFetchTicketById,
-        setLoading
+        setLoading,
+        promotingUser: state.promotingUser,
+        promotedUser: state.promotedUser,
+        isPromotingUserModalOpen: state.isPromotingUserModalOpen,
+        setPromotingUser,
+        promoteUserToStaff,
+        promoteUserToAdmin
       }}
     >
       {props.children}

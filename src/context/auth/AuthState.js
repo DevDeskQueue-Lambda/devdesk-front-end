@@ -9,7 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  GET_LOGGEDIN_USER_SUCCESS,
+  GET_LOGGEDIN_USER_SUCCESS
 } from "../types.js";
 
 const AuthState = props => {
@@ -19,6 +19,7 @@ const AuthState = props => {
     loading: true,
     userInfo: JSON.parse(localStorage.getItem("user")) || "",
     error: null
+    //isAdmin: false
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -93,6 +94,7 @@ const AuthState = props => {
         loading: state.loading,
         userInfo: state.userInfo,
         error: state.error,
+        isAdmin: state.isAdmin,
         login,
         logout,
         register
