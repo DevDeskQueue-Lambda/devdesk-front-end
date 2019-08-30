@@ -29,7 +29,7 @@ function App() {
         <AdminState>
           <div className="App">
             <Router>
-              <NavBar logo={lambdaLogo} homeUrl="https://devdesk-ui.devdesk.now.sh/" />
+              <NavBar logo={lambdaLogo} homeUrl="https://devdesk.lambdaschool.me/" />
               <Fragment>
                 <Switch>
                   <Route exact path="/" component={Login} />
@@ -54,7 +54,7 @@ function App() {
                   />
 
                   <PrivateRoute
-                    path="/admin/dashboard"
+                    path="/admin/dashboard/"
                     roleName={roles.admin}
                     component={AdminDashboard}
                   />
