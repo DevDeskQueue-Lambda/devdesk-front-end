@@ -25,7 +25,7 @@ const AdminTicketView = (props) => {
 
   //ticket context
   const ticketContext = useContext(TicketContext);
-  const {tickets,
+  const {
     categories,
     fetchAllTickets,
     fetchAllCategories,
