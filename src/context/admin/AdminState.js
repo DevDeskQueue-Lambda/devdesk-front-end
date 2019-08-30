@@ -102,10 +102,41 @@ const AdminState = props => {
   };
 
   // adminAddUser
-  const adminAddUser = async () => console.log("adminAddUser");
+  const adminAddUser = async (user) => {
+    try{
+      const res = await getCurrentLoggedInUser().post(
+        'https://lambda-devdesk.herokuapp.com/register', user
+      )
+      dispatch({
+        type: ADD_USER,
+        payload: res.data
+      })
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.data
+      });
+    }
+  }
 
   // adminEditUser
-  const adminUpdateUser = async () => console.log("adminEditUser");
+  const adminUpdateUser = async (user) => {
+    try{
+      const res = await getCurrentLoggedInUser().put(
+        'https://lambda-devdesk.herokuapp.com/users/user/${user.id}` , user
+      )
+      dispatch({
+        type: UPDATE_USER,
+        payload: res.data
+      })
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.data
+      });
+    }
+
+  }
 
   // clear users
   const adminClearUsers = () => {

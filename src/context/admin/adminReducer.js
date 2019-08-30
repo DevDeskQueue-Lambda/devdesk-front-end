@@ -38,6 +38,13 @@ export default (state, action) => {
         users: action.payload,
         loading: false
       };
+    case ADD_USER:
+      return {
+        ...state,
+        users: [action.payload, ...state.users], 
+        loading: false
+
+      }
     case DELETE_USER:
       return {
         ...state,

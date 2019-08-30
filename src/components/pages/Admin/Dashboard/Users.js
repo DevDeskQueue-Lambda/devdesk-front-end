@@ -39,13 +39,7 @@ const Users = (props) => {
       .catch(error => console.log(error.response));
   };
 
-  const deleteUser= id => {
-    axiosWithAuth().delete(`https://lambda-devdesk.herokuapp.com/users/user/${id}`)
-    .then(response => {
-        setUsersList(response.data);
-      })
-      .catch(error => console.log(error.response));
-  };
+
 
   return (
     <div>
