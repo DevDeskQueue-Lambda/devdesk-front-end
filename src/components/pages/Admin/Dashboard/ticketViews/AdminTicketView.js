@@ -20,6 +20,11 @@ const AdminTicketView = () => {
   const ticketContext = useContext(TicketContext);
   const { isModalOpen, setModalOpen } = ticketContext;
 
+ 
+  const [ticket, setTicket] = useState({
+
+  })
+
   useEffect(() => {
     // fetchAllTickets();
     adminFetchTickets();
@@ -109,7 +114,7 @@ const AdminTicketView = () => {
                       <Table.Cell>
                       {ticket && ticket.assigneduser && ticket.assigneduser.fname}
                         <button onClick={() => onAdminRemovedAssigned(ticket.ticketid)}>Un Assign</button>
-                        
+                        <button onClick={() => onAdminResolveTicket(ticket.ticketid)}>Resolved</button>
                       </Table.Cell>{" "}
                       {
                         //need assigned user
