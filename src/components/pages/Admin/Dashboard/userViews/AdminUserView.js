@@ -32,6 +32,7 @@ const AdminUserView = () => {
           <h4>Users</h4>
           <UserFilter />
           {/* <Table.Row celled> */}
+          <AssignTicket />
           <Table>
             <Table.Header>
               <Table.Row>
@@ -58,8 +59,7 @@ const AdminUserView = () => {
                           </Table.Cell>
                         </Table.Row>
 
-                        <Table.Row>
-                          <AssignTicket />
+                        <Table.Row textAlign="middle">
                           <Button
                             onClick={() => {
                               adminDeleteUser(user.userid);
@@ -68,6 +68,7 @@ const AdminUserView = () => {
                             Delete User
                           </Button>
                         </Table.Row>
+                        <Table.Row></Table.Row>
                       </Fragment>
                     );
                   })
@@ -87,9 +88,12 @@ const AdminUserView = () => {
                           </Table.Cell>
                         </Table.Row>
 
-                        <Table.Row>
-                          <AssignTicket />
+                        <Table.Row textAlign="middle">
+                          <Table.Cell />
+                          <Table.Cell />
+
                           <Button
+                            color="red"
                             onClick={() => {
                               adminDeleteUser(user.userid);
                             }}
@@ -109,6 +113,9 @@ const AdminUserView = () => {
                               Promote
                             </Button>
                           )}
+                        </Table.Row>
+                        <Table.Row>
+                          <AssignTicket />
                         </Table.Row>
                       </Fragment>
                     );
