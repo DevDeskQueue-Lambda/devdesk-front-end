@@ -7,7 +7,9 @@ import {
   GET_All_TICKETS,
   GET_All_TICKETS_FAIL,
   GET_AVAILABLE_TICKETS,
-  GET_AVAILABLE_TICKETS_FAIL
+  GET_AVAILABLE_TICKETS_FAIL,
+  CLAIM_TICKET,
+  CLAIM_TICKET_FAIL
 } from "../types";
 
 export default (state, action) => {
@@ -63,6 +65,20 @@ export default (state, action) => {
       };
     }
     case GET_All_TICKETS_FAIL: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
+    //! CLAIM TICKET
+    case CLAIM_TICKET: {
+      return {
+        ...state,
+        user: action.payload
+      };
+    }
+    case CLAIM_TICKET_FAIL: {
       return {
         ...state,
         error: action.payload

@@ -7,20 +7,6 @@ import MyTickets from "./MyTickets";
 import AvailableTickets from "./AvailableTickets";
 
 export default function StaffDashboard(props) {
-  /* const staffContext = React.useContext(StaffContext);
-  const {
-    user,
-    tickets,
-    fetchAssignedTickets,
-    fetchCurrentUserData
-  } = staffContext;
-
-  React.useEffect(() => {
-    fetchCurrentUserData();
-    fetchAssignedTickets();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); */
-
   return (
     <div>
       <Router>

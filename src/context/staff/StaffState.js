@@ -12,7 +12,9 @@ import {
   GET_All_TICKETS,
   GET_All_TICKETS_FAIL,
   GET_AVAILABLE_TICKETS,
-  GET_AVAILABLE_TICKETS_FAIL
+  GET_AVAILABLE_TICKETS_FAIL,
+  CLAIM_TICKET,
+  CLAIM_TICKET_FAIL
 } from "../types";
 
 const StaffState = props => {
@@ -47,18 +49,10 @@ const StaffState = props => {
     try {
       fetchCurrentUserData();
       fetchAllTickets();
-      console.log("GET ASSIGNED TICKETS", state.tickets);
-      /* const user = await axiosWithAuth().get("/users/user"); */
-      /* const currentUser = user.data.userid;
-      const assignedTickets = {
-        ...tickets.data.filter(ticket => ticket.assigneduser !== null)
-      };
-      console.log("LOGGING FROM STAFFSTATE", assignedTickets);
-      console.log("LOGGING FROM STAFFSTATE", currentUser); */
-      /* dispatch({
+      dispatch({
         type: GET_ASSIGNED_TICKETS,
-        payload: tickets.data
-      }); */
+        payload: fetchAllTickets
+      });
     } catch (err) {
       dispatch({
         type: GET_ASSIGNED_TICKETS_FAIL,
@@ -106,6 +100,25 @@ const StaffState = props => {
     }
   };
 
+  //! CLAIM TICKET
+  const claimTicket = async (ticket, user) => {
+    try {
+      const res = await axiosWithAuth().put(
+        `https://lambda-devdesk.herokuapp.com/tickets/ticket/admin/assign/${ticket.ticketid}/${user.userid}`
+      );
+      console.log("RES.DATA", res);
+      /* dispatch({
+        type: CLAIM_TICKET,
+        payload: res.data
+      }); */
+    } catch (err) {
+      dispatch({
+        type: CLAIM_TICKET_FAIL,
+        payload: err.response
+      });
+    }
+  };
+
   return (
     <StaffContext.Provider
       value={{
@@ -116,7 +129,8 @@ const StaffState = props => {
         fetchAssignedTickets,
         fetchCurrentUserData,
         fetchAvailableTickets,
-        fetchAllTickets
+        fetchAllTickets,
+        claimTicket
       }}
     >
       {props.children}

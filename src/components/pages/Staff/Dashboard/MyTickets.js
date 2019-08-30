@@ -12,44 +12,17 @@ export default function MyTickets(props) {
   } = staffContext;
 
   React.useEffect(() => {
-    /* fetchCurrentUserData(); */
-    /* fetchAssignedTickets(); */
+    fetchCurrentUserData();
     fetchAssignedTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const mappedTickets = (x, y) => {
-    if (x === y) {
-      return `${x} is equal to ${y}`;
-    }
+  const handleUnclaim = ticket => {
+    console.log("UNCLAIM TICKET", ticket.ticketid);
   };
 
-  /* function isAssigned() {
-    return;
-  } */
-
-  const currentTickets = tickets;
-  const currentUser = user;
-
-  const filterino = () => {
-    const filterNull = currentTickets.filter(
-      ticket => ticket.assigneduser !== null
-    );
-    const mapId = filterNull.map(item => {
-      return item.assigneduser.userid;
-    });
-    const filterId = mapId.filter(id => id === currentUser.userid);
-    /*     const killMe = currentTickets.filter(ticket => ) */
-    console.log("1 filterNull", filterNull);
-    console.log("2 mapId", mapId);
-    console.log("3 filterId", filterId);
-    /*     console.log("4 killMe", killMe); */
-  };
-
-  //console.log("USER ID", user.userid);
-  //console.log("TICKETS", tickets);
-  console.log("MAPPED TICKETS", mappedTickets(4, 4));
-  console.log(filterino());
+  console.log("USER", user);
+  console.log("ASSIGNED TICKETS", tickets);
 
   return (
     <div>
@@ -93,10 +66,7 @@ export default function MyTickets(props) {
                       <Button /* onClick={() => handleTicketModal("edit")} */>
                         View
                       </Button>
-                      <Button
-                        color="red"
-                        /* onClick={() => handleTicketModal("delete")} */
-                      >
+                      <Button color="red" onClick={() => handleUnclaim(ticket)}>
                         Unclaim
                       </Button>
                     </Table.Cell>

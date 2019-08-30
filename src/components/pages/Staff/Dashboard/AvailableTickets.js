@@ -4,12 +4,28 @@ import StaffContext from "../../../../context/staff/staffContext";
 
 export default function AvailableTickets(props) {
   const staffContext = React.useContext(StaffContext);
-  const { tickets, fetchAvailableTickets } = staffContext;
+  const {
+    user,
+    tickets,
+    fetchAvailableTickets,
+    fetchCurrentUserData,
+    claimTicket
+  } = staffContext;
 
   React.useEffect(() => {
+    fetchCurrentUserData();
     fetchAvailableTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleClaim = ticket => {
+    console.log("CLAIM TICKET", ticket.ticketid);
+    console.log("CLAIMEE", user.userid);
+    claimTicket(ticket, user);
+  };
+
+  console.log("USER", user);
+  console.log("AVAILABLE TICKETS", tickets);
 
   return (
     <div>
@@ -53,10 +69,7 @@ export default function AvailableTickets(props) {
                       <Button /* onClick={() => handleTicketModal("edit")} */>
                         View
                       </Button>
-                      <Button
-                        color="green"
-                        /* onClick={() => handleTicketModal("delete")} */
-                      >
+                      <Button color="green" onClick={() => handleClaim(ticket)}>
                         Claim
                       </Button>
                     </Table.Cell>
