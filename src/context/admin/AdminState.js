@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import axios from "axios";
+
 import { getCurrentLoggedInUser } from "../../utils";
 import { axiosWithAuth } from "../../utils";
 import AdminContext from "./adminContext";
@@ -9,14 +9,14 @@ import {
   DELETE_USER,
   GET_ALL_USERS,
   GET_USER_ROLES,
-  ARCHIVE_TICKET,
+  // ARCHIVE_TICKET,
   ASSIGN_TICKET,
   RESOLVE_TICKET,
   REMOVE_ASSIGNED,
   FILTER_USERS,
   CLEAR_FILTER,
-  ADD_USER,
-  UPDATE_USER,
+  // ADD_USER,
+  // UPDATE_USER,
   CLEAR_USERS,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -25,9 +25,6 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-  PROMOTE_USER_TO_STAFF,
-  PROMOTE_ANY_USER,
-  PROMOTE_USER_TO_ADMIN,
   ADMIN_ERROR,
   ERROR,
   SET_PROMOTING_USER,
@@ -334,9 +331,6 @@ const AdminState = props => {
   // set loading to true
   const setLoading = () => dispatch({ type: SET_LOADING });
 
-  // promote any user
-  const promoteAnyUser = () => console.log("promoteUserToStaff");
-
   return (
     <AdminContext.Provider
       value={{
@@ -348,7 +342,7 @@ const AdminState = props => {
         filteredTickets: state.filteredTickets,
         staff: state.staff,
         promoteUserToStaff,
-        promoteAnyUser,
+
         promoteUserToAdmin,
         adminGetAllUsers,
         adminDeleteUser,
