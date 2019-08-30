@@ -18,7 +18,8 @@ const AuthState = props => {
     isAuthenticated: localStorage.getItem("token") ? true : false,
     loading: true,
     userInfo: JSON.parse(localStorage.getItem("user")) || "",
-    error: null
+    error: null,
+    isInvalidToken: false
     //isAdmin: false
   };
 
