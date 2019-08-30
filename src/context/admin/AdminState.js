@@ -46,7 +46,7 @@ const AdminState = props => {
     filtered: null,
     adminTickets: null,
     filteredTickets: null,
-    staff: null,
+    staff: [],
     promotingUser: null,
     promotedUser: null,
     isPromotingUserModalOpen: false
@@ -220,10 +220,10 @@ const AdminState = props => {
       });
       adminFetchTickets();
     } catch (err) {
-      // console.log("adminAssignTicket", err);
+      console.log("adminAssignTicket", err);
       dispatch({
         type: ADMIN_ERROR,
-        payload: err.response.data
+        payload: err.response
       });
     }
   };
@@ -245,7 +245,7 @@ const AdminState = props => {
       console.log("adminResolveTicket 3", err.response);
       dispatch({
         type: ADMIN_ERROR,
-        payload: err.response.data
+        payload: err.response
       });
     }
   };
