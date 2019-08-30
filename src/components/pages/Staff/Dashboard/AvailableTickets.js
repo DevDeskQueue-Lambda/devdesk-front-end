@@ -66,9 +66,6 @@ export default function AvailableTickets(props) {
                     <Table.Cell>{ticket.tried}</Table.Cell>
                     <Table.Cell>{ticket.status.name}</Table.Cell>
                     <Table.Cell>
-                      <Button /* onClick={() => handleTicketModal("edit")} */>
-                        View
-                      </Button>
                       <Button color="green" onClick={() => handleClaim(ticket)}>
                         Claim
                       </Button>

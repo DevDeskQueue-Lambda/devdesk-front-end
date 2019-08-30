@@ -1,5 +1,5 @@
 import React from "react";
-import { axiosWithAuth, getCurrentLoggedInUser } from "../../utils";
+import { /* axiosWithAuth,  */ getCurrentLoggedInUser } from "../../utils";
 // Context/Reducer
 import StaffContext from "./staffContext";
 import staffReducer from "./staffReducer";
@@ -29,7 +29,7 @@ const StaffState = props => {
   //! GET USER DATA
   const fetchCurrentUserData = async () => {
     try {
-      const user = await axiosWithAuth().get(
+      const user = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/users/user"
       );
       dispatch({
@@ -64,7 +64,7 @@ const StaffState = props => {
   //! GET AVAILABLE TICKETS
   const fetchAvailableTickets = async () => {
     try {
-      const tickets = await axiosWithAuth().get(
+      const tickets = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/tickets/alltickets"
       );
       const availableTickets = tickets.data.filter(
@@ -85,7 +85,7 @@ const StaffState = props => {
   //! GET ALL TICKETS
   const fetchAllTickets = async () => {
     try {
-      const res = await axiosWithAuth().get(
+      const res = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/tickets/alltickets"
       );
       dispatch({
@@ -103,13 +103,13 @@ const StaffState = props => {
   //! CLAIM TICKET
   const claimTicket = async (ticket, user) => {
     try {
-      const res = await axiosWithAuth().put(
+      const res = await getCurrentLoggedInUser().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/admin/assign/${ticket.ticketid}/${user.userid}`
       );
-      /* dispatch({
+      dispatch({
         type: CLAIM_TICKET,
         payload: res.data
-      }); */
+      });
     } catch (err) {
       dispatch({
         type: CLAIM_TICKET_FAIL,

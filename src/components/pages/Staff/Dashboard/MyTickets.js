@@ -63,8 +63,10 @@ export default function MyTickets(props) {
                     <Table.Cell>{ticket.tried}</Table.Cell>
                     <Table.Cell>{ticket.status.name}</Table.Cell>
                     <Table.Cell>
-                      <Button /* onClick={() => handleTicketModal("edit")} */>
-                        View
+                      <Button
+                        color="green" /* onClick={() => handleTicketModal("edit")} */
+                      >
+                        Resolve
                       </Button>
                       <Button color="red" onClick={() => handleUnclaim(ticket)}>
                         Unclaim
