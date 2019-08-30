@@ -21,7 +21,13 @@ import {
   PROMOTE_ANY_USER,
   PROMOTE_USER_TO_ADMIN,
   SET_LOADING,
-  ADMIN_ERROR
+  ADMIN_ERROR,
+  ERROR,
+  SET_PROMOTING_USER,
+  SET_PROMOTED_USER,
+  SET_PROMOTING_USER_MODAL_OPEN,
+  UPDATE_USERS_AFTER_PROMOTION,
+  SET_PROMOTED_USER_FAIL
 } from "../types";
 
 export default (state, action) => {
@@ -67,7 +73,7 @@ export default (state, action) => {
         ...state,
         adminTickets: [action.payload],
         loading: false
-      }
+      };
     case REMOVE_ASSIGNED:
       return {
         ...state,
@@ -114,6 +120,39 @@ export default (state, action) => {
         })
       };
     case ADMIN_CLEAR_TICKET_FILTER:
+    case SET_PROMOTING_USER: {
+      return {
+        ...state,
+        promotingUser: action.payload
+      };
+    }
+    case SET_PROMOTED_USER: {
+      return {
+        ...state,
+        promotedUser: action.payload
+      };
+    }
+    case SET_PROMOTED_USER_FAIL: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+    case UPDATE_USERS_AFTER_PROMOTION: {
+      console.log("promoted ", action.payload);
+      return {
+        ...state,
+        users: state.users.map(user =>
+          user.userid === action.payload.userid ? action.payload : user
+        )
+      };
+    }
+    case SET_PROMOTING_USER_MODAL_OPEN: {
+      return {
+        ...state,
+        isPromotingUserModalOpen: action.payload
+      };
+    }
     case CLEAR_FILTER:
       return {
         ...state,

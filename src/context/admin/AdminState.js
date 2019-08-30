@@ -28,7 +28,13 @@ import {
   PROMOTE_USER_TO_STAFF,
   PROMOTE_ANY_USER,
   PROMOTE_USER_TO_ADMIN,
-  ADMIN_ERROR
+  ADMIN_ERROR,
+  ERROR,
+  SET_PROMOTING_USER,
+  SET_PROMOTED_USER,
+  SET_PROMOTING_USER_MODAL_OPEN,
+  UPDATE_USERS_AFTER_PROMOTION,
+  SET_PROMOTED_USER_FAIL
 } from "../types";
 
 const AdminState = props => {
@@ -40,7 +46,10 @@ const AdminState = props => {
     filtered: null,
     adminTickets: null,
     filteredTickets: null,
-    staff: []
+    staff: null,
+    promotingUser: null,
+    promotedUser: null,
+    isPromotingUserModalOpen: false
   };
 
   const [state, dispatch] = useReducer(adminReducer, initialState);
@@ -263,17 +272,70 @@ const AdminState = props => {
     }
   };
 
+  const setPromotingUser = (modalOpen, user, resetPromotedUser) => {
+    dispatch({
+      type: SET_PROMOTING_USER,
+      payload: user
+    });
+    dispatch({
+      type: SET_PROMOTING_USER_MODAL_OPEN,
+      payload: modalOpen
+    });
+
+    if (resetPromotedUser) {
+      dispatch({
+        type: SET_PROMOTED_USER,
+        payload: null
+      });
+    }
+  };
+
+  const promoteUserToStaff = async userID => {
+    try {
+      const promotedUser = await axiosWithAuth().put(
+        `/users/admin/promote/staff/${userID}`
+      );
+
+      dispatch({
+        type: SET_PROMOTED_USER,
+        payload: promotedUser.data
+      });
+
+      dispatch({
+        type: UPDATE_USERS_AFTER_PROMOTION,
+        payload: promotedUser.data
+      });
+    } catch (errors) {
+      dispatch({
+        type: SET_PROMOTED_USER_FAIL,
+        payload: errors.response
+      });
+    }
+  };
+  const promoteUserToAdmin = async userID => {
+    try {
+      const promotedUser = await axiosWithAuth().put(
+        `/users/admin/promote/admin/${userID}`
+      );
+
+      dispatch({
+        type: SET_PROMOTED_USER,
+        payload: promotedUser.data
+      });
+      dispatch({
+        type: UPDATE_USERS_AFTER_PROMOTION,
+        payload: promotedUser.data
+      });
+    } catch (errors) {
+      console.log(errors);
+    }
+  };
+
   // set loading to true
   const setLoading = () => dispatch({ type: SET_LOADING });
 
-  // promote user to staff
-  const promoteUserToStaff = () => console.log("promoteUserToStaff");
-
   // promote any user
   const promoteAnyUser = () => console.log("promoteUserToStaff");
-
-  // promote user to admin
-  const promoteUserToAdmin = () => console.log("promoteUserToStaff");
 
   return (
     <AdminContext.Provider
@@ -306,7 +368,13 @@ const AdminState = props => {
         adminFilterTickets,
         adminClearTicketFilter,
         adminFetchTicketById,
-        setLoading
+        setLoading,
+        promotingUser: state.promotingUser,
+        promotedUser: state.promotedUser,
+        isPromotingUserModalOpen: state.isPromotingUserModalOpen,
+        setPromotingUser,
+        promoteUserToStaff,
+        promoteUserToAdmin
       }}
     >
       {props.children}
