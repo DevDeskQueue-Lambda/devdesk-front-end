@@ -21,6 +21,7 @@ const EditTicket = props => {
           const tempArray = values.ticketCategories.map(ticketCategory => {
             const matchCategory = categories.find(
               category => category.categoryid === parseInt(ticketCategory)
+              
             );
 
             return {
@@ -30,6 +31,7 @@ const EditTicket = props => {
           values.ticketCategories = tempArray;
           values.ticketid = props.ticket.ticketid;
           editTicket(values);
+          window.location.reload()
         }}
         render={formikProps => (
           <StudentForm {...formikProps} helpCategories={categories} />

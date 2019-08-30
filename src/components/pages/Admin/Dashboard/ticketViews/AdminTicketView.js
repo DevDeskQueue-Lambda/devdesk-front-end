@@ -72,6 +72,7 @@ const AdminTicketView = (props) => {
 
   const onAdminRemovedAssigned = id => {
     adminRemoveAssigned(id);
+    
   };
 
   const onAdminResolveTicket = id => {
@@ -90,9 +91,11 @@ const AdminTicketView = (props) => {
       ticketModal === "add"
         ? { backgroundColor: "#21BA45", color: "#FFFFFF" }
         : { backgroundColor: "#2185D0", color: "#FFFFFF" }
+        
   };
-
+ 
   return (
+    
     <div>
       <Grid padded="horizontally" style={{ marginTop: "5rem" }}>
         <Grid.Row columns={2}>

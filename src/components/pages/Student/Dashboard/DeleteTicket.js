@@ -22,7 +22,13 @@ const DeleteTicket = () => {
           <Header>Are you sure you want to delete this ticket?</Header>
         </Modal.Content>
         <Modal.Actions>
-          <Button primary onClick={() => deleteTicket(deletingTicketID)}>
+          <Button primary onClick={() => {
+            return(
+              
+              deleteTicket(deletingTicketID),
+              window.location.reload()
+            )
+            }}>
             Yes
           </Button>
           <Button basic onClick={() => setDeleteTicketModalOpen(false)}>

@@ -31,6 +31,7 @@ const AddTicket = () => {
           // console.log('values in submit', values);
 
           addTicket(values);
+         
         }}
         render={formikProps => (
           <StudentForm {...formikProps} helpCategories={categories} />
