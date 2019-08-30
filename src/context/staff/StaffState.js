@@ -106,7 +106,6 @@ const StaffState = props => {
       const res = await axiosWithAuth().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/admin/assign/${ticket.ticketid}/${user.userid}`
       );
-      console.log("RES.DATA", res);
       /* dispatch({
         type: CLAIM_TICKET,
         payload: res.data
