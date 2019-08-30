@@ -49,7 +49,7 @@ const AdminState = props => {
       const res = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/users/allusers"
       );
-      // console.log("AdminState", res);
+      console.log("adminGetAllUsers", res);
       dispatch({
         type: GET_ALL_USERS,
         payload: res.data
@@ -89,7 +89,7 @@ const AdminState = props => {
       const res = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/users/roles"
       );
-      // console.log("AdminState", res);
+      console.log("adminGetUserRoles", res);
       dispatch({
         type: GET_USER_ROLES,
         payload: res.data
@@ -197,19 +197,19 @@ const AdminState = props => {
 
   // adminAssignTicket
   const adminAssignTicket = async ({ id, userid }) => {
-    console.log("adminAssignTicket", id, userid);
+    // console.log("adminAssignTicket", id, userid);
     try {
       const res = await getCurrentLoggedInUser().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/admin/assign/${id}/${userid}`
       );
-      console.log("adminAssignTicket", id, userid);
+      // console.log("adminAssignTicket", id, userid);
       dispatch({
         type: ASSIGN_TICKET,
         payload: res.data
       });
       adminFetchTickets();
     } catch (err) {
-      console.log("adminAssignTicket", err);
+      // console.log("adminAssignTicket", err);
       dispatch({
         type: ADMIN_ERROR,
         payload: err.response.data
@@ -218,23 +218,42 @@ const AdminState = props => {
   };
 
   // adminResolveTicket
-  const adminResolveTicket = () => console.log("adminResolveTicket");
-
-  // adminRemoveAssigned
-  const adminRemoveAssigned = async id => {
-    console.log("adminRemoveAssigned 1", id);
+  const adminResolveTicket = async id => {
+    console.log("adminResolveTicket 1", id);
     try {
       const res = await getCurrentLoggedInUser().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/unassign/${id}`
       );
-      console.log("adminRemoveAssigned 2", id);
+      console.log("adminResolveTicket 2", id);
+      dispatch({
+        type: RESOLVE_TICKET,
+        payload: res.data
+      });
+      adminFetchTickets();
+    } catch (err) {
+      console.log("adminResolveTicket 3", err.response);
+      dispatch({
+        type: ADMIN_ERROR,
+        payload: err.response.data
+      });
+    }
+  };
+
+  // adminRemoveAssigned
+  const adminRemoveAssigned = async id => {
+    // console.log("adminRemoveAssigned 1", id);
+    try {
+      const res = await getCurrentLoggedInUser().put(
+        `https://lambda-devdesk.herokuapp.com/tickets/ticket/unassign/${id}`
+      );
+      // console.log("adminRemoveAssigned 2", id);
       dispatch({
         type: REMOVE_ASSIGNED,
         payload: res.data
       });
       adminFetchTickets();
     } catch (err) {
-      console.log("adminRemoveAssigned 3", err.response);
+      // console.log("adminRemoveAssigned 3", err.response);
       dispatch({
         type: ADMIN_ERROR,
         payload: err.response.data
