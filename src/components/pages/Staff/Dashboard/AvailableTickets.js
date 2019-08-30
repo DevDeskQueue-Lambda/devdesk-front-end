@@ -4,10 +4,10 @@ import StaffContext from "../../../../context/staff/staffContext";
 
 export default function AvailableTickets(props) {
   const staffContext = React.useContext(StaffContext);
-  const { tickets, fetchAllTickets } = staffContext;
+  const { tickets, fetchAvailableTickets } = staffContext;
 
   React.useEffect(() => {
-    fetchAllTickets();
+    fetchAvailableTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

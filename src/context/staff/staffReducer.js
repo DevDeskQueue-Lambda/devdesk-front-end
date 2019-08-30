@@ -5,13 +5,15 @@ import {
   GET_ASSIGNED_TICKETS,
   GET_ASSIGNED_TICKETS_FAIL,
   GET_All_TICKETS,
-  GET_All_TICKETS_FAIL
+  GET_All_TICKETS_FAIL,
+  GET_AVAILABLE_TICKETS,
+  GET_AVAILABLE_TICKETS_FAIL
 } from "../types";
 
 export default (state, action) => {
   console.log("reducer action", action);
   switch (action.type) {
-    //! GET USER
+    //! GET USER DATA
     case GET_CURRENT_USER: {
       return {
         ...state,
@@ -21,10 +23,11 @@ export default (state, action) => {
     case GET_CURRENT_USER_FAIL: {
       return {
         ...state,
-        userError: action.payload
+        error: action.payload
       };
     }
-    //! GET TICKETS
+
+    //! GET ASSIGNED TICKETS
     case GET_ASSIGNED_TICKETS: {
       return {
         ...state,
@@ -37,6 +40,21 @@ export default (state, action) => {
         error: action.payload
       };
     }
+
+    //! GET AVAILABLE TICKETS
+    case GET_AVAILABLE_TICKETS: {
+      return {
+        ...state,
+        tickets: action.payload
+      };
+    }
+    case GET_AVAILABLE_TICKETS_FAIL: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+
     //! GET ALL TICKETS
     case GET_All_TICKETS: {
       return {

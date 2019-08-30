@@ -7,15 +7,49 @@ export default function MyTickets(props) {
   const {
     user,
     tickets,
-    fetchAssignedTickets,
-    fetchCurrentUserData
+    fetchCurrentUserData,
+    fetchAssignedTickets
   } = staffContext;
 
   React.useEffect(() => {
-    fetchCurrentUserData();
+    /* fetchCurrentUserData(); */
+    /* fetchAssignedTickets(); */
     fetchAssignedTickets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const mappedTickets = (x, y) => {
+    if (x === y) {
+      return `${x} is equal to ${y}`;
+    }
+  };
+
+  /* function isAssigned() {
+    return;
+  } */
+
+  const currentTickets = tickets;
+  const currentUser = user;
+
+  const filterino = () => {
+    const filterNull = currentTickets.filter(
+      ticket => ticket.assigneduser !== null
+    );
+    const mapId = filterNull.map(item => {
+      return item.assigneduser.userid;
+    });
+    const filterId = mapId.filter(id => id === currentUser.userid);
+    /*     const killMe = currentTickets.filter(ticket => ) */
+    console.log("1 filterNull", filterNull);
+    console.log("2 mapId", mapId);
+    console.log("3 filterId", filterId);
+    /*     console.log("4 killMe", killMe); */
+  };
+
+  //console.log("USER ID", user.userid);
+  //console.log("TICKETS", tickets);
+  console.log("MAPPED TICKETS", mappedTickets(4, 4));
+  console.log(filterino());
 
   return (
     <div>
