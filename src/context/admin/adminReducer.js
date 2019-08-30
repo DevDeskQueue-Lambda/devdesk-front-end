@@ -2,10 +2,14 @@ import {
   DELETE_USER,
   GET_ALL_USERS,
   GET_USER_ROLES,
+  // ARCHIVE_TICKET,
   ASSIGN_TICKET,
+  RESOLVE_TICKET,
+  REMOVE_ASSIGNED,
   FILTER_USERS,
   CLEAR_FILTER,
-  REMOVE_ASSIGNED,
+  // ADD_USER,
+  // UPDATE_USER,
   CLEAR_USERS,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -13,15 +17,19 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-  /*   PROMOTE_USER_TO_STAFF,
-  PROMOTE_ANY_USER,
-  PROMOTE_USER_TO_ADMIN, */
+
   SET_LOADING,
-  ADMIN_ERROR
+  ADMIN_ERROR,
+  ERROR,
+  SET_PROMOTING_USER,
+  SET_PROMOTED_USER,
+  SET_PROMOTING_USER_MODAL_OPEN,
+  UPDATE_USERS_AFTER_PROMOTION,
+  SET_PROMOTED_USER_FAIL
 } from "../types";
 
 export default (state, action) => {
-  // console.log("adminReducer", action);
+  console.log("admiReducer", action);
   switch (action.type) {
     case ADMIN_FETCH_TICKET_BY_ID:
     case ADMIN_FETCH_TICKETS:
@@ -58,10 +66,18 @@ export default (state, action) => {
         staff: [action.payload, ...state.staff],
         loading: false
       };
-    /*     case REMOVE_ASSIGNED:
+    case RESOLVE_TICKET:
       return {
         ...state,
-        adminTickets: state.adminTickets.filter(ticket => ticket.id !== action.payload),
+        adminTickets: [action.payload],
+        loading: false
+      };
+    case REMOVE_ASSIGNED:
+      return {
+        ...state,
+        adminTickets: state.adminTickets.filter(
+          ticket => ticket.id !== action.payload
+        ),
         loading: false
       }; */
     case SET_CURRENT:
@@ -102,6 +118,39 @@ export default (state, action) => {
         })
       };
     case ADMIN_CLEAR_TICKET_FILTER:
+    case SET_PROMOTING_USER: {
+      return {
+        ...state,
+        promotingUser: action.payload
+      };
+    }
+    case SET_PROMOTED_USER: {
+      return {
+        ...state,
+        promotedUser: action.payload
+      };
+    }
+    case SET_PROMOTED_USER_FAIL: {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
+    case UPDATE_USERS_AFTER_PROMOTION: {
+      console.log("promoted ", action.payload);
+      return {
+        ...state,
+        users: state.users.map(user =>
+          user.userid === action.payload.userid ? action.payload : user
+        )
+      };
+    }
+    case SET_PROMOTING_USER_MODAL_OPEN: {
+      return {
+        ...state,
+        isPromotingUserModalOpen: action.payload
+      };
+    }
     case CLEAR_FILTER:
       return {
         ...state,

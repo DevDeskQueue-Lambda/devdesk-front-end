@@ -1,5 +1,7 @@
 import React, { useReducer } from "react";
+
 import { getCurrentLoggedInUser } from "../../utils";
+import { axiosWithAuth } from "../../utils";
 import AdminContext from "./adminContext";
 import adminReducer from "./adminReducer";
 
@@ -7,10 +9,14 @@ import {
   DELETE_USER,
   GET_ALL_USERS,
   GET_USER_ROLES,
+  // ARCHIVE_TICKET,
   ASSIGN_TICKET,
+  RESOLVE_TICKET,
   REMOVE_ASSIGNED,
   FILTER_USERS,
   CLEAR_FILTER,
+  // ADD_USER,
+  // UPDATE_USER,
   CLEAR_USERS,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -19,10 +25,13 @@ import {
   ADMIN_FILTER_TICKETS,
   ADMIN_CLEAR_TICKET_FILTER,
   ADMIN_FETCH_TICKET_BY_ID,
-  /*   PROMOTE_USER_TO_STAFF,
-  PROMOTE_ANY_USER,
-  PROMOTE_USER_TO_ADMIN, */
-  ADMIN_ERROR
+  ADMIN_ERROR,
+  ERROR,
+  SET_PROMOTING_USER,
+  SET_PROMOTED_USER,
+  SET_PROMOTING_USER_MODAL_OPEN,
+  UPDATE_USERS_AFTER_PROMOTION,
+  SET_PROMOTED_USER_FAIL
 } from "../types";
 
 const AdminState = props => {
@@ -34,7 +43,10 @@ const AdminState = props => {
     filtered: null,
     adminTickets: null,
     filteredTickets: null,
-    staff: []
+    staff: [],
+    promotingUser: null,
+    promotedUser: null,
+    isPromotingUserModalOpen: false
   };
 
   const [state, dispatch] = useReducer(adminReducer, initialState);
@@ -45,7 +57,7 @@ const AdminState = props => {
       const res = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/users/allusers"
       );
-      // console.log("AdminState", res);
+      console.log("adminGetAllUsers", res);
       dispatch({
         type: GET_ALL_USERS,
         payload: res.data
@@ -85,7 +97,7 @@ const AdminState = props => {
       const res = await getCurrentLoggedInUser().get(
         "https://lambda-devdesk.herokuapp.com/users/roles"
       );
-      // console.log("AdminState", res);
+      console.log("adminGetUserRoles", res);
       dispatch({
         type: GET_USER_ROLES,
         payload: res.data
@@ -193,12 +205,12 @@ const AdminState = props => {
 
   // adminAssignTicket
   const adminAssignTicket = async ({ id, userid }) => {
-    console.log("adminAssignTicket", id, userid);
+    // console.log("adminAssignTicket", id, userid);
     try {
       const res = await getCurrentLoggedInUser().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/admin/assign/${id}/${userid}`
       );
-      console.log("adminAssignTicket", id, userid);
+      // console.log("adminAssignTicket", id, userid);
       dispatch({
         type: ASSIGN_TICKET,
         payload: res.data
@@ -208,29 +220,48 @@ const AdminState = props => {
       console.log("adminAssignTicket", err);
       dispatch({
         type: ADMIN_ERROR,
-        payload: err.response.data
+        payload: err.response
       });
     }
   };
 
   // adminResolveTicket
-  const adminResolveTicket = () => console.log("adminResolveTicket");
-
-  // adminRemoveAssigned
-  const adminRemoveAssigned = async id => {
-    console.log("adminRemoveAssigned 1", id);
+  const adminResolveTicket = async id => {
+    console.log("adminResolveTicket 1", id);
     try {
       const res = await getCurrentLoggedInUser().put(
         `https://lambda-devdesk.herokuapp.com/tickets/ticket/unassign/${id}`
       );
-      console.log("adminRemoveAssigned 2", id);
+      console.log("adminResolveTicket 2", id);
+      dispatch({
+        type: RESOLVE_TICKET,
+        payload: res.data
+      });
+      adminFetchTickets();
+    } catch (err) {
+      console.log("adminResolveTicket 3", err.response);
+      dispatch({
+        type: ADMIN_ERROR,
+        payload: err.response
+      });
+    }
+  };
+
+  // adminRemoveAssigned
+  const adminRemoveAssigned = async id => {
+    // console.log("adminRemoveAssigned 1", id);
+    try {
+      const res = await getCurrentLoggedInUser().put(
+        `https://lambda-devdesk.herokuapp.com/tickets/ticket/unassign/${id}`
+      );
+      // console.log("adminRemoveAssigned 2", id);
       dispatch({
         type: REMOVE_ASSIGNED,
         payload: res.data
       });
       adminFetchTickets();
     } catch (err) {
-      console.log("adminRemoveAssigned 3", err.response);
+      // console.log("adminRemoveAssigned 3", err.response);
       dispatch({
         type: ADMIN_ERROR,
         payload: err.response.data
@@ -238,17 +269,67 @@ const AdminState = props => {
     }
   };
 
+  const setPromotingUser = (modalOpen, user, resetPromotedUser) => {
+    dispatch({
+      type: SET_PROMOTING_USER,
+      payload: user
+    });
+    dispatch({
+      type: SET_PROMOTING_USER_MODAL_OPEN,
+      payload: modalOpen
+    });
+
+    if (resetPromotedUser) {
+      dispatch({
+        type: SET_PROMOTED_USER,
+        payload: null
+      });
+    }
+  };
+
+  const promoteUserToStaff = async userID => {
+    try {
+      const promotedUser = await axiosWithAuth().put(
+        `/users/admin/promote/staff/${userID}`
+      );
+
+      dispatch({
+        type: SET_PROMOTED_USER,
+        payload: promotedUser.data
+      });
+
+      dispatch({
+        type: UPDATE_USERS_AFTER_PROMOTION,
+        payload: promotedUser.data
+      });
+    } catch (errors) {
+      dispatch({
+        type: SET_PROMOTED_USER_FAIL,
+        payload: errors.response
+      });
+    }
+  };
+  const promoteUserToAdmin = async userID => {
+    try {
+      const promotedUser = await axiosWithAuth().put(
+        `/users/admin/promote/admin/${userID}`
+      );
+
+      dispatch({
+        type: SET_PROMOTED_USER,
+        payload: promotedUser.data
+      });
+      dispatch({
+        type: UPDATE_USERS_AFTER_PROMOTION,
+        payload: promotedUser.data
+      });
+    } catch (errors) {
+      console.log(errors);
+    }
+  };
+
   // set loading to true
   const setLoading = () => dispatch({ type: SET_LOADING });
-
-  // promote user to staff
-  const promoteUserToStaff = () => console.log("promoteUserToStaff");
-
-  // promote any user
-  const promoteAnyUser = () => console.log("promoteUserToStaff");
-
-  // promote user to admin
-  const promoteUserToAdmin = () => console.log("promoteUserToStaff");
 
   return (
     <AdminContext.Provider
@@ -261,7 +342,7 @@ const AdminState = props => {
         filteredTickets: state.filteredTickets,
         staff: state.staff,
         promoteUserToStaff,
-        promoteAnyUser,
+
         promoteUserToAdmin,
         adminGetAllUsers,
         adminDeleteUser,
@@ -281,7 +362,13 @@ const AdminState = props => {
         adminFilterTickets,
         adminClearTicketFilter,
         adminFetchTicketById,
-        setLoading
+        setLoading,
+        promotingUser: state.promotingUser,
+        promotedUser: state.promotedUser,
+        isPromotingUserModalOpen: state.isPromotingUserModalOpen,
+        setPromotingUser,
+        promoteUserToStaff,
+        promoteUserToAdmin
       }}
     >
       {props.children}

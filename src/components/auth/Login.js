@@ -73,8 +73,9 @@ const FormikLogin = withFormik({
     password: yup.string().required("You must provide your password.")
   }),
 
-  handleSubmit: function (values, { setStatus }) {
+  handleSubmit: function (values, { setStatus, resetForm }) {
     setStatus(values);
+    resetForm();
   }
 })(Login);
 

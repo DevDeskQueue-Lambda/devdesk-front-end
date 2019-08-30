@@ -1,15 +1,24 @@
 import React, { Fragment, useContext, useEffect } from "react";
-import { Header, Grid } from "semantic-ui-react";
+import { Button, Header, Grid } from "semantic-ui-react";
 import AdminContext from "../../../../../context/admin/adminContext";
-import AssignTicket from '../ticketViews/AssignTicket'
+
+import AssignTicket from "../ticketViews/AssignTicket";
 
 import UserFilter from "./UserFilter";
 
+import PromoteUser from "./PromoteUser";
 
 const AdminUserView = () => {
   const adminContext = useContext(AdminContext);
 
-  const { users, adminGetAllUsers, adminDeleteUser, filtered } = adminContext;
+  const {
+    users,
+    adminGetAllUsers,
+    adminDeleteUser,
+    filtered,
+    setPromotingUser,
+    promotingUser
+  } = adminContext;
 
   // console.log("admin index", users);
 
@@ -28,44 +37,53 @@ const AdminUserView = () => {
           <UserFilter />
           {filtered && filtered !== null
             ? filtered.map((user, i) => {
-              return (
-                <Fragment key={i}>
-                  <h1>{user.username}</h1>
-                  <h3>{user.fname}</h3>
-                  <h3>{user.lname}</h3>
-                  <AssignTicket />
-                  <button
-                    onClick={() => {
-                      adminDeleteUser(user.userid);
-                    }}
-                  >
-                    Delete User
+                return (
+                  <Fragment key={i}>
+                    <h1>{user.username}</h1>
+                    <h3>{user.fname}</h3>
+                    <h3>{user.lname}</h3>
+                    <AssignTicket />
+                    <button
+                      onClick={() => {
+                        adminDeleteUser(user.userid);
+                      }}
+                    >
+                      Delete User
                     </button>
-                </Fragment>
-              );
-            })
+                  </Fragment>
+                );
+              })
             : users &&
-            users.map((user, i) => {
-              return (
-                <Fragment key={i}>
-                  <h2>{user.username}</h2>
-                  <h3>{user.fname}</h3>
-                  <h3>{user.lname}</h3>
-                  <AssignTicket />
-                  <button
-                    onClick={() => {
-                      adminDeleteUser(user.userid);
-                    }}
-                  >
-                    Delete User
+              users.map((user, i) => {
+                return (
+                  <Fragment key={i}>
+                    <h2>{user.username}</h2>
+                    <h3>{user.fname}</h3>
+                    <h3>{user.lname}</h3>
+                    <AssignTicket />
+                    <button
+                      onClick={() => {
+                        adminDeleteUser(user.userid);
+                      }}
+                    >
+                      Delete User
                     </button>
-                </Fragment>
-              );
-            })}
+                    {user.authority.findIndex(
+                      authority => authority.authority === "ROLE_ADMIN"
+                    ) === -1 && (
+                      <Button
+                        onClick={() => setPromotingUser(true, user, false)}
+                      >
+                        Promote
+                      </Button>
+                    )}
+                  </Fragment>
+                );
+              })}
         </Grid.Column>
       </Grid>
 
-
+      {promotingUser && <PromoteUser />}
     </div>
   );
 };
