@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import { axiosWithAuth } from "../../utils";
+import axios from "axios";
 import TicketContext from "./ticketContext";
 import ticketReducer from "./ticketReducer";
 import {
@@ -15,19 +16,29 @@ import {
   GET_CATEGORIES_FAIL,
   SET_MODAL_OPEN,
   SET_DELETE_TICKET_MODAL_OPEN,
-  SET_DELETING_TICKET_ID
+  SET_DELETING_TICKET_ID,
+  SET_TICKET_COMMENTS,
+  SET_TICKET_COMMENTS_MODAL_OPEN,
+  SET_ASSIGNED_STAFF,
+  SET_ASSIGNED_STAFF_MODAL_OPEN,
+  FILTER_BY_CATEGORY,
+  RESET_FILTER
 } from "../types";
 
 const TicketState = props => {
   const initialState = {
+    defaultTickets: [],
     tickets: [],
-    deletingTicketID: null,
     loading: false,
     error: null,
     categories: [],
     categoriesError: null,
     isModalOpen: false,
-    isDeleteTicketModalOpen: false
+    isDeleteTicketModalOpen: false,
+    isTicketCommentsModalOpen: false,
+    isAssignedStaffModalOpen: false,
+    ticketComments: [],
+    assignedStaff: null
   };
 
   const [state, dispatch] = useReducer(ticketReducer, initialState);
@@ -45,13 +56,13 @@ const TicketState = props => {
       });
     }
   };
-  const fetchAllTickets = async () => {
+  const fetchAllTickets = async studentID => {
     try {
       const tickets = await axiosWithAuth().get("/tickets/alltickets");
 
       dispatch({
         type: GET_TICKETS,
-        payload: tickets.data
+        payload: { tickets: tickets.data, studentID: studentID }
       });
     } catch (errors) {
       dispatch({
@@ -62,9 +73,17 @@ const TicketState = props => {
   };
 
   const addTicket = async newTicket => {
+    console.log('new ticket', newTicket);
+    //Autoposting to the devdesk slackbot which must be installed in the slack workspace
+    const slackURL = 'https://hooks.slack.com/services/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';
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+    axios.post(proxyurl + slackURL, { text: newTicket.description })
+      .then(res => console.log('res from slack webhook', res))
+      .catch(err => console.log(err.response));
+    //******************************************************************************* */
     try {
       const ticket = await axiosWithAuth().post("/tickets/ticket", newTicket);
-
       dispatch({
         type: ADD_TICKET,
         payload: ticket.data
@@ -129,10 +148,8 @@ const TicketState = props => {
         type: DELETE_TICKET_FAIL,
         payload: errors.response.data
       });
-      console.log(errors);
     }
   };
-
   const deletingTicket = ticketID => {
     dispatch({
       type: SET_DELETING_TICKET_ID,
@@ -143,7 +160,6 @@ const TicketState = props => {
       payload: true
     });
   };
-
   const setModalOpen = condition => {
     dispatch({
       type: SET_MODAL_OPEN,
@@ -165,17 +181,67 @@ const TicketState = props => {
     }
   };
 
+  const setTicketCommentsModalOpen = (isOpen, comments) => {
+    dispatch({
+      type: SET_TICKET_COMMENTS_MODAL_OPEN,
+      payload: isOpen
+    });
+    dispatch({
+      type: SET_TICKET_COMMENTS,
+      payload: comments
+    });
+  };
+  const setAssignedStaffModalOpen = (isOpen, staff) => {
+    dispatch({
+      type: SET_ASSIGNED_STAFF_MODAL_OPEN,
+      payload: isOpen
+    });
+    dispatch({
+      type: SET_ASSIGNED_STAFF,
+      payload: staff
+    });
+  };
+
+  const setFilter = (filterBy, filteringTerm) => {
+    switch (filterBy) {
+      case "category":
+        dispatch({
+          type: FILTER_BY_CATEGORY,
+          payload: filteringTerm
+        });
+
+        break;
+
+      default:
+        dispatch({
+          type: RESET_FILTER,
+          payload: null
+        });
+    }
+  };
+
   return (
     <TicketContext.Provider
       value={{
+        // state variables
         tickets: state.tickets,
+        defaultTickets: state.defaultTickets,
         deletingTicketID: state.deletingTicketID,
         loading: state.loading,
         error: state.error,
         categoriesError: state.categoriesError,
-        categories: state.categories,
+        categories: state.categories.sort((a, b) => {
+          let categoryA = a.name.toUpperCase();
+          let categoryB = b.name.toUpperCase();
+          return categoryA < categoryB ? -1 : categoryA > categoryB ? 1 : 0;
+        }),
         isModalOpen: state.isModalOpen,
         isDeleteTicketModalOpen: state.isDeleteTicketModalOpen,
+        isTicketCommentsModalOpen: state.isTicketCommentsModalOpen,
+        ticketComments: state.ticketComments,
+        assignedStaff: state.assignedStaff,
+        isAssignedStaffModalOpen: state.isAssignedStaffModalOpen,
+        // functions
         fetchAllCategories,
         fetchAllTickets,
         addTicket,
@@ -183,7 +249,10 @@ const TicketState = props => {
         deleteTicket,
         deletingTicket,
         setModalOpen,
-        setDeleteTicketModalOpen
+        setDeleteTicketModalOpen,
+        setTicketCommentsModalOpen,
+        setAssignedStaffModalOpen,
+        setFilter
       }}
     >
       {props.children}

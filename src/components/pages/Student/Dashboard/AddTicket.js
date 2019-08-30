@@ -1,18 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import TicketContext from "../../../../context/ticket/ticketContext";
 import { Formik } from "formik";
 import StudentForm from "./StudentForm";
 
-import * as Yup from "yup";
-
-const AddTicket = props => {
+const AddTicket = () => {
   const ticketContext = useContext(TicketContext);
-  const { addTicket, fetchAllCategories, categories } = ticketContext;
-
-  useEffect(() => {
-    fetchAllCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { addTicket, categories } = ticketContext;
 
   return (
     <>
@@ -34,6 +27,8 @@ const AddTicket = props => {
             };
           });
           values.ticketCategories = tempArray;
+
+          // console.log('values in submit', values);
 
           addTicket(values);
         }}

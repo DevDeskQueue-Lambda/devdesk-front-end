@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import AuthContext from "../../context/auth/authContext";
 import { Form, Field, withFormik } from "formik";
-import {} from "semantic-ui-react";
+import { } from "semantic-ui-react";
 import {
   Form as SemanticForm,
   Button,
@@ -25,7 +25,7 @@ const Login = ({ values, history, status }) => {
     if (isAuthenticated) {
       if (userInfo && userInfo.authority.length > 1) {
         history.push("/dashboard");
-      } else {
+      } else if (userInfo.authority) {
         const auth = userInfo.authority[0].authority.split("_");
         const role = auth[1].toLowerCase();
         history.push(`/${role}/dashboard`);
@@ -35,7 +35,7 @@ const Login = ({ values, history, status }) => {
 
   return (
     <Grid container centered>
-      <Grid.Column width={5}>
+      <Grid.Column computer={6} tablet={12} mobile={16}>
         <Form className="ui form">
           {error && (
             <Message
@@ -61,7 +61,7 @@ const Login = ({ values, history, status }) => {
 };
 
 const FormikLogin = withFormik({
-  mapPropsToValues: function({ username, password }) {
+  mapPropsToValues: function ({ username, password }) {
     return {
       username: username || "",
       password: password || ""
@@ -73,8 +73,9 @@ const FormikLogin = withFormik({
     password: yup.string().required("You must provide your password.")
   }),
 
-  handleSubmit: function(values, { setStatus }) {
+  handleSubmit: function (values, { setStatus, resetForm }) {
     setStatus(values);
+    resetForm();
   }
 })(Login);
 

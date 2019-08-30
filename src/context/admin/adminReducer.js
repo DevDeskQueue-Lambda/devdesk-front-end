@@ -45,6 +45,11 @@ export default (state, action) => {
         loading: false
 
       }
+    case UPDATE_USER:
+      return {
+        ...state,
+        users: [ state.users.map(user => user.id !== action.payload)]
+      }
     case DELETE_USER:
       return {
         ...state,

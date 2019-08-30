@@ -123,7 +123,7 @@ const AdminState = props => {
   const adminUpdateUser = async (user) => {
     try{
       const res = await getCurrentLoggedInUser().put(
-        'https://lambda-devdesk.herokuapp.com/users/user/${user.id}` , user
+        `https://lambda-devdesk.herokuapp.com/users/admin/user/${user.id}` , user
       )
       dispatch({
         type: UPDATE_USER,

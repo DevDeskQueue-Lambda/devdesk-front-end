@@ -3,18 +3,13 @@ import { axiosLogin, getCurrentLoggedInUser } from "../../utils";
 import axios from "axios";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
-import { axiosWithAuth } from "../../utils";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  USER_LOADED,
-  AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS,
-  GET_LOGGEDIN_USER_SUCCESS,
-  GET_LOGGEDIN_USER_FAIL
+  GET_LOGGEDIN_USER_SUCCESS
 } from "../types.js";
 
 const AuthState = props => {
@@ -24,6 +19,7 @@ const AuthState = props => {
     loading: true,
     userInfo: JSON.parse(localStorage.getItem("user")) || "",
     error: null
+    //isAdmin: false
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -98,6 +94,7 @@ const AuthState = props => {
         loading: state.loading,
         userInfo: state.userInfo,
         error: state.error,
+        isAdmin: state.isAdmin,
         login,
         logout,
         register
