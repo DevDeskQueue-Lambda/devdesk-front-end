@@ -18,7 +18,8 @@ const AuthState = props => {
     isAuthenticated: localStorage.getItem("token") ? true : false,
     loading: true,
     userInfo: JSON.parse(localStorage.getItem("user")) || "",
-    error: null
+    error: null,
+    isInvalidToken: false
     //isAdmin: false
   };
 
@@ -55,6 +56,7 @@ const AuthState = props => {
 
   // Login
   const login = async fromData => {
+    console.log(fromData);
     try {
       const res = await axiosLogin().post(
         "/login",
