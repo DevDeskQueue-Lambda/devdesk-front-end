@@ -56,6 +56,7 @@ const AuthState = props => {
 
   // Login
   const login = async fromData => {
+    console.log(fromData);
     try {
       const res = await axiosLogin().post(
         "/login",
